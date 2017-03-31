@@ -23,7 +23,7 @@ location: 'Dalian, China'
 baseurl: /
 
 # Permalinks
-permalink: /:title
+permalink: /:title/
 
 
 # gems and other configs
