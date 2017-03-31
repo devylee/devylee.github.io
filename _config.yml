@@ -1,1 +1,76 @@
-theme: jekyll-theme-cayman
+
+# Jykell configuration
+#markdown: redcarpet
+#highlighter: pygments
+markdown: kramdown
+highlighter: rouge
+paginate: 5
+language: 'zh-cn'
+
+# Website info
+name: 'elsewhere'
+description: "一个辅助记忆的树洞."
+
+# Author's info
+twitter_username: idevylee
+github_username:  devylee
+author: 'Devy Lee'
+nickname: devy
+bio: "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
+location: 'Dalian, China'
+url: 'https://devylee.github.io/'
+
+#google_analytics: 
+#disqus: 
+# edit baseurl to simply '/' if using as your personal page (instead of a project page)
+baseurl: /
+
+# Permalinks
+permalink: /:title
+# permalink: /author/:username
+# permalink: /tag/:tag
+
+
+# gems and other configs
+gems: [jekyll-paginate]
+exclude: [vendor]
+
+# Additional settings available on the front-matter
+# Site logo in the index.html (as in demo.ghost.io)
+# Author's page cover in _layouts/author.html
+# The same for page.html and tag.html layouts
+# Post's page cover as a per-post basis _posts/...
+# Disqus comments as a per-post basis
+# ...
+
+
+# Settings for builing master branch with travis-ci
+# with jekyll-travis
+
+# Settings for deploy rake task
+# Username and repo of Github repo, e.g.
+# https://github.com/USERNAME/REPO.git
+# username defaults to ENV['GIT_NAME'] used by Travis
+# repo defaults to USERNAME.github.io
+# Branch defaults to "source" for USERNAME.github.io
+# or "master" otherwise
+safe: false
+lsi: false
+username: devylee
+repo: devylee.github.io
+branch: master
+relative_source: ../
+destination: ../gh-pages/
+production_url:  https://devylee.github.io/
+source_url:      https://github.com/devylee/devylee.github.io/
+
+exclude:
+  - README.md
+  - Rakefile
+  - Gemfile
+  - Gemfile.lock
+  - changelog.md
+  - "*.Rmd"
+  - vendor
+  - .travis.yml
+  - gh-pages
