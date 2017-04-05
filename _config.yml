@@ -29,6 +29,7 @@ permalink: /:title/
 safe: false
 lsi: false
 repo: 'devylee.github.io'
+branch: source
 destination: '../gh-pages/'
 
 # gems and other configs
