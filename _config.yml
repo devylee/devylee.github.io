@@ -29,7 +29,7 @@ permalink: /:title/
 safe: false
 lsi: false
 repo: 'devylee.github.io'
-destination: './gh-pages/'
+destination: '../gh-pages/'
 
 # gems and other configs
 gems: [jekyll-paginate]
@@ -40,8 +40,6 @@ exclude:
   - Rakefile
   - Gemfile
   - Gemfile.lock
-  - changelog.md
   - "*.Rmd"
   - vendor
   - .travis.yml
-  - gh-pages
