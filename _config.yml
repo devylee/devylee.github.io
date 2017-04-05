@@ -30,7 +30,8 @@ safe: false
 lsi: false
 repo: 'devylee.github.io'
 branch: source
-destination: _site
+relative_source: '../devylee.github.io/'
+destination: '../gh-pages/'
 
 # gems and other configs
 gems: [jekyll-paginate]
