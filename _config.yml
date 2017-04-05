@@ -1,7 +1,6 @@
 
 # Jykell configuration
 markdown: kramdown
-highlighter: rouge
 paginate: 5
 language: 'zh-cn'
 
