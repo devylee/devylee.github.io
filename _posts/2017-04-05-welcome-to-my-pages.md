@@ -4,7 +4,6 @@ cover: false
 title: 'Welcome to my pages'
 post_class: 'post tag-fiction'
 date: '2017-04-05 17:30:00'
-tags: test
 navigation: true
 categories: devy
 ---
