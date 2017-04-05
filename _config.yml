@@ -7,7 +7,7 @@ language: 'zh-cn'
 
 # Website info
 name: elsewhere
-description: '一个辅助记忆的树洞.'
+description: '一个辅助记忆的树洞'
 image: true
 
 # Author's info
