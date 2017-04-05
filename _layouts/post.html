@@ -62,7 +62,7 @@ navigation: true
             {% endif %}
 
             <section class="author">
-                <h4><a href="#">{{ site.author }}</a></h4>
+                <h4><a href="{{ site.baseurl }}author/{{ site.nickname }}">{{ site.author }}</a></h4>
                 
                 {% if site.bio %}
                     <p> {{ site.bio }}</p>

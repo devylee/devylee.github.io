@@ -37,10 +37,8 @@ gems: [jekyll-paginate]
 
 exclude:
   - vendor
-  - README.md
   - Rakefile
   - Gemfile
   - Gemfile.lock
   - "*.Rmd"
-  - vendor
   - .travis.yml
