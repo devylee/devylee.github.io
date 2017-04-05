@@ -4,7 +4,7 @@
 [![Ruby](https://img.shields.io/badge/ruby-2.2-blue.svg?style=flat)](https://travis-ci.org/devylee/devylee.github.io)
 [![Jekyll](https://img.shields.io/badge/jekyll-3.4-blue.svg?style=flat)](https://travis-ci.org/devylee/devylee.github.io)
 
-> This is my github page published by Jekyll, and the Theme customized from Ghost Casper.
+> This is my github page (also my personal blog since 5 April 2017) published by Jekyll, and the Theme customized from Ghost Casper.
 
 ## Thanks
 

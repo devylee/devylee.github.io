@@ -2,23 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>elsewhere - Articles</title>
-    <description>一个辅助记忆的树洞.</description>
+    <description>一个辅助记忆的树洞</description>
     <link>
     </link>
-    
-      
-      <item>
-        <title>Test Post</title>
-        
-          <description>&lt;p&gt;这是测试Post.&lt;/p&gt;
-</description>
-        
-        <pubDate>Fri, 31 Mar 2017 10:18:00 +0000</pubDate>
-        <link>
-        /test-post/</link>
-        <guid isPermaLink="true">/test-post/</guid>
-      </item>
-      
     
   </channel>
 </rss>
