@@ -53,7 +53,7 @@
 
 </head>
 
-<body class="home-template nav-closed">
+<body class="tag-template nav-closed">
 
     <div class="nav">
     <h3 class="nav-title">Menu</h3>
@@ -61,7 +61,7 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home  nav-current"><a href="/">Home</a></li>
+        <li class="nav-home "><a href="/">Home</a></li>
         <li class="nav-about "><a href="/about/">About</a></li>
     </ul>
     <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
@@ -72,11 +72,11 @@
     <div class="site-wrapper">
 
         <!-- [[! Everything else gets inserted here ]] -->
-        <!-- < default -->
+        <!-- < default}} -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- The big featured header  -->
-<header class="main-header no-cover">
+<!-- If we have a tag cover, display that - else blog cover - else nothing -->
+<header class="main-header tag-head no-cover">
     <nav class="main-nav overlay clearfix">
         
         
@@ -85,11 +85,14 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">elsewhere</h1>
-            <h2 class="page-description">一个辅助记忆的树洞.</h2>
+            <h1 class="page-title">Test</h1>
+            <h2 class="page-description">
+            
+			    A 1-post collection
+            
+            </h2>
         </div>
     </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
 </header>
 
 <!-- The main content area on the homepage -->
@@ -146,7 +149,6 @@
 
 
 </main>
-
 
         <footer class="site-footer clearfix">
           <section class="copyright"><a href="/">elsewhere</a> &copy; 2017</section>
