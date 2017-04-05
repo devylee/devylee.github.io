@@ -57,20 +57,19 @@ navigation: true
 
             {% if site.image %}
             <figure class="author-image">
-                <a class="img" href="#" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=68)"><span class="hidden">{{ page.author }}'s Picture</span></a>
+                <a class="img" href="{{ site.baseurl }}author/{{ site.nickname }}/" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=68)"><span class="hidden">{{ page.author }}'s Picture</span></a>
             </figure>
             {% endif %}
 
             <section class="author">
-                <h4><a href="{{ site.baseurl }}author/{{ site.nickname }}">{{ site.author }}</a></h4>
+                <h4><a href="{{ site.baseurl }}author/{{ site.nickname }}/">{{ site.author }}</a></h4>
                 
                 {% if site.bio %}
                     <p> {{ site.bio }}</p>
                 {% endif %}
                 <div class="author-meta">
-                    {% if site.location %}<span class="author-location icon-location"> {{ site.location }}</span>{% endif %} 
-                    {% if site.github_username %}<span class="author-link icon-github"><a href="https://github.com/{{ site.github_username }}"> Github</a></span>{% endif %} 
-                    {% if site.twitter_username %}<span class="author-link icon-twitter"><a href="https://twitter.com/{{ site.twitter_username }}"> Twitter</a></span>{% endif %} 
+                    {% if page.location %}<span class="author-location icon-location"> {{ page.location }}</span>
+                    {% elsif site.location %}<span class="author-location icon-location"> {{ site.location }}</span>{% endif %} 
                 </div>
             </section>
 

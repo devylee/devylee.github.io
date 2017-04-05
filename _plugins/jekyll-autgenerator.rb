@@ -5,8 +5,8 @@ module Jekyll
     safe true
 
     def generate(site)
-      site.categories.each do |category|
-        build_subpages(site, "author", category)
+      site.categories.each do |author|
+        build_subpages(site, "author", author)
       end
     end
 
