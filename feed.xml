@@ -6,5 +6,20 @@
     <link>
     </link>
     
+      
+      <item>
+        <title>Welcome to my pages</title>
+        
+          <description>&lt;p&gt;欢迎来到我的Github Page，当然这也将被用作我的个人博客。&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 05 Apr 2017 17:30:00 +0000</pubDate>
+        <link>
+        /welcome-to-my-pages/</link>
+        <guid isPermaLink="true">/welcome-to-my-pages/</guid>
+      </item>
+      
+    
   </channel>
 </rss>

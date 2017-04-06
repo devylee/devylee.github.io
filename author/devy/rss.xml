@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title></title>
+   <link></link>
+   <description>一个辅助记忆的树洞</description>
+   <language>zh-cn</language>
+   <managingEditor> Devy</managingEditor>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   
+	<item>
+	  <title>Welcome to my pages</title>
+	  <link>//welcome-to-my-pages/</link>
+	  <author>Devy</author>
+	  <pubDate>2017-04-05T17:30:00+00:00</pubDate>
+	  <guid>//welcome-to-my-pages/</guid>
+	  <description><![CDATA[
+	     <p>欢迎来到我的Github Page，当然这也将被用作我的个人博客。</p>
+
+<p>我不是一个高产的写作者，只是年纪大了，很多东西总是会记不起，所以这可能就是我用来记录这些记忆碎片的地方。</p>
+
+<p>其实在此之前，我还用过Blogger、Baidu空间、SAE，无奈这些服务要么被墙、要么死掉、要么被死死监管，最终落脚在此，希望会是个好的归宿吧。</p>
+
+<p>我也想是不是要把之前那些po再贴过来，但是想想最后还是放弃了，有些东西丢了其实真的没必要再捡回来，尤其是这日新月异信息爆炸的时代！</p>
+
+<p>我们还是来开启新篇章吧~</p>
+
+	  ]]></description>
+	</item>
+
+
+</channel>
+</rss>
