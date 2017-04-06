@@ -44,7 +44,7 @@ permalink: 404.html
             </div>
         </div>
     </main>
-{% if site.google_analytics %}
+{% if jekyll.environment == "production" and site.google_analytics %}
     <!-- Add Google Analytics  -->
     {% include google_analytics.html %}   
 {% endif %}

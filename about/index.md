@@ -1,11 +1,7 @@
 ---
 layout: page
-cover: false
-logo: false
 title: About
-navigation: True
 current: about
-class: 'page-template'
 ---
 
 这是我的[Github Page](https://pages.github.com/)，同时自2017年4月5日起，这也将用作我的个人博客.

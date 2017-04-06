@@ -17,13 +17,14 @@
     <!-- [[! Styles'n'Scripts ]] -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}assets/css/syntax.css" />
 
     <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
     {% include head.html %}
 
 </head>
 
-<body class="{% if paginator.page > 1 %}paged archive-template{% elsif page.class %}{{ page.class }}{% else %}home-template{% endif %} nav-closed">
+<body class="{% if paginator.page > 1 %}paged archive-template{% elsif layout.class %}{{ layout.class }}{% else %}home-template{% endif %} nav-closed">
 
     {% include navigation.html %}
 
@@ -42,7 +43,7 @@
     <!-- [[! The main JavaScript file for Casper ]] -->
     <script type="text/javascript" src="{{ site.baseurl }}assets/js/jquery.fitvids.js"></script>
     <script type="text/javascript" src="{{ site.baseurl }}assets/js/index.js"></script>
-{% if site.google_analytics %}
+{% if jekyll.environment == "production" and site.google_analytics %}
     <!-- Add Google Analytics  -->
     {% include google_analytics.html %}   
 {% endif %}

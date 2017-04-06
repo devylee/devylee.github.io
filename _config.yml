@@ -1,8 +1,20 @@
 
 # Jykell configuration
-markdown: kramdown
 paginate: 5
 language: 'zh-cn'
+timezone: 'Asia/Shanghai'
+highlighter: rouge 
+kramdown:
+  input: GFM
+  parse_block_html: true
+  parse_span_html: true
+  html_to_native: true
+  syntax_highlighter: rouge
+
+#markdown: redcarpet
+#redcarpet:
+#  extensions:
+#    - footnotes
 
 # Website info
 name: elsewhere
@@ -17,12 +29,12 @@ nickname: devy
 bio: "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
 location: 'Dalian, China'
 
-#google_analytics: 
-#disqus: 
+google_analytics: false
+disqus: false
 baseurl: /
 
 # Permalinks
-permalink: /:title/
+permalink: /:year/:month/:title.html
 
 # Settings for deploy rake task
 safe: false

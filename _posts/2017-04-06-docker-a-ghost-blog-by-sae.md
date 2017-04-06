@@ -1,15 +1,16 @@
 ---
 layout: post
-cover: false
 title: '用SAE Docker一个自己的Ghost博客'
-post_class: 'post tag-fiction'
+class: 'post tag-docker tag-ghost tag-sae'
 date: '2017-04-06 9:00:00'
-navigation: true
 categories: devy
 tags: 'Docker Ghost SAE'
+excerpt_separator: <!--more-->
 ---
 
-其实这是之前在SAE部署Ghost之后写下的，迁移至此供大家参考。
+其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考。
+
+<!--more-->
 
 首先我们先来认识一下本文即将出场的几位主角（其实它们都在标题里了）：
 
@@ -39,14 +40,15 @@ tags: 'Docker Ghost SAE'
 
 > 其实[Docker Hub](https://hub.docker.com/)中也有Ghost官方提供的镜像的([点这里](https://hub.docker.com/_/ghost/))，你可以参考他的Dockerfile，我并没有试过这个镜像是否可以直接在SAE上运行
 
-我的Dockerfile大概是下面这样的：
+我的Dockerfile大概是下面这样的（*GHOST_CONTENT参考注[^1]*）：
 
-```
+{:.highlight}
+```docker
 FROM node:4-slim
 
 ENV GHOST_SOURCE=/var/www/ghost 
-# 参考注1
-ENV GHOST_CONTENT=/path/to/your/content 
+# 参考注1.
+ENV GHOST_CONTENT=/path/to/your/content
 ENV NODE_ENV=production
 ENV GOSU_VERSION=1.10 
 ENV GHOST_VERSION=0.11.5
@@ -88,13 +90,11 @@ COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["npm", "start"]
-
 ```
 
 docker-entrypoint.sh是这个样子：
 
 ```bash
-
 #!/bin/bash
 set -e
 
@@ -106,13 +106,12 @@ if [[ "$*" == npm*start* ]] && [ "$(id -u)" = '0' ]; then
 fi
 
 exec "$@"
-
 ```
 
-ghost-config.js大概是这个样子：
+ghost-config.js大概是这个样子（*url配置参考注[^2]*）：
+
 
 ```javascript
-
 var path = require('path'),
     config;
 
@@ -143,7 +142,6 @@ config = {
 };
 
 module.exports = config;
-
 ```
 
 
