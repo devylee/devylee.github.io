@@ -35,9 +35,9 @@ navigation: true
                 on 
                 {% for tag in page.tags %}
                     {% if forloop.index == page.tags.size %}
-                       <a href='{{ site.baseurl }}tag/{{ tag }}/'>{{ tag | capitalize }}</a>
+                       <a href='{{ site.baseurl }}tag/{{ tag | downcase }}/'>{{ tag }}</a>
                     {% else %}
-                       <a href='{{ site.baseurl }}tag/{{ tag }}/'>{{ tag | capitalize }}</a>,
+                       <a href='{{ site.baseurl }}tag/{{ tag | downcase }}/'>{{ tag }}</a>,
                     {% endif %}   
                 {% endfor %}
                 {% endif %}
@@ -47,10 +47,6 @@ navigation: true
         <section class="post-content">
             
             {{ content }}
-
-            {% if footnotes %}
-            footnotes
-            {% endif %}
 
         </section>
 
