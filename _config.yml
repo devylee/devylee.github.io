@@ -29,8 +29,9 @@ nickname: devy
 bio: "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
 location: 'Dalian, China'
 
-google_analytics: false
-disqus: false
+google_analytics: 'UA-92777218-1'
+disqus: devylee
+disqus_url: 'https://devylee.github.io'
 baseurl: /
 
 # Permalinks

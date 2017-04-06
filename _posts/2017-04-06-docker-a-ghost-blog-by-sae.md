@@ -6,6 +6,7 @@ date: '2017-04-06 9:00:00'
 categories: devy
 tags: 'Docker Ghost SAE'
 excerpt_separator: <!--more-->
+comments: true
 ---
 
 其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投[Jekyll](https://jekyllrb.com)和[Github Pages](https://pages.github.com/)。

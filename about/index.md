@@ -22,4 +22,6 @@ BTW, 在Ghost和Jekyll之间最终还是选择了后者，原因大概有如下�
 - Github Pages免费；
 - 不用再忍受域名备案的烦恼！！！
 
+另，本站使用的[Disqus](https://disqus.com)评论服务，国内是被墙的，您需要**翻墙**才可以使用评论功能！
+
 Nice~
