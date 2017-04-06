@@ -8,9 +8,9 @@
     
       
       <item>
-        <title>用SAE Docker一个自己的Ghost博客</title>
+        <title>用SAE Docker一个Ghost博客</title>
         
-          <description>&lt;p&gt;其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考。&lt;/p&gt;
+          <description>&lt;p&gt;其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;和&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt;。&lt;/p&gt;
 
 </description>
         

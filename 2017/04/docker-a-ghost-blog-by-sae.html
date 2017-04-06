@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>用SAE Docker一个自己的Ghost博客</title>
+    <title>用SAE Docker一个Ghost博客</title>
     <meta name="description" content="elsewhere - 一个辅助记忆的树洞" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -95,7 +95,7 @@
     <article class="post tag-docker tag-ghost tag-sae">
 
         <header class="post-header">
-            <h1 class="post-title">用SAE Docker一个自己的Ghost博客</h1>
+            <h1 class="post-title">用SAE Docker一个Ghost博客</h1>
             <section class="post-meta">
             <!-- <a href='/'>Devy</a> -->
             <time class="post-date" datetime="2017-04-06">06 Apr 2017</time>
@@ -104,15 +104,15 @@
                 on 
                 
                     
-                       <a href='/tag/Docker/'>Docker</a>,
+                       <a href='/tag/docker/'>Docker</a>,
                        
                 
                     
-                       <a href='/tag/Ghost/'>Ghost</a>,
+                       <a href='/tag/ghost/'>Ghost</a>,
                        
                 
                     
-                       <a href='/tag/SAE/'>Sae</a>
+                       <a href='/tag/sae/'>SAE</a>
                        
                 
                 
@@ -121,7 +121,7 @@
 
         <section class="post-content">
             
-            <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考。</p>
+            <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>
 
 <!--more-->
 
@@ -141,15 +141,15 @@
 
 <h3 id="第1步-创建云应用sae">第1步 创建云应用SAE</h3>
 
-<p>盖房子要先买地的，所以，首先我们要申请一个SAE（当然你要先保证自己的账户中有足够的云豆，其实就是充值啦）：进入云应用SAE控制台，在”应用管理”中点击”+创建新应用”，然后就会进入如下应用创建页面</p>
+<p>盖房子要先买地的，所以，首先我们要申请一个SAE（当然你要先保证自己的账户中有足够的云豆，其实就是充值啦）：进入云应用SAE控制台，在<em>“应用管理”</em>中点击<em>“+创建新应用”</em>，然后就会进入如下应用创建页面</p>
 
 <p><img src="/assets/images/2017/04/create-sae.png" alt="创建云应用" /></p>
 
 <blockquote>
-  <p>开发语言选”自定义”，部署环境选”Dockerfile”，环境配置和实例个数我建议先选1个基础配置就可以了，这个配置可以在部署成功以后随时根据实际需求来调整的，当然越多越高的配置也相应会有更多的支出。</p>
+  <p>开发语言选<em>“自定义”</em>，部署环境选<em>“Dockerfile”</em>，环境配置和实例个数我建议先选1个基础配置就可以了，这个配置可以在部署成功以后随时根据实际需求来调整的，当然越多越高的配置也相应会有更多的支出。</p>
 </blockquote>
 
-<p>云应用创建成功，进入云应用管理，接下来我们要申请数据库和存储，虽然容器有5G的空间，你完全可以使用sqlite作为数据库，把内容数据和文件都保存在这个容器中，但问题是，只要你更新Dockerfile，容器就会重新构建，你的数据也就没了！所以就不要吝啬这点投入了，在”数据库与缓存服务”中，创建一个”共享型MySQL”，当然，够豪的话，你也可以创建独享型MySQL；在”存储于CDN服务”中新建一个”共享存储”，容量视个人需求而定吧，反正也是随时可以调整的。这个存储在后续的步骤中是要挂载到容器上的。</p>
+<p>云应用创建成功，进入云应用管理，接下来我们要申请数据库和存储，虽然容器有5G的空间，你完全可以使用sqlite作为数据库，把内容数据和文件都保存在这个容器中，但问题是，只要你更新Dockerfile，容器就会重新构建，你的数据也就没了！所以就不要吝啬这点投入了，在<em>“数据库与缓存服务”</em>中，创建一个<em>“共享型MySQL”</em>，当然，够豪的话，你也可以创建独享型MySQL；在<em>“存储与CDN服务”</em>中新建一个<em>“共享存储”</em>，容量视个人需求而定吧，反正也是随时可以调整的。这个存储在后续的步骤中是要挂载到容器上的。</p>
 
 <h3 id="第2步-编写dockerfile">第2步 编写Dockerfile</h3>
 
@@ -157,7 +157,7 @@
   <p>考验你的时刻到了，这里你要用到Git、Dockerfile、nodejs、bash等等相关知识</p>
 </blockquote>
 
-<p>首先我们要git迁出代码，在SAE控制台的”应用”&gt;”代码管理”中，可以看到你的Git仓库及代码部署说明，可以参照他的sample来操作，也可以clone迁出，当然不管哪种方式，你看到的是一个空仓库，我们要自己来创建必要的Dockerfile文件、ENTRYPOINT文件和Ghost的config.js配置文件。</p>
+<p>首先我们要git迁出代码，在SAE控制台的“应用”»“代码管理”中，可以看到你的Git仓库及代码部署说明，可以参照他的sample来操作，也可以clone迁出，当然不管哪种方式，你看到的是一个空仓库，我们要自己来创建必要的Dockerfile文件、ENTRYPOINT文件和Ghost的config.js配置文件。</p>
 
 <blockquote>
   <p>其实<a href="https://hub.docker.com/">Docker Hub</a>中也有Ghost官方提供的镜像的(<a href="https://hub.docker.com/_/ghost/">点这里</a>)，你可以参考他的Dockerfile，我并没有试过这个镜像是否可以直接在SAE上运行</p>
@@ -268,7 +268,7 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 
 <p>其实这一步就是git comit &amp; push你的代码，然后你就静待花开吧，如果一切顺利，在push收到成功的信息后，你的blog就在那里了。</p>
 
-<p>哦，别忘了把你的”共享存储”挂载到Dockerfile中$GHOST_CONTENT所指定的路径上并重启你的容器。</p>
+<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中$GHOST_CONTENT所指定的路径上并重启你的容器。</p>
 
 <p>Enjoy!</p>
 
@@ -279,16 +279,14 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>GHOST_CONTENT 就是你在第1步中申请的”共享存储”的挂载路径&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：url: ‘http://’ + process.env.APPNAME + ‘.applinzi.com/’；或者像我，先在SAE控制台的”应用”&gt;”环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： url: process.env.SITEURL 。&nbsp;<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-json highlighter-rouge"><span class="err">url:</span><span class="w"> </span><span class="err">'http://'</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">process.env.APPNAME</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">'.applinzi.com/'</span></code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： <code class="language-json highlighter-rouge"><span class="err">url:</span><span class="w"> </span><span class="err">process.env.SITEURL</span></code> 。&nbsp;<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
 
-
-            
 
         </section>
 
@@ -318,7 +316,7 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=用SAE Docker一个自己的Ghost博客&amp;url=201704docker-a-ghost-blog-by-sae.html"
+                <a class="icon-twitter" href="http://twitter.com/share?text=用SAE Docker一个Ghost博客&amp;url=201704docker-a-ghost-blog-by-sae.html"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
@@ -326,7 +324,7 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=%2F2017%2F04%2Fdocker-a-ghost-blog-by-sae.html&title=%E7%94%A8SAE+Docker%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84Ghost%E5%8D%9A%E5%AE%A2"
+                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=%2F2017%2F04%2Fdocker-a-ghost-blog-by-sae.html&title=%E7%94%A8SAE+Docker%E4%B8%80%E4%B8%AAGhost%E5%8D%9A%E5%AE%A2"
                    onclick="window.open(this.href, 'weibo-share', 'width=490,height=530');return false;">
                     <span class="hidden">Weibo</span>
                 </a>
