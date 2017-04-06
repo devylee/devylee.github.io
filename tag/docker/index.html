@@ -76,43 +76,30 @@
         <!-- < default}} -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- The big featured header -->
-
-<!-- Everything inside the #author tags pulls data from the author -->
-<!-- #author  -->
-    <header class="main-header author-head no-cover">
-        <nav class="main-nav overlay clearfix">
+<!-- If we have a tag cover, display that - else blog cover - else nothing -->
+<header class="main-header tag-head no-cover">
+    <nav class="main-nav overlay clearfix">
+        
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            <h1 class="page-title">Docker</h1>
+            <h2 class="page-description">
             
+			    A 1-post collection
             
-                <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-            
-        </nav>
-    </header>
-
-    <section class="author-profile inner">
-        
-        <figure class="author-image">
-            <div class="img" style="background-image: url(https://github.com/devylee.png?size=114)"><span class="hidden">Devy's Picture</span></div>
-        </figure>
-        
-        <h1 class="author-title">Devy</h1>
-        
-            <h2 class="author-bio">代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</h2>
-        
-        <div class="author-meta">
-            <span class="author-location icon-location">Dalian, China</span>
-            <span class="author-link icon-github"><a href="https://github.com/devylee"> Github</a></span> 
-            <span class="author-link icon-twitter"><a href="https://twitter.com/idevylee"> Twitter</a></span> 
-            <!-- <span class="author-stats"><i class="icon-stats"></i> [[plural ../pagination.total empty='No posts' singular='% post' plural='% posts']]</span> -->
-            <span class="author-stats"><i class="icon-stats"></i>2 posts</span>
+            </h2>
         </div>
-    </section>
-<!-- /author -->
+    </div>
+</header>
 
 <!-- The main content area on the homepage -->
 <main id="content" class="content" role="main">
 
-    <!-- The tag below includes the post loop - partials/loop.hbs  -->
+    <!-- The tag below includes the post loop - partials/loop.hbs -->
         <!-- Previous/next page links - only displayed on page 2+ -->
     <div class="extra-pagination inner">
         
@@ -160,27 +147,6 @@
         </footer>
     </article>
     
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/2017/04/welcome-to-my-pages.html">Welcome to my pages</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>欢迎来到我的Github Page，当然这也将被用作我的个人博客。
-
-我不是一个高产的写作者，只是年纪大了，很多东西总是会记不起，所以这可能就是我用来记录这些记忆碎片的地方。
-
-<a class="read-more" href="/2017/04/welcome-to-my-pages.html">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="https://github.com/devylee.png?size=24" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            <a href="/author/devy/">Devy</a>
-            <!-- [[tags prefix=" on "]] -->
-            
-            <time class="post-date" datetime="2017-04-05">05 Apr 2017</time>
-        </footer>
-    </article>
-    
 
     <!-- Previous/next page links - displayed on every page -->
     
@@ -193,7 +159,6 @@
 
 
 </main>
-
 
         <footer class="site-footer clearfix">
           <section class="copyright"><a href="/">elsewhere</a> &copy; 2017</section>

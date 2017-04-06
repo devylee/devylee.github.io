@@ -1,22 +1,127 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- [[! Document Settings ]] -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-   <title></title>
-   <link></link>
-   <description>一个辅助记忆的树洞</description>
-   <language>zh-cn</language>
-   <managingEditor> Devy</managingEditor>
-   <atom:link href="rss" rel="self" type="application/rss+xml" />
-   
-	<item>
-	  <title>用SAE Docker一个自己的Ghost博客</title>
-	  <link>//2017/04/docker-a-ghost-blog-by-sae.html</link>
-	  <author>Devy</author>
-	  <pubDate>2017-04-06T09:00:00+08:00</pubDate>
-	  <guid>//2017/04/docker-a-ghost-blog-by-sae.html</guid>
-	  <description><![CDATA[
-	     <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考。</p>
+    <!-- [[! Page Meta ]] -->
+    <title>用SAE Docker一个自己的Ghost博客</title>
+    <meta name="description" content="elsewhere - 一个辅助记忆的树洞" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico" >
+
+    <!-- [[! Styles'n'Scripts ]] -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="elsewhere" />
+    <meta property="og:description" content="一个辅助记忆的树洞" />
+    <meta property="og:url" content="/" />
+    <!--meta property="og:image" content="/assets/images/cover1.jpg" /-->
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="elsewhere" />
+    <meta name="twitter:description" content="一个辅助记忆的树洞" />
+    <meta name="twitter:url" content="/" />
+    <!--meta name="twitter:image:src" content="/assets/images/cover1.jpg" /-->
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Website",
+    "publisher": "elsewhere",
+    "url": "/",
+    //"image": "/assets/images/cover1.jpg",
+    "description": "一个辅助记忆的树洞"
+}
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="/feed.xml" />
+
+
+</head>
+
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        <li class="nav-home "><a href="/">Home</a></li>
+        <li class="nav-about "><a href="/about/">About</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        <!-- [[! Everything else gets inserted here ]] -->
+        <!-- < default -->
+
+<!-- The comment above "< default" means - insert everything in this file into -->
+    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-docker tag-ghost tag-sae">
+
+        <header class="post-header">
+            <h1 class="post-title">用SAE Docker一个自己的Ghost博客</h1>
+            <section class="post-meta">
+            <!-- <a href='/'>Devy</a> -->
+            <time class="post-date" datetime="2017-04-06">06 Apr 2017</time>
+                <!-- [[tags prefix=" on "]] -->
+                 
+                on 
+                
+                    
+                       <a href='/tag/Docker/'>Docker</a>,
+                       
+                
+                    
+                       <a href='/tag/Ghost/'>Ghost</a>,
+                       
+                
+                    
+                       <a href='/tag/SAE/'>Sae</a>
+                       
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+            
+            <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考。</p>
 
 <!--more-->
 
@@ -182,31 +287,94 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
   </ol>
 </div>
 
-	  ]]></description>
-	</item>
 
-	<item>
-	  <title>Welcome to my pages</title>
-	  <link>//2017/04/welcome-to-my-pages.html</link>
-	  <author>Devy</author>
-	  <pubDate>2017-04-05T17:30:00+08:00</pubDate>
-	  <guid>//2017/04/welcome-to-my-pages.html</guid>
-	  <description><![CDATA[
-	     <p>欢迎来到我的Github Page，当然这也将被用作我的个人博客。</p>
+            
 
-<p>我不是一个高产的写作者，只是年纪大了，很多东西总是会记不起，所以这可能就是我用来记录这些记忆碎片的地方。</p>
+        </section>
 
-<!--more-->
+        <footer class="post-footer">
 
-<p>其实在此之前，我还用过Blogger、Baidu空间、SAE，无奈这些服务要么被墙、要么死掉、要么被死死监管，最终落脚在此，希望会是个好的归宿吧。</p>
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
 
-<p>我也想是不是要把之前那些po再贴过来，但是想想最后还是放弃了，有些东西丢了其实真的没必要再捡回来，尤其是这日新月异信息爆炸的时代！</p>
+            
+            <figure class="author-image">
+                <a class="img" href="/author/devy/" style="background-image: url(https://github.com/devylee.png?size=68)"><span class="hidden">'s Picture</span></a>
+            </figure>
+            
 
-<p>我们还是来开启新篇章吧~</p>
+            <section class="author">
+                <h4><a href="/author/devy/">Devy</a></h4>
+                
+                
+                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> Dalian, China</span> 
+                </div>
+            </section>
 
-	  ]]></description>
-	</item>
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=用SAE Docker一个自己的Ghost博客&amp;url=201704docker-a-ghost-blog-by-sae.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=201704docker-a-ghost-blog-by-sae.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=%2F2017%2F04%2Fdocker-a-ghost-blog-by-sae.html&title=%E7%94%A8SAE+Docker%E4%B8%80%E4%B8%AA%E8%87%AA%E5%B7%B1%E7%9A%84Ghost%E5%8D%9A%E5%AE%A2"
+                   onclick="window.open(this.href, 'weibo-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Weibo</span>
+                </a>
+            </section>
+            
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev no-cover" href="/2017/04/welcome-to-my-pages.html">
+            <section class="post">
+                <h2>Welcome to my pages</h2>
+                <p>欢迎来到我的Github Page，当然这也将被用作我的个人博客。
+
+我不是一个高产的写作者，只是年纪大了，很多东西总是会记不起，所以这可能就是我用来记录这些记忆碎片的地方。
+
+</p>
+            </section>
+        </a>
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->
 
 
-</channel>
-</rss>
+        <footer class="site-footer clearfix">
+          <section class="copyright"><a href="/">elsewhere</a> &copy; 2017</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> theme by <a href="https://github.com/tryghost/casper">Casper</a></section>
+        </footer>
+    </div>
+    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- [[! The main JavaScript file for Casper ]] -->
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+</body>
+</html>
+
