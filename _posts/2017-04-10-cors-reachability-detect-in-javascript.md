@@ -62,7 +62,7 @@ comments: true
 1. Disqus在response的header中提供`Access-Control-Allow-Origin： *`；
 2. 换一种方案！
 
-想来要Disqus在header中加入Access-Control-Allow-Origin也并非是件容易的事，所以还是自己动手丰衣足食吧！Google了一通，得知jQuery的ajax方法，在`dataType`是jsonp或者script的时候，不会有这个Access-Control-Allow-Origin的问题，于是，我的第二个方案诞生了：
+想来要Disqus在header中加入Access-Control-Allow-Origin也并非是件容易的事，所以还是自己动手丰衣足食吧！Google了一通，得知jQuery的ajax方法，在`dataType`是`jsonp`或者`script`的时候，不会有这个Access-Control-Allow-Origin的问题，于是，我的第二个方案诞生了：
 ```javascript
 ...
 
@@ -70,7 +70,7 @@ comments: true
         document.addEventListener('DOMContentLoaded', function() {
             $.ajax({
                 url: '//EXAMPLE.disqus.com/embed.js', // IMPORTANT: Replace EXAMPLE with your forum shortname!
-                dataType: 'script', // or jsonp
+                dataType: 'script', // jsonp 会有parseerror
                 jsonp: false,
                 timeout: 3000,
                 error: function(xhr, status) {
