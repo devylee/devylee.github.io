@@ -8,9 +8,28 @@
     
       
       <item>
+        <title>用Javascript检测跨站资源(CORS)的可用性</title>
+        
+          <description>&lt;blockquote&gt;
+  &lt;p&gt;我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        
+        <pubDate>Mon, 10 Apr 2017 15:30:00 +0800</pubDate>
+        <link>
+        /2017/04/cors-reachability-detect-in-javascript.html</link>
+        <guid isPermaLink="true">/2017/04/cors-reachability-detect-in-javascript.html</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>用SAE Docker一个Ghost博客</title>
         
-          <description>&lt;p&gt;其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;和&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt;。&lt;/p&gt;
+          <description>&lt;blockquote&gt;
+  &lt;p&gt;其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投&lt;a href=&quot;https://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt;和&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
 
 </description>
         

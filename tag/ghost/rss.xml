@@ -16,7 +16,9 @@
 	  <pubDate>2017-04-06T09:00:00+08:00</pubDate>
 	  <guid>//2017/04/docker-a-ghost-blog-by-sae.html</guid>
 	  <description><![CDATA[
-	     <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>
+	     <blockquote>
+  <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>
+</blockquote>
 
 <!--more-->
 
@@ -29,7 +31,7 @@
 </ul>
 
 <blockquote>
-  <p>其实新浪云的<a href="http://sae.sina.com.cn/?m=appmarket&amp;a=index">云市场</a>里是有Ghost镜像的，你完全可以点击几下鼠标就可以用它来很轻松的部署一个Ghost实例，但对于我这种喜欢自己鼓捣的人来说，当然是不愿意在这方面节省时间的。</p>
+  <p>新浪云的<a href="http://sae.sina.com.cn/?m=appmarket&amp;a=index">云市场</a>里是有Ghost镜像的，你完全可以点击几下鼠标就可以用它来很轻松的部署一个Ghost实例，但对于我这种喜欢自己鼓捣的人来说，当然是不愿意在这方面节省时间的。</p>
 </blockquote>
 
 <p>好了，言归正传！</p>
