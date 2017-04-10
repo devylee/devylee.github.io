@@ -180,14 +180,14 @@
   <li>换一种方案！</li>
 </ol>
 
-<p>想来要Disqus在header中加入Access-Control-Allow-Origin也并非是件容易的事，所以还是自己动手丰衣足食吧！Google了一通，得知jQuery的ajax方法，在<code class="highlighter-rouge">dataType</code>是jsonp或者script的时候，不会有这个Access-Control-Allow-Origin的问题，于是，我的第二个方案诞生了：</p>
+<p>想来要Disqus在header中加入Access-Control-Allow-Origin也并非是件容易的事，所以还是自己动手丰衣足食吧！Google了一通，得知jQuery的ajax方法，在<code class="highlighter-rouge">dataType</code>是<code class="highlighter-rouge">jsonp</code>或者<code class="highlighter-rouge">script</code>的时候，不会有这个Access-Control-Allow-Origin的问题，于是，我的第二个方案诞生了：</p>
 <div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">...</span>
 
     <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
         <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'DOMContentLoaded'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
             <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
                 <span class="na">url</span><span class="p">:</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">,</span> <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-                <span class="na">dataType</span><span class="p">:</span> <span class="s1">'script'</span><span class="p">,</span> <span class="c1">// or jsonp</span>
+                <span class="na">dataType</span><span class="p">:</span> <span class="s1">'script'</span><span class="p">,</span> <span class="c1">// jsonp 会有parseerror</span>
                 <span class="na">jsonp</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
                 <span class="na">timeout</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
                 <span class="na">error</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
