@@ -9,7 +9,7 @@ excerpt_separator: <!--more-->
 comments: true
 ---
 
-其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投[Jekyll](https://jekyllrb.com)和[Github Pages](https://pages.github.com/)。
+> 其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投[Jekyll](https://jekyllrb.com)和[Github Pages](https://pages.github.com/)。
 
 <!--more-->
 
@@ -19,7 +19,7 @@ comments: true
 * [Docker](https://www.docker.com/)：应该是时下最流行的容器技术了吧，我们要基于它来构建Ghost服务
 * [SAE](http://www.sinacloud.com/sae.html)：新浪云的云应用，也就是我们要用新浪云的云应用服务来运行我们的博客
 
-> 其实新浪云的[云市场](http://sae.sina.com.cn/?m=appmarket&a=index)里是有Ghost镜像的，你完全可以点击几下鼠标就可以用它来很轻松的部署一个Ghost实例，但对于我这种喜欢自己鼓捣的人来说，当然是不愿意在这方面节省时间的。
+> 新浪云的[云市场](http://sae.sina.com.cn/?m=appmarket&a=index)里是有Ghost镜像的，你完全可以点击几下鼠标就可以用它来很轻松的部署一个Ghost实例，但对于我这种喜欢自己鼓捣的人来说，当然是不愿意在这方面节省时间的。
 
 好了，言归正传！
 
