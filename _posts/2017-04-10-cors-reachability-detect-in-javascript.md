@@ -72,7 +72,6 @@ comments: true
                 url: '//EXAMPLE.disqus.com/embed.js', // IMPORTANT: Replace EXAMPLE with your forum shortname!
                 dataType: 'script', // or jsonp
                 jsonp: false,
-                async: false,
                 timeout: 3000,
                 error: function(xhr, status) {
                     xhr.about(status);
