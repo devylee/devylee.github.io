@@ -25,12 +25,13 @@ description: '一个辅助记忆的树洞'
 image: true
 
 # Author's info
-twitter_username: idevylee
-github_username:  devylee
 author: Devy
 nickname: devy
 bio: "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
 location: 'Dalian, China'
+twitter_username: idevylee
+github_username:  devylee
+weibo_username: devylee
 
 google_analytics: 'UA-92777218-1'
 disqus: devylee
