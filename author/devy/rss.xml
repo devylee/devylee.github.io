@@ -131,6 +131,25 @@
 
 <p>问题解决！不知道大家注意到没有，我ping的是<code class="highlighter-rouge">https://EXAMPLE.disqus.com/count.js</code>而不是<code class="highlighter-rouge">//EXAMPLE.disqus.com/embed.js</code>。其实原因很简单，count.js(1.5k)要远远小于embed.js(18k)！直接使用https也是因为这样省去了远端的redirect。</p>
 
+<p><em>** 其实，我还试过另外一种不奏效的方案：</em></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">),</span>
+            <span class="nx">t</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span> <span class="c1">// 定义一个定时器用于在超时后移除这个script</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span> <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">t</span><span class="p">);</span> <span class="p">};</span> <span class="c1">// 成功加载后移除定时器</span>
+        <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+    <span class="p">})();</span>
+
+</code></pre>
+</div>
+
+<p>貌似<code class="highlighter-rouge">&lt;script /&gt;</code>只要append就无法停止加载（直到努力加载到无能为力），也许正是因此，上述的第二种ajax检测方案在timeout时abort操作会不起作用吧。</p>
+
 <hr />
 
 <p><em>注：</em></p>
