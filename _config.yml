@@ -1,7 +1,12 @@
 
 # Jykell configuration
-language: 'zh-cn'
+safe: false
 timezone: 'Asia/Shanghai'
+source: .
+destination: ./_site
+
+# Conversion
+lsi: false
 highlighter: rouge 
 kramdown:
   input: GFM
@@ -9,15 +14,21 @@ kramdown:
   parse_span_html: true
   html_to_native: true
   syntax_highlighter: rouge
-
-# Pagination
-paginate: 5
-paginate_path: '/p/:num/'
-
 #markdown: redcarpet
 #redcarpet:
 #  extensions:
 #    - footnotes
+
+# url
+baseurl: /
+url: 'https://devylee.github.io'
+
+# Pagination
+paginate: 5
+paginate_path: '/page/:num/'
+
+# Permalinks
+permalink: '/post/:year/:month/:title.html'
 
 # Website info
 name: elsewhere
@@ -33,20 +44,13 @@ twitter_username: idevylee
 github_username:  devylee
 weibo_username: devylee
 
+# Widget
 google_analytics: 'UA-92777218-1'
 disqus: devylee
-disqus_url: 'https://devylee.github.io'
-baseurl: /
-
-# Permalinks
-permalink: '/:year/:month/:title.html'
 
 # Settings for deploy rake task
-safe: false
-lsi: false
 repo: 'devylee.github.io'
 branch: source
-destination: _site
 
 # gems and other configs
 gems: [jekyll-paginate]
