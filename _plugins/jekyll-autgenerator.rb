@@ -28,7 +28,7 @@ module Jekyll
         pager = Jekyll::Paginate::Pager.new(site, num_page, posts[1], pages)
         path = "/author/#{posts[0].downcase}"
         if num_page > 1
-          path = path + "/page#{num_page}"
+          path = path + site.config['paginate_path'].gsub(/:num/, num_page.to_s)
         end
         newpage = GroupSubPageAuthor.new(site, site.source, path, type, posts[0])
         newpage.pager = pager

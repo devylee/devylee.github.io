@@ -1,6 +1,5 @@
 
 # Jykell configuration
-paginate: 5
 language: 'zh-cn'
 timezone: 'Asia/Shanghai'
 highlighter: rouge 
@@ -10,6 +9,10 @@ kramdown:
   parse_span_html: true
   html_to_native: true
   syntax_highlighter: rouge
+
+# Pagination
+paginate: 5
+paginate_path: '/p/:num/'
 
 #markdown: redcarpet
 #redcarpet:
@@ -35,7 +38,7 @@ disqus_url: 'https://devylee.github.io'
 baseurl: /
 
 # Permalinks
-permalink: /:year/:month/:title.html
+permalink: '/:year/:month/:title.html'
 
 # Settings for deploy rake task
 safe: false
