@@ -5,7 +5,6 @@ class: 'post tag-docker tag-ghost tag-sae'
 date: '2017-04-06 9:00:00'
 categories: devy
 tags: 'Docker Ghost SAE'
-excerpt_separator: <!--more-->
 comments: true
 ---
 

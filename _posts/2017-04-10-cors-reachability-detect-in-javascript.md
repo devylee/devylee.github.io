@@ -5,14 +5,15 @@ class: 'post tag-javascript tag-cors tag-disqus'
 date: '2017-04-10 15:30:00'
 categories: devy
 tags: 'Javascript CORS Disqus'
-excerpt_separator: <!--more-->
 comments: true
 ---
 
 > 我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。
+
 <!--more-->
 
 其实我之所以会冒出这个想法，也是源于我的自身需求，因为要在博客中集成[Disqus](https://disqus.com)评论。但是正如你所知，Disqus在国内是被墙的，这样会导致一个问题，就是页面加载后，因为Disqus的资源（js）始终加载不进来，浏览器就始终在那里loading...，虽然不影响页面内容的阅读，但我是无法接受的！所以我的需求很简单：**要在页面加载后检测Disqus的资源是否能够加载，如果不能，那就停止对这些资源的请求。** 
+
 > 是的，在国内不翻墙的情况下，你是看不到我博客有评论功能的！
 
 先来看看Disqus官方提供的通用集成代码：

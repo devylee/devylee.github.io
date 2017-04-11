@@ -3,7 +3,6 @@ layout: post
 title: 'Welcome to my pages'
 date: '2017-04-05 17:30:00'
 categories: devy
-excerpt_separator: <!--more-->
 ---
 
 欢迎来到我的Github Page，当然这也将被用作我的个人博客。

@@ -4,6 +4,7 @@ safe: false
 timezone: 'Asia/Shanghai'
 source: .
 destination: ./_site
+excerpt_separator: <!--more-->
 
 # Conversion
 lsi: false
