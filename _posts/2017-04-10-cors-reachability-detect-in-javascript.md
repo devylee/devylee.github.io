@@ -119,7 +119,24 @@ setTimeout(function() { img.src = ''; img = null; reject(Error('Timeout')); }, 3
 问题解决！不知道大家注意到没有，我ping的是`https://EXAMPLE.disqus.com/count.js`而不是`//EXAMPLE.disqus.com/embed.js`。其实原因很简单，count.js(1.5k)要远远小于embed.js(18k)！直接使用https也是因为这样省去了远端的redirect。
 
 
+*** 其实，我还试过另外一种不奏效的方案：*
 
+```javascript
+...
+
+(function(){
+        var d = document, s = d.createElement('script'),
+            t = setTimeout(function(){ s.src = ''; s.remove(); }, 3000); // 定义一个定时器用于在超时后移除这个script
+        s.src = '//EXAMPLE.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.setAttribute('data-timestamp', +new Date());
+        s.async = true;
+        s.onload = function(){ clearTimeout(t); }; // 成功加载后移除定时器
+        (d.head || d.body).appendChild(s);
+    })();
+
+```
+
+貌似`<script />`只要append就无法停止加载（直到努力加载到无能为力），也许正是因此，上述的第二种ajax检测方案在timeout时abort操作会不起作用吧。
 
 ---
 
