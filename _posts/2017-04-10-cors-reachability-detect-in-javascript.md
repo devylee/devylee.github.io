@@ -74,7 +74,7 @@ comments: true
                 jsonp: false,
                 timeout: 3000,
                 error: function(xhr, status) {
-                    xhr.about(status);
+                    xhr.abort(status);
                 },
                 success: function() {
                     var d = document, s = d.createElement('script');
