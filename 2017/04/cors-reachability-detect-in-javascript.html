@@ -191,7 +191,7 @@
                 <span class="na">jsonp</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
                 <span class="na">timeout</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
                 <span class="na">error</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">about</span><span class="p">(</span><span class="nx">status</span><span class="p">);</span>
+                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">abort</span><span class="p">(</span><span class="nx">status</span><span class="p">);</span>
                 <span class="p">},</span>
                 <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
                     <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
