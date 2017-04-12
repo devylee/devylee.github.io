@@ -125,7 +125,7 @@ setTimeout(function() { img.src = ''; img = null; reject(Error('Timeout')); }, 3
 ```javascript
 ...
 
-(function(){
+    (function(){
         var d = document, s = d.createElement('script'),
             t = setTimeout(function(){ s.src = ''; s.remove(); }, 3000); // 定义一个定时器用于在超时后移除这个script
         s.src = '//EXAMPLE.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
