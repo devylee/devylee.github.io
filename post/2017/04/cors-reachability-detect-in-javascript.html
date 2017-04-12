@@ -243,7 +243,7 @@
 
 <div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">...</span>
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
         <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">),</span>
             <span class="nx">t</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span> <span class="c1">// 定义一个定时器用于在超时后移除这个script</span>
         <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
