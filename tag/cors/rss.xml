@@ -10,7 +10,7 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
-	  <title>用Javascript检测跨站资源(CORS)的可用性</title>
+	  <title>用Javascript检测跨域资源(CORS)的可用性</title>
 	  <link>/post/2017/04/cors-reachability-detect-in-javascript.html</link>
 	  <author>Devy</author>
 	  <pubDate>2017-04-10T15:30:00+08:00</pubDate>
