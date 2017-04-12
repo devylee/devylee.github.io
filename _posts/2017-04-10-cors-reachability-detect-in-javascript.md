@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '用Javascript检测跨站资源(CORS)的可用性'
+title: '用Javascript检测跨域资源(CORS)的可用性'
 class: 'post tag-javascript tag-cors tag-disqus'
 date: '2017-04-10 15:30:00'
 categories: devy
