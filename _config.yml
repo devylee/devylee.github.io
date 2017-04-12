@@ -1,5 +1,6 @@
 
 # Jykell configuration
+language: 'zh-CN'
 safe: false
 timezone: 'Asia/Shanghai'
 source: .

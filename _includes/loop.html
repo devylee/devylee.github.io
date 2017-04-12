@@ -24,7 +24,7 @@
             <p>{% if post.excerpt %}{{ post.excerpt | strip_html }}{% else %}{{ post.content | strip_html | truncatewords: 26 }}{% endif %}<a class="read-more" href="{{ site.baseurl }}{{ post.url | remove_first : '/' }}">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            {% if site.image %}<img class="author-thumb" src="https://github.com/{{ site.github_username }}.png?size=24" alt="Author image" nopin="nopin" />{% endif %}
+            {% if site.image %}<img class="author-thumb" src="https://github.com/{{ site.github_username }}.png?size=48" alt="Author image" nopin="nopin" />{% endif %}
             <!-- author -->
             <a href="{{ site.baseurl }}author/{{ site.nickname }}/">{{ site.author }}</a>
             <!-- [[tags prefix=" on "]] -->

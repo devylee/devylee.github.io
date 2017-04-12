@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>{% if page.title %}{{ page.title }}{% elsif site.name %}{{ site.name }}{% endif %}</title>
+    <title>{{ site.name }}{% if page.title %} | {{ page.title }}{% endif %}</title>
     <meta name="description" content="{{ site.name }} - {{ site.description }}" />
 
     <meta name="HandheldFriendly" content="True" />

@@ -1,6 +1,6 @@
 ---
 layout: default
-cover: false
+cover: '/assets/images/cover-author.jpg'
 logo: false
 class: 'author-template'
 navigation: True
@@ -13,7 +13,7 @@ current: author
 
 <!-- Everything inside the #author tags pulls data from the author -->
 <!-- #author  -->
-    <header class="main-header author-head {% if page.cover %}" style="background-image: url({{ site.baseurl }}{{ page.cover }}) {% else %}no-cover{% endif %}">
+    <header class="main-header author-head {% if page.cover %}" style="background-image: url({{ page.cover }}) {% else %}no-cover{% endif %}">
         <nav class="main-nav overlay clearfix">
             {% if page.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ site.baseurl }}{{ page.logo }}" alt="Blog Logo" /></a>{% endif %}
             {% if page.navigation %}
@@ -25,7 +25,7 @@ current: author
     <section class="author-profile inner">
         {% if site.image %}
         <figure class="author-image">
-            <div class="img" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=114)"><span class="hidden">{{ site.author }}'s Picture</span></div>
+            <div class="img" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=228)"><span class="hidden">{{ site.author }}'s Picture</span></div>
         </figure>
         {% endif %}
         <h1 class="author-title">{{ site.author }}</h1>
