@@ -2,19 +2,19 @@
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title></title>
-   <link></link>
+   <title>elsewhere</title>
+   <link>https://devylee.github.io</link>
    <description>一个辅助记忆的树洞</description>
-   <language>zh-cn</language>
+   <language>zh-CN</language>
    <managingEditor> Devy</managingEditor>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
 	  <title>用SAE Docker一个Ghost博客</title>
-	  <link>//2017/04/docker-a-ghost-blog-by-sae.html</link>
+	  <link>/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
 	  <author>Devy</author>
 	  <pubDate>2017-04-06T09:00:00+08:00</pubDate>
-	  <guid>//2017/04/docker-a-ghost-blog-by-sae.html</guid>
+	  <guid>/post/2017/04/docker-a-ghost-blog-by-sae.html</guid>
 	  <description><![CDATA[
 	     <blockquote>
   <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>

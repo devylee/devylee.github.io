@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>用Javascript检测跨站资源(CORS)的可用性</title>
+    <title>elsewhere | 用Javascript检测跨站资源(CORS)的可用性</title>
     <meta name="description" content="elsewhere - 一个辅助记忆的树洞" />
 
     <meta name="HandheldFriendly" content="True" />
@@ -30,13 +30,13 @@
     <meta property="og:title" content="elsewhere" />
     <meta property="og:description" content="一个辅助记忆的树洞" />
     <meta property="og:url" content="/" />
-    <!--meta property="og:image" content="/assets/images/cover1.jpg" /-->
+    <meta property="og:image" content="/assets/images/cover-home.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="elsewhere" />
     <meta name="twitter:description" content="一个辅助记忆的树洞" />
     <meta name="twitter:url" content="/" />
-    <!--meta name="twitter:image:src" content="/assets/images/cover1.jpg" /-->
+    <meta name="twitter:image:src" content="/assets/images/cover-home.jpg" />
 
     <script type="application/ld+json">
 {
@@ -44,7 +44,7 @@
     "@type": "Website",
     "publisher": "elsewhere",
     "url": "/",
-    //"image": "/assets/images/cover1.jpg",
+    "image": "/assets/images/cover-home.jpg",
     "description": "一个辅助记忆的树洞"
 }
     </script>
@@ -123,11 +123,13 @@
         <section class="post-content">
             
             <blockquote>
-  <p>我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。
-<!--more--></p>
+  <p>我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。</p>
 </blockquote>
 
+<!--more-->
+
 <p>其实我之所以会冒出这个想法，也是源于我的自身需求，因为要在博客中集成<a href="https://disqus.com">Disqus</a>评论。但是正如你所知，Disqus在国内是被墙的，这样会导致一个问题，就是页面加载后，因为Disqus的资源（js）始终加载不进来，浏览器就始终在那里loading…，虽然不影响页面内容的阅读，但我是无法接受的！所以我的需求很简单：<strong>要在页面加载后检测Disqus的资源是否能够加载，如果不能，那就停止对这些资源的请求。</strong></p>
+
 <blockquote>
   <p>是的，在国内不翻墙的情况下，你是看不到我博客有评论功能的！</p>
 </blockquote>
@@ -278,7 +280,7 @@
 
             
             <figure class="author-image">
-                <a class="img" href="/author/devy/" style="background-image: url(https://github.com/devylee.png?size=68)"><span class="hidden">'s Picture</span></a>
+                <a class="img" href="/author/devy/" style="background-image: url(https://github.com/devylee.png?size=136)"><span class="hidden">'s Picture</span></a>
             </figure>
             
 
@@ -297,15 +299,15 @@
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text=用Javascript检测跨站资源(CORS)的可用性&amp;url=201704cors-reachability-detect-in-javascript.html"
+                <a class="icon-twitter" href="http://twitter.com/share?text=用Javascript检测跨站资源(CORS)的可用性&amp;url=https://devylee.github.iopost201704cors-reachability-detect-in-javascript.html"
                     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=201704cors-reachability-detect-in-javascript.html"
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.iopost201704cors-reachability-detect-in-javascript.html"
                     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=%2F2017%2F04%2Fcors-reachability-detect-in-javascript.html&title=%E7%94%A8Javascript%E6%A3%80%E6%B5%8B%E8%B7%A8%E7%AB%99%E8%B5%84%E6%BA%90%28CORS%29%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"
+                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io%2Fpost%2F2017%2F04%2Fcors-reachability-detect-in-javascript.html&title=%E7%94%A8Javascript%E6%A3%80%E6%B5%8B%E8%B7%A8%E7%AB%99%E8%B5%84%E6%BA%90%28CORS%29%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"
                    onclick="window.open(this.href, 'weibo-share', 'width=490,height=530');return false;">
                     <span class="hidden">Weibo</span>
                 </a>
@@ -320,8 +322,8 @@
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
     */
     var disqus_config = function () {
-        this.page.url = 'https://devylee.github.io/2017/04/cors-reachability-detect-in-javascript.html';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = '/2017/04/cors-reachability-detect-in-javascript.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/post/2017/04/cors-reachability-detect-in-javascript.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     (function(){
         document.addEventListener('DOMContentLoaded', function() {
@@ -350,7 +352,7 @@
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev no-cover" href="/2017/04/docker-a-ghost-blog-by-sae.html">
+        <a class="read-next-story prev no-cover" href="/post/2017/04/docker-a-ghost-blog-by-sae.html">
             <section class="post">
                 <h2>用SAE Docker一个Ghost博客</h2>
                 <p>
