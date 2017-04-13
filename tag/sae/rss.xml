@@ -11,10 +11,10 @@
    
 	<item>
 	  <title>用SAE Docker一个Ghost博客</title>
-	  <link>/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
+	  <link>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
 	  <author>Devy</author>
 	  <pubDate>2017-04-06T09:00:00+08:00</pubDate>
-	  <guid>/post/2017/04/docker-a-ghost-blog-by-sae.html</guid>
+	  <guid>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</guid>
 	  <description><![CDATA[
 	     <blockquote>
   <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>
