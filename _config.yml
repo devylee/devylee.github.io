@@ -22,7 +22,6 @@ kramdown:
 #    - footnotes
 
 # url
-baseurl: /
 url: 'https://devylee.github.io'
 
 # Pagination
@@ -55,7 +54,7 @@ repo: 'devylee.github.io'
 branch: source
 
 # gems and other configs
-gems: [jekyll-paginate]
+gems: [ 'jekyll-paginate', 'jekyll-sitemap' ]
 
 exclude:
   - vendor

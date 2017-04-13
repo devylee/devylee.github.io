@@ -4,11 +4,11 @@ title: nil
 ---
 {% for post in page.posts %}
 	<item>
-	  <title>{{ post.title }}</title>
-	  <link>{{ site.baseurl }}{{ post.url | remove_first : '/' }}</link>
+	  <title>{{ post.title | xml_escape }}</title>
+	  <link>{{ post.url | absolute_url }}</link>
 	  <author>{{ site.author }}</author>
 	  <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
-	  <guid>{{ site.baseurl }}{{ post.url | remove_first : '/' }}</guid>
+	  <guid>{{ post.url | absolute_url }}</guid>
 	  <description><![CDATA[
 	     {{ post.content | expand_urls : site.url }}
 	  ]]></description>

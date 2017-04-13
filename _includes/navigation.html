@@ -4,9 +4,9 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home {% if page.current == 'home' %} nav-current{% endif %}"><a href="{{ site.baseurl }}">Home</a></li>
-        <li class="nav-about {% if page.current == 'about' %} nav-current{% endif %}"><a href="{{ site.baseurl }}about/">About</a></li>
+        <li class="nav-home {% if page.current == 'home' %} nav-current{% endif %}"><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li class="nav-about {% if page.current == 'about' %} nav-current{% endif %}"><a href="{{ '/about/' | relative_url }}">About</a></li>
     </ul>
-    <a class="subscribe-button icon-feed" href="{{ site.baseurl }}feed.xml">Subscribe</a>
+    <a class="subscribe-button icon-feed" href="{{ '/feed.xml' | relative_url }}">Subscribe</a>
 </div>
 <span class="nav-cover"></span>

@@ -1,35 +1,37 @@
-    <link rel="canonical" href="{{ site.baseurl }}" />
+    <link rel="canonical" href="{{ '/' | relative_url }}" />
     <meta name="referrer" content="origin" />
     {% if paginator.previous_page %}
-    <link rel="prev" href="{% if page.current == 'author' %}{{ site.baseurl }}author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}" />
+    {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
+    <link rel="prev" href="{{ prev_page_path | relative_url }}" />
     {% endif %}
     {% if paginator.next_page %}
-    <link rel="next" href="{% if page.current == 'author' %}{{ site.baseurl }}author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}" />
+    {% capture next_page_path %}{% if page.current == 'author' %}{{ site.baseurl }}/author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
+    <link rel="next" href="{{ next_page_path | relative_url }}" />
     {% endif %}
 
     <meta property="og:site_name" content="{{ site.name }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ site.name }}" />
     <meta property="og:description" content="{{ site.description }}" />
-    <meta property="og:url" content="{{ site.baseurl }}" />
-    <meta property="og:image" content="{{ site.baseurl }}assets/images/cover-home.jpg" />
+    <meta property="og:url" content="{{ '/' | relative_url }}" />
+    <meta property="og:image" content="{{ '/assets/images/cover-home.jpg' | relative_url }}" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{{ site.name }}" />
     <meta name="twitter:description" content="{{ site.description }}" />
-    <meta name="twitter:url" content="{{ site.baseurl }}" />
-    <meta name="twitter:image:src" content="{{ site.baseurl }}assets/images/cover-home.jpg" />
+    <meta name="twitter:url" content="{{ '/' | relative_url }}" />
+    <meta name="twitter:image:src" content="{{ '/assets/images/cover-home.jpg' | relative_url }}" />
 
     <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "{{ site.name }}",
-    "url": "{{ site.baseurl }}",
-    "image": "{{ site.baseurl }}assets/images/cover-home.jpg",
+    "url": "{{ '/' | relative_url }}",
+    "image": "{{ '/assets/images/cover-home.jpg' | relative_url }}",
     "description": "{{ site.description }}"
 }
     </script>
 
     <meta name="generator" content="Jekyll" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.baseurl }}feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ '/feed.xml' | relative_url }}" />
