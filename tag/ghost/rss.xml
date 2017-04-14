@@ -6,9 +6,9 @@
    <link>https://devylee.github.io</link>
    <description>一个辅助记忆的树洞</description>
    <language>zh-CN</language>
-   <managingEditor> Devy</managingEditor>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
+    
 	<item>
 	  <title>用SAE Docker一个Ghost博客</title>
 	  <link>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
@@ -40,7 +40,7 @@
 
 <p>盖房子要先买地的，所以，首先我们要申请一个SAE（当然你要先保证自己的账户中有足够的云豆，其实就是充值啦）：进入云应用SAE控制台，在<em>“应用管理”</em>中点击<em>“+创建新应用”</em>，然后就会进入如下应用创建页面</p>
 
-<p><img src="/assets/images/2017/04/create-sae.png" alt="创建云应用" /></p>
+<p><img src="/uploads/2017/04/create-sae.png" alt="创建云应用" /></p>
 
 <blockquote>
   <p>开发语言选<em>“自定义”</em>，部署环境选<em>“Dockerfile”</em>，环境配置和实例个数我建议先选1个基础配置就可以了，这个配置可以在部署成功以后随时根据实际需求来调整的，当然越多越高的配置也相应会有更多的支出。</p>

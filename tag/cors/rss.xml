@@ -6,9 +6,9 @@
    <link>https://devylee.github.io</link>
    <description>一个辅助记忆的树洞</description>
    <language>zh-CN</language>
-   <managingEditor> Devy</managingEditor>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
+    
 	<item>
 	  <title>用Javascript检测跨域资源(CORS)的可用性</title>
 	  <link>https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html</link>
