@@ -1,7 +1,7 @@
 ---
-layout: default
-disqus: true
-class: post-template
+layout    : default
+disqus    : true
+class     : post-template
 navigation: true
 ---
 
@@ -12,7 +12,6 @@ navigation: true
 
 <!-- Everything inside the #post tags pulls data from the post -->
 <!-- #post -->
-
 <header class="main-header post-head {% if page.cover %}" style="background-image: url({{ page.cover | relative_url }}) {% else %}no-cover{% endif %}">
     <nav class="main-nav {% if page.cover %} overlay {% endif %} clearfix">
         {% if page.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
@@ -23,13 +22,12 @@ navigation: true
 </header>
 
 <main class="content" role="main">
-
+{% assign author = page.categories[0] %}
     <article class="{% if page.class %}{{ page.class }}{% else %}post{% endif %}">
 
         <header class="post-header">
             <h1 class="post-title">{{ page.title }}</h1>
             <section class="post-meta">
-            <!-- <a href='{{ site.baseurl }}{{ page.about }}'>{{ site.author }}</a> -->
             <time class="post-date" datetime="{{ page.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
                 <!-- [[tags prefix=" on "]] -->
                 {% if page.tags.size > 0 %} 
@@ -56,22 +54,22 @@ navigation: true
 
             <!-- Everything inside the #author tags pulls data from the author -->
             <!-- #author-->
-            {% capture author_page_path %}/author/{{ site.nickname }}/{% endcapture %}
+            {% capture author_page_path %}/author/{{ author }}/{% endcapture %}
             {% if site.image %}
             <figure class="author-image">
-                <a class="img" href="{{ author_page_path | relative_url }}" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=136)"><span class="hidden">{{ page.author }}'s Picture</span></a>
+                <a class="img" href="{{ author_page_path | relative_url }}" style="background-image: url({{ site.authors[author].avatar }}?size=136)"><span class="hidden">{{ site.authors[author].name }}'s Picture</span></a>
             </figure>
             {% endif %}
 
             <section class="author">
-                <h4><a href="{{ author_page_path | relative_url }}">{{ site.author }}</a></h4>
+                <h4><a href="{{ author_page_path | relative_url }}">{{ site.authors[author].name }}</a></h4>
                 
-                {% if site.bio %}
-                    <p> {{ site.bio }}</p>
+                {% if site.authors[author].bio %}
+                    <p> {{ site.authors[author].bio }}</p>
                 {% endif %}
                 <div class="author-meta">
                     {% if page.location %}<span class="author-location icon-location"> {{ page.location }}</span>
-                    {% elsif site.location %}<span class="author-location icon-location"> {{ site.location }}</span>{% endif %} 
+                    {% elsif site.authors[author].location %}<span class="author-location icon-location"> {{ site.authors[author].location }}</span>{% endif %} 
                 </div>
             </section>
 

@@ -1,10 +1,10 @@
 ---
-layout: default
-cover: "/assets/images/cover-author.jpg"
-logo: false
-class: author-template
+layout    : default
+cover     : "/assets/images/cover-author.jpg"
+logo      : false
+class     : author-template
 navigation: true
-current: author
+current   : author
 ---
 
 <!-- < default}} -->
@@ -14,7 +14,8 @@ current: author
 
 <!-- Everything inside the #author tags pulls data from the author -->
 <!-- #author  -->
-    <header class="main-header author-head {% if page.cover %}" style="background-image: url({{ page.cover | relative_url }}){% else %}no-cover{% endif %}">
+{% assign author = site.authors[page.author] %}
+    <header class="main-header author-head {% if author.cover %}" style="background-image: url({{ author.cover | relative_url }}){% else %}no-cover{% endif %}">
         <nav class="main-nav overlay clearfix">
             {% if page.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
             {% if page.navigation %}
@@ -26,19 +27,19 @@ current: author
     <section class="author-profile inner">
         {% if site.image %}
         <figure class="author-image">
-            <div class="img" style="background-image: url(https://github.com/{{ site.github_username }}.png?size=228)"><span class="hidden">{{ site.author }}'s Picture</span></div>
+            <div class="img" style="background-image: url({{ author.avatar}}?size=228)"><span class="hidden">{{ author.mame }}'s Picture</span></div>
         </figure>
         {% endif %}
-        <h1 class="author-title">{{ site.author }}</h1>
-        {% if site.bio %}
-            <h2 class="author-bio">{{ site.bio }}</h2>
+        <h1 class="author-title">{{ author.name }}</h1>
+        {% if author.bio %}
+            <h2 class="author-bio">{{ author.bio }}</h2>
         {% endif %}
         <div class="author-meta">
-            {% if site.location %}<span class="author-location icon-location">{{ site.location }}</span>{% endif %}
+            {% if author.location %}<span class="author-location icon-location">{{ author.location }}</span>{% endif %}
             <span class="author-stats"><i class="icon-stats"></i>{% if paginator.total_posts == 0 %}No posts{% elsif paginator.total_posts == 1 %}1 post{% else %}{{ paginator.total_posts }} posts{% endif %}</span>
-            {% if site.github_username %}<span class="author-link icon-github"><a href="https://github.com/{{ site.github_username }}"> Github</a></span>{% endif %} 
-            {% if site.twitter_username %}<span class="author-link icon-twitter"><a href="https://twitter.com/{{ site.twitter_username }}"> Twitter</a></span>{% endif %} 
-            {% if site.weibo_username %}<span class="author-link icon-weibo"><a href="https://weibo.com/{{ site.weibo_username }}"> Weibo</a></span>{% endif %} 
+            {% if author.github_url %}<span class="author-link icon-github"><a href="{{ author.github_url }}"> Github</a></span>{% endif %} 
+            {% if author.twitter_url %}<span class="author-link icon-twitter"><a href="{{ author.twitter_url }}"> Twitter</a></span>{% endif %} 
+            {% if author.weibo_url %}<span class="author-link icon-weibo"><a href="{{ author.weibo_url }}"> Weibo</a></span>{% endif %} 
         </div>
     </section>
 <!-- /author -->

@@ -1,10 +1,10 @@
 ---
-layout: default
-cover: "/assets/images/cover-tags.jpg"
-logo: false
-class: tag-template
+layout    : default
+cover     : "/assets/images/cover-tags.jpg"
+logo      : false
+class     : tag-template
 navigation: true
-current: tag
+current   : tag
 ---
 
 <!-- < default}} -->
@@ -13,7 +13,7 @@ current: tag
 <!-- If we have a tag cover, display that - else blog cover - else nothing -->
 <header class="main-header tag-head {% if page.cover %}" style="background-image: url({{ page.cover | relative_url }}){% else %}no-cover{% endif %}">
     <nav class="main-nav overlay clearfix">
-        {% if layout.logo %}<a class="blog-logo" href="{{ site.baseurl }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
+        {% if layout.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
         {% if page.navigation %}
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
         {% endif %}

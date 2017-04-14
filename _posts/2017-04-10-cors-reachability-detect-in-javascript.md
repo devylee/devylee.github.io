@@ -1,15 +1,14 @@
 ---
-title: 用Javascript检测跨域资源(CORS)的可用性
-date: 2017-04-10 15:30:00 +08:00
-categories:
-- devy
-tags:
-- Javascript
-- CORS
-- Disqus
-layout: post
-class: post tag-javascript tag-cors tag-disqus
-comments: true
+title     : 用Javascript检测跨域资源(CORS)的可用性
+date      : "2017-04-10 15:30:00"
+categories: devy
+tags      : 
+  - Javascript
+  - CORS
+  - Disqus
+layout    : post
+class     : "post tag-javascript tag-cors tag-disqus"
+comments  : true
 ---
 
 > 我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。

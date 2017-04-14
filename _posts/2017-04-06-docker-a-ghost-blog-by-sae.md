@@ -1,15 +1,14 @@
 ---
-title: 用SAE Docker一个Ghost博客
-date: 2017-04-06 09:00:00 +08:00
-categories:
-- devy
-tags:
-- Docker
-- Ghost
-- SAE
-layout: post
-class: post tag-docker tag-ghost tag-sae
-comments: true
+title     : 用SAE Docker一个Ghost博客
+date      : "2017-04-06 09:00:00"
+categories: devy
+tags      : 
+  - Docker
+  - Ghost
+  - SAE
+layout    : post
+class     : "post tag-docker tag-ghost tag-sae"
+comments  : true
 ---
 
 > 其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投[Jekyll](https://jekyllrb.com)和[Github Pages](https://pages.github.com/)。
@@ -30,7 +29,7 @@ comments: true
 
 盖房子要先买地的，所以，首先我们要申请一个SAE（当然你要先保证自己的账户中有足够的云豆，其实就是充值啦）：进入云应用SAE控制台，在*"应用管理"*中点击*"+创建新应用"*，然后就会进入如下应用创建页面
 
-![创建云应用](/assets/images/2017/04/create-sae.png)
+![创建云应用](/uploads/2017/04/create-sae.png)
 
 > 开发语言选*“自定义”*，部署环境选*“Dockerfile”*，环境配置和实例个数我建议先选1个基础配置就可以了，这个配置可以在部署成功以后随时根据实际需求来调整的，当然越多越高的配置也相应会有更多的支出。
 

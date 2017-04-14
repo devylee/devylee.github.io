@@ -1,51 +1,76 @@
----
-title: Devylee.Github.Io
-timezone: Asia/Shanghai
-collections:
-  posts:
-    title: Posts
-    output: true
-  uploads:
-    title: Uploads
-    output: true
-language: zh-CN
-safe: false
-source: "."
-destination: "./_site"
+
+# Jykell configuration
+name             : elsewhere
+title            : elsewhere
+description      : 一个辅助记忆的树洞
+language         : zh-CN
+image            : true
+safe             : false
+timezone         : Asia/Shanghai
+source           : "."
+destination      : "./_site"
 excerpt_separator: "<!--more-->"
-lsi: false
-highlighter: rouge
-kramdown:
-  input: GFM
-  parse_block_html: true
-  parse_span_html: true
-  html_to_native: true
-  syntax_highlighter: rouge
-url: https://devylee.github.io
-paginate: 5
+url              : "https://devylee.github.io"
+
+collections  : 
+  posts      : 
+    output   : true
+    permalink: "/post/:year/:month/:title.html"
+  pages      : 
+    output   : true
+    permalink: "/:name/index.html"
+  uploads    : 
+    output   : true
+
+# Pagination
+paginate     : 5
 paginate_path: "/page/:num/"
-permalink: "/post/:year/:month/:title.html"
-name: elsewhere
-description: 一个辅助记忆的树洞
-image: true
-author: Devy
-nickname: devy
-bio: 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'
-location: Dalian, China
-twitter_username: idevylee
-github_username: devylee
-weibo_username: devylee
+
+# Conversion
+lsi        : false
+highlighter: rouge 
+kramdown:
+  input             : GFM
+  parse_block_html  : true
+  parse_span_html   : true
+  html_to_native    : true
+  syntax_highlighter: rouge
+#markdown: redcarpet
+#redcarpet:
+#  extensions:
+#    - footnotes
+
+# Author's info
+authors:
+  devy: 
+    name       : Devy
+    nickname   : devy
+    bio        : "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
+    location   : "Dalian, China"
+    avatar     : "https://github.com/devylee.png"
+    cover      : "/assets/images/cover-author.jpg"
+    twitter_url: "https://twitter.com/idevylee"
+    github_url : "https://github.com/devylee"
+    weibo_url  : "https://weibo.com/devylee"
+
+# Widget
 google_analytics: UA-92777218-1
-disqus: devylee
-repo: devylee.github.io
-branch: source
+disqus          : devylee
+
+# Settings for deploy rake task
+ghusername: devylee
+repo    : "devylee.github.io"
+branch  : source
+
+# gems and other configs
 gems:
-- jekyll-paginate
-- jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-sitemap
+
 exclude:
-- vendor
-- Rakefile
-- Gemfile
-- Gemfile.lock
-- "*.Rmd"
-- ".travis.yml"
+  - vendor
+  - Rakefile
+  - Gemfile
+  - Gemfile.lock
+  - "*.Rmd"
+  - ".travis.yml"

@@ -10,7 +10,7 @@ require 'date'
 require 'yaml'
 
 CONFIG = YAML.load(File.read('_config.yml'))
-USERNAME = CONFIG["github_username"] || ENV['GIT_NAME']
+USERNAME = CONFIG["ghusername"] || ENV['GIT_NAME']
 REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
 
 # Determine source and destination branch
