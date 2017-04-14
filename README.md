@@ -1,8 +1,8 @@
 # devylee.github.io
 
 [![Build Status](https://travis-ci.org/devylee/devylee.github.io.svg?branch=source)](https://travis-ci.org/devylee/devylee.github.io)
-[![Ruby](https://img.shields.io/badge/ruby-2.2-blue.svg?style=flat)](https://travis-ci.org/devylee/devylee.github.io)
-[![Jekyll](https://img.shields.io/badge/jekyll-3.4-blue.svg?style=flat)](https://travis-ci.org/devylee/devylee.github.io)
+[![Jekyll](https://img.shields.io/badge/Jekyll-3.4-blue.svg?style=flat)](https://rubygems.org/gems/jekyll)
+[![Ruby](https://img.shields.io/badge/Ruby-2.2-blue.svg?style=flat)](https://www.ruby-lang.org)
 
 > This is my github page (also my personal blog since 5 April 2017) published by Jekyll, and the Theme customized from Ghost Casper.
 
