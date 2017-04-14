@@ -1,65 +1,51 @@
-
-# Jykell configuration
-language: 'zh-CN'
+---
+title: Devylee.Github.Io
+timezone: Asia/Shanghai
+collections:
+  posts:
+    title: Posts
+    output: true
+  uploads:
+    title: Uploads
+    output: true
+language: zh-CN
 safe: false
-timezone: 'Asia/Shanghai'
-source: .
-destination: ./_site
-excerpt_separator: <!--more-->
-
-# Conversion
+source: "."
+destination: "./_site"
+excerpt_separator: "<!--more-->"
 lsi: false
-highlighter: rouge 
+highlighter: rouge
 kramdown:
   input: GFM
   parse_block_html: true
   parse_span_html: true
   html_to_native: true
   syntax_highlighter: rouge
-#markdown: redcarpet
-#redcarpet:
-#  extensions:
-#    - footnotes
-
-# url
-url: 'https://devylee.github.io'
-
-# Pagination
+url: https://devylee.github.io
 paginate: 5
-paginate_path: '/page/:num/'
-
-# Permalinks
-permalink: '/post/:year/:month/:title.html'
-
-# Website info
+paginate_path: "/page/:num/"
+permalink: "/post/:year/:month/:title.html"
 name: elsewhere
-description: '一个辅助记忆的树洞'
+description: 一个辅助记忆的树洞
 image: true
-
-# Author's info
 author: Devy
 nickname: devy
-bio: "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
-location: 'Dalian, China'
+bio: 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'
+location: Dalian, China
 twitter_username: idevylee
-github_username:  devylee
+github_username: devylee
 weibo_username: devylee
-
-# Widget
-google_analytics: 'UA-92777218-1'
+google_analytics: UA-92777218-1
 disqus: devylee
-
-# Settings for deploy rake task
-repo: 'devylee.github.io'
+repo: devylee.github.io
 branch: source
-
-# gems and other configs
-gems: [ 'jekyll-paginate', 'jekyll-sitemap' ]
-
+gems:
+- jekyll-paginate
+- jekyll-sitemap
 exclude:
-  - vendor
-  - Rakefile
-  - Gemfile
-  - Gemfile.lock
-  - "*.Rmd"
-  - .travis.yml
+- vendor
+- Rakefile
+- Gemfile
+- Gemfile.lock
+- "*.Rmd"
+- ".travis.yml"

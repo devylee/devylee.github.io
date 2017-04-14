@@ -1,10 +1,14 @@
 ---
+title: 用SAE Docker一个Ghost博客
+date: 2017-04-06 09:00:00 +08:00
+categories:
+- devy
+tags:
+- Docker
+- Ghost
+- SAE
 layout: post
-title: '用SAE Docker一个Ghost博客'
-class: 'post tag-docker tag-ghost tag-sae'
-date: '2017-04-06 9:00:00'
-categories: devy
-tags: 'Docker Ghost SAE'
+class: post tag-docker tag-ghost tag-sae
 comments: true
 ---
 
