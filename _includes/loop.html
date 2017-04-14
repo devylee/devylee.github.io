@@ -34,9 +34,9 @@
                 {% for tag in post.tags %}
                     {% capture tag_page_path %}/tag/{{ tag | downcase }}/{% endcapture %}
                     {% if forloop.index == post.tags.size %}
-                       <a href="{{ tag_page_path | relative_url }}"/>{{ tag }}</a>
+                       <a href="{{ tag_page_path | relative_url }}"/>{{ tag | replace : '-', ' ' }}</a>
                     {% else %}
-                       <a href="{{ tag_page_path | relative_url }}"/>{{ tag }}</a>,
+                       <a href="{{ tag_page_path | relative_url }}"/>{{ tag | replace : '-', ' ' }}</a>,
                     {% endif %}   
                 {% endfor %}
             {% endif %}

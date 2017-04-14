@@ -5,7 +5,7 @@
     {% endif %}
     <span class="page-number"> Page {{ paginator.page }} of {{ paginator.total_pages }} </span>
     {% if paginator.next_page %} 
-        {% capture next_page_path %}/author/{{ page.tag | downcase }}{{ paginator.next_page_path }}{% endcapture %}
+        {% capture next_page_path %}/tag/{{ page.tag | downcase }}{{ paginator.next_page_path }}{% endcapture %}
         <a class="older-posts" href="{{ next_page_path | relative_url }}" title="Next Page">Older Posts &raquo;</a>
     {% endif %} 
 </nav>
