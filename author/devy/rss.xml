@@ -113,7 +113,7 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
 
 <p>这个命令会创建一个运行mysql的容器，容器的3306端口（也就是mysql的服务端口）会被映射到docker主机的3306端口，mysql的root用户密码是<code class="highlighter-rouge">MYSQL_ROOT_PASSWORD</code>指定的<code class="highlighter-rouge">mysqlpwd</code>。我们可以用下面的命令连接这个mysql服务看看：</p>
 
-<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mysql root@192.168.85.135 -p
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mysql 192.168.85.135 -u root -p
 </code></pre>
 </div>
 
