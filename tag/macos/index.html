@@ -63,7 +63,7 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home  nav-current"><a href="/">Home</a></li>
+        <li class="nav-home "><a href="/">Home</a></li>
         <li class="nav-about "><a href="/about/">About</a></li>
         <li class="nav-github-repos"><a href="https://github.com/devylee/">Github repos</a></li>
     </ul>
@@ -75,12 +75,11 @@
     <div class="site-wrapper">
 
         <!-- [[! Everything else gets inserted here ]] -->
-        <!-- < default -->
+        <!-- < default}} -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- The big featured header  -->
-<header class="main-header "
-        style="background-image: url(/assets/images/cover-home.jpg) ">
+<!-- If we have a tag cover, display that - else blog cover - else nothing -->
+<header class="main-header tag-head " style="background-image: url(/assets/images/cover-tags.jpg)">
     <nav class="main-nav overlay clearfix">
         
         
@@ -89,11 +88,14 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">elsewhere</h1>
-            <h2 class="page-description">一个辅助记忆的树洞</h2>
+            <h1 class="page-title">macOS</h1>
+            <h2 class="page-description">
+            
+			    A 1-post collection
+            
+            </h2>
         </div>
     </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
 </header>
 
 <!-- The main content area on the homepage -->
@@ -145,117 +147,11 @@
         </footer>
     </article>
     
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/post/2017/04/cors-reachability-detect-in-javascript.html">用Javascript检测跨域资源(CORS)的可用性</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>
-  我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。
-
-
-<a class="read-more" href="/post/2017/04/cors-reachability-detect-in-javascript.html">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="https://github.com/devylee.png?size=48" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            
-            <a href="/author/devy/">Devy</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                    
-                       <a href="/tag/javascript/"/>Javascript</a>,
-                       
-                
-                    
-                    
-                       <a href="/tag/cors/"/>CORS</a>,
-                       
-                
-                    
-                    
-                       <a href="/tag/disqus/"/>Disqus</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-04-10">10 Apr 2017</time>
-        </footer>
-    </article>
-    
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>
-  其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投Jekyll和Github Pages。
-
-
-<a class="read-more" href="/post/2017/04/docker-a-ghost-blog-by-sae.html">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="https://github.com/devylee.png?size=48" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            
-            <a href="/author/devy/">Devy</a>
-            <!-- [[tags prefix=" on "]] -->
-             
-                on 
-                
-                    
-                    
-                       <a href="/tag/docker/"/>Docker</a>,
-                       
-                
-                    
-                    
-                       <a href="/tag/ghost/"/>Ghost</a>,
-                       
-                
-                    
-                    
-                       <a href="/tag/sae/"/>SAE</a>
-                       
-                
-            
-            <time class="post-date" datetime="2017-04-06">06 Apr 2017</time>
-        </footer>
-    </article>
-    
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/post/2017/04/welcome-to-my-pages.html">Welcome to my pages</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>欢迎来到我的Github Page，当然这也将被用作我的个人博客。
-
-我不是一个高产的写作者，只是年纪大了，很多东西总是会记不起，所以这可能就是我用来记录这些记忆碎片的地方。
-
-<a class="read-more" href="/post/2017/04/welcome-to-my-pages.html">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            <img class="author-thumb" src="https://github.com/devylee.png?size=48" alt="Author image" nopin="nopin" />
-            <!-- author -->
-            
-            <a href="/author/devy/">Devy</a>
-            <!-- [[tags prefix=" on "]] -->
-            
-            <time class="post-date" datetime="2017-04-05">05 Apr 2017</time>
-        </footer>
-    </article>
-    
 
     
 
 
 </main>
-
 
         <footer class="site-footer clearfix">
           <section class="copyright"><a href="/">elsewhere</a> &copy; 2017 All Rights Reserved.</section>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- [[! Document Settings ]] -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- [[! Page Meta ]] -->
+    <title>elsewhere | Mac下Docker的使用</title>
+    <meta name="description" content="elsewhere - 一个辅助记忆的树洞" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico" >
+
+    <!-- [[! Styles'n'Scripts ]] -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    
+    
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="elsewhere" />
+    <meta property="og:description" content="一个辅助记忆的树洞" />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="/assets/images/cover-home.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="elsewhere" />
+    <meta name="twitter:description" content="一个辅助记忆的树洞" />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image:src" content="/assets/images/cover-home.jpg" />
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Website",
+    "publisher": "elsewhere",
+    "url": "/",
+    "image": "/assets/images/cover-home.jpg",
+    "description": "一个辅助记忆的树洞"
+}
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="/feed.xml" />
+
+
+</head>
+
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        <li class="nav-home "><a href="/">Home</a></li>
+        <li class="nav-about "><a href="/about/">About</a></li>
+        <li class="nav-github-repos"><a href="https://github.com/devylee/">Github repos</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        <!-- [[! Everything else gets inserted here ]] -->
+        <!-- < default -->
+
+<!-- The comment above "< default" means - insert everything in this file into -->
+    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-docker tag-macos tag-macports">
+
+        <header class="post-header">
+            <h1 class="post-title">Mac下Docker的使用</h1>
+            <section class="post-meta">
+            <time class="post-date" datetime="2017-04-17">17 Apr 2017</time>
+                <!-- [[tags prefix=" on "]] -->
+                 
+                on 
+                
+                    
+                    
+                       <a href='/tag/docker/'>Docker</a>,
+                       
+                
+                    
+                    
+                       <a href='/tag/macos/'>macOS</a>,
+                       
+                
+                    
+                    
+                       <a href='/tag/macports/'>MacPorts</a>
+                       
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+            
+            <blockquote>
+  <p>自从接触了<a href="https://www.docker.com/">Docker</a>，我就深深的觉得：<strong>Docker的使用应该是一个开发人员，尤其是基于Linux的Web服务端开发人员应该具备的基本技能之一！</strong>其实Docker的使用也并不复杂，熟悉两个命令<code class="highlighter-rouge">docker</code>、<code class="highlighter-rouge">docker-machine</code>和一个<code class="highlighter-rouge">Dockerfile</code>就可以在你的本机开发环境中跑起来了。</p>
+</blockquote>
+
+<!--more-->
+
+<p>Docker最具价值的功能在于它可以实现将应用部署完全的程序化，由此，我们创建一个主机、部署一个应用不再需要重复的人工操作，基于它背后庞大的镜像社区<a href="https://hub.docker.com/">Docker Hub</a>，一行命令就可以搞定一台虚拟机，一个Dockerfile就可以部署一个应用……这样不但提高了部署效率也大大降低人工操作的出错风险。更重要的是，这也让更多自动化的需求成为可能，比如：在系统负载过高时自动部署应用镜像来均衡负载，提高系统稳定性！</p>
+
+<h2 id="安装">安装</h2>
+
+<p>我是一个忠实的Mac用户，在Mac下安装使用Docker也不止一种途径，比如官方提供的：<a href="https://www.docker.com/docker-mac">Docker for Mac</a>和<a href="https://www.docker.com/products/docker-toolbox">Docker Toolbox</a>。</p>
+<blockquote>
+  <p>如果你的系统版本够高，我其实更推荐使用Docker for Mac，因为Docker Toolbox需要另外安装<a href="https://www.virtualbox.org/">VirtualBox</a>。</p>
+</blockquote>
+
+<p>我是个<a href="https://www.macports.org/">MacPorts</a>的重度用户，在电脑的使用上还有严重的洁癖！所以我的Docker环境是用MacPorts维护的（当然你也可以选择<a href="https://brew.sh/">homebrew</a>）。其实这差不多就是在用Docker Toolbox了，也就是说，你还是要有VirtuaBox或者<a href="http://www.vmware.com/products/fusion.html">VMWare Fusion</a>。不多说了，还是放码吧，安装：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>sudo port install docker docker-machine docker-compose
+</code></pre>
+</div>
+
+<h2 id="docker-machine">docker-machine</h2>
+
+<blockquote>
+  <p>要运行docker，首先得有可用的Docker Machine，本地环境中的Machine可以由<code class="highlighter-rouge">docker-machine</code>命令来维护。</p>
+</blockquote>
+
+<p>先来ls一下：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-machine ls
+NAME      ACTIVE   DRIVER         STATE     URL   SWARM   DOCKER    ERRORS
+</code></pre>
+</div>
+
+<p>没有machine，所以还是要自己动手先来创建，其实就是一个VirtualBox或者VMWare Fusion驱动的VM，命令如下：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-machine create --driver virtualbox default
+</code></pre>
+</div>
+
+<p>再ls：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-machine ls
+NAME      ACTIVE   DRIVER         STATE     URL   SWARM   DOCKER    ERRORS
+default   -        virtualbox     Stopped                 Unknown 
+</code></pre>
+</div>
+
+<p>OK有了，来启动这个machine：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-machine start default
+Starting <span class="s2">"default"</span>...
+Machine <span class="s2">"default"</span> was started.
+Waiting <span class="k">for </span>SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the <span class="sb">`</span>docker-machine env<span class="sb">`</span> command.
+
+<span class="gp">$ </span>docker-machine env default
+<span class="nb">export </span><span class="nv">DOCKER_TLS_VERIFY</span><span class="o">=</span><span class="s2">"1"</span>
+<span class="nb">export </span><span class="nv">DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.85.135:2376"</span>
+<span class="nb">export </span><span class="nv">DOCKER_CERT_PATH</span><span class="o">=</span><span class="s2">"/Users/yourname/.docker/machine/machines/default"</span>
+<span class="nb">export </span><span class="nv">DOCKER_MACHINE_NAME</span><span class="o">=</span><span class="s2">"default"</span>
+<span class="c"># Run this command to configure your shell: </span>
+<span class="c"># eval $(docker-machine env)</span>
+
+<span class="gp">$ </span><span class="nb">eval</span> <span class="s2">"</span><span class="k">$(</span>docker-machine env default<span class="k">)</span><span class="s2">"</span>
+
+</code></pre>
+</div>
+
+<p>好了，我们的Docker Machine算是启动了，如果要ssh连接到这个主机，需要用<code class="highlighter-rouge">docker-machine ssh default</code>。</p>
+
+<blockquote>
+  <p>在Docker主机中如果要切换su，执行<code class="highlighter-rouge">sudo -i</code>就可以了。</p>
+</blockquote>
+
+<p><em>常用的docker-machine命令：</em></p>
+
+<ul>
+  <li><code class="highlighter-rouge">docker-machine create</code>  创建</li>
+  <li><code class="highlighter-rouge">docker-machine start</code> 启动</li>
+  <li><code class="highlighter-rouge">docker-machine stop</code> 停止</li>
+  <li><code class="highlighter-rouge">docker-machine env</code> 查看环境参数</li>
+  <li><code class="highlighter-rouge">docker-machine ip</code> 查看IP</li>
+  <li><code class="highlighter-rouge">docker-machine ssh</code> ssh连接</li>
+  <li><code class="highlighter-rouge">docker-machine ls</code> machines 列表</li>
+</ul>
+
+<h2 id="docker">docker</h2>
+
+<p>下面该<code class="highlighter-rouge">docker</code>登场了！<code class="highlighter-rouge">docker info</code>可以查看当前接入的Docker Machine的信息，我们先来run一个mysql试试：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker run --name mysql -p 3306:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>mysqlpwd -d mysql
+</code></pre>
+</div>
+
+<p>这个命令会创建一个运行mysql的容器，容器的3306端口（也就是mysql的服务端口）会被映射到docker主机的3306端口，mysql的root用户密码是<code class="highlighter-rouge">MYSQL_ROOT_PASSWORD</code>指定的<code class="highlighter-rouge">mysqlpwd</code>。我们可以用下面的命令连接这个mysql服务看看：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mysql root@192.168.85.135 -p
+</code></pre>
+</div>
+
+<p>可以了吧，好了，关于run命令的更多信息可以<code class="highlighter-rouge">docker run --help</code>查阅。如果要停止上面那个容器可以用<code class="highlighter-rouge">docker stop mysql</code>。run过之后，这个容器（Container）和镜像（Image）都已经保存在本地了，下次再运行这个容器可以直接运行<code class="highlighter-rouge">docker start mysql</code>而不需要再<code class="highlighter-rouge">docker run</code>了。</p>
+
+<p><em>常用的docker命令：</em></p>
+
+<ul>
+  <li><code class="highlighter-rouge">docker build</code> 通过Dockerfile构建镜像</li>
+  <li><code class="highlighter-rouge">docker run</code> 运行容器</li>
+  <li><code class="highlighter-rouge">docker ps</code> 显示当前运行的容器（加<code class="highlighter-rouge">-a</code>参数可以列出本地所有容器，包括未运行的容器）</li>
+  <li><code class="highlighter-rouge">docker start</code> 启动容器</li>
+  <li><code class="highlighter-rouge">docker stop</code> 停止容器</li>
+  <li><code class="highlighter-rouge">docker rm</code> 删除容器</li>
+  <li><code class="highlighter-rouge">docker rmi</code> 删除镜像</li>
+</ul>
+
+<h2 id="dockerfile--docker-build">Dockerfile &amp; <code class="highlighter-rouge">docker build</code></h2>
+
+<blockquote>
+  <p><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>文件用于声明自动构建镜像的一系列命令，<code class="highlighter-rouge">docker build</code>使用这个文件来构建镜像。<em>在我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中，我就是用Dockerfile来构建的<a href="https://ghost.org">Ghost</a>应用。</em></p>
+</blockquote>
+
+<p>当你编写好了Dockerfile之后，你就可以使用<code class="highlighter-rouge">docker build</code>命令了：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd</span> /path/to/workdir/
+<span class="gp">$ </span>docker build .
+</code></pre>
+</div>
+
+<p>我们也可以在build的时候为镜像命名，另外，在build的时候，docker还会为每一个步骤（命令）生成缓存，我们可以加<code class="highlighter-rouge">--no-cache</code>参数取消缓存，如下：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker build -t image_name --no-cache .
+</code></pre>
+</div>
+
+<p>build成功后，执行<code class="highlighter-rouge">docker images</code>就可以看到本地的镜像列表，如果是第一次执行可以用<code class="highlighter-rouge">docker run</code>，如果已经作为容器运行了（<code class="highlighter-rouge">docker ps -a</code>查看）则可以用<code class="highlighter-rouge">docker start</code>来启动容器。另外<code class="highlighter-rouge">docker run</code>时也可以指定环境变量，例如：我在“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中的Dockerfile，因为用到了SAE的环境变量，所以，在本地测试环境中，我就把本地环境配置放到一个名为env-dev.list的文件中，内容类似这样：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>MYSQL_HOST=192.168.85.135
+MYSQL_PORT=3306
+ACCESSKEY=ghost
+SECRETKEY=ghost
+APPNAME=ghost
+GHOST_URL=http://192.168.85.135:7000/
+PORT=2467
+</code></pre>
+</div>
+
+<p>然后<code class="highlighter-rouge">docker run</code>：</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker run --name ghost -p 7000:2467 --env-file<span class="o">=</span>./env-dev.list -v /var/storage/ghost:/var/storage/ghost ghost_image
+</code></pre>
+</div>
+
+<p>这条命令使用ghost_image镜像启动容器并将容器的2467端口映射到主机的7000端口，同时将主机的<code class="highlighter-rouge">/var/storage/ghost</code>目录挂载到容器的<code class="highlighter-rouge">/var/storage/ghost</code>。</p>
+
+<p>没什么问题的话，我们就可以通过在浏览器输入<code class="highlighter-rouge">http://192.168.85.135:7000/</code>来访问这个Ghost应用了。</p>
+
+<hr />
+
+<p><em>参考：</em></p>
+
+<ol>
+  <li><a href="https://docs.docker.com/docker-for-mac/">Get started with Docker for Mac</a></li>
+  <li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a></li>
+  <li><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Best practices for writing Dockerfiles</a></li>
+  <li><a href="https://www.viget.com/articles/how-to-use-docker-on-os-x-the-missing-guide">How to Use Docker on OS X: The Missing Guide</a></li>
+  <li><a href="https://blog.tutum.co/2014/10/22/how-to-optimize-your-dockerfile/">How to Optimize Your Dockerfile</a></li>
+</ol>
+
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+            
+            
+            <figure class="author-image">
+                <a class="img" href="/author/devy/" style="background-image: url(https://github.com/devylee.png?size=136)"><span class="hidden">Devy's Picture</span></a>
+            </figure>
+            
+
+            <section class="author">
+                <h4><a href="/author/devy/">Devy</a></h4>
+                
+                
+                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> Dalian, China</span> 
+                </div>
+            </section>
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Mac下Docker的使用&amp;url=https://devylee.github.iopost201704using-docker-on-macos.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.iopost201704using-docker-on-macos.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io%2Fpost%2F2017%2F04%2Fusing-docker-on-macos.html&title=Mac%E4%B8%8BDocker%E7%9A%84%E4%BD%BF%E7%94%A8"
+                   onclick="window.open(this.href, 'weibo-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Weibo</span>
+                </a>
+            </section>
+            
+            
+                <!-- Add Disqus Comments -->
+                <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+    */
+    var disqus_config = function () {
+        this.page.url = 'https://devylee.github.io/post/2017/04/using-docker-on-macos.html';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/post/2017/04/using-docker-on-macos.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function(){
+        document.addEventListener('DOMContentLoaded', function() {
+            ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                var d = document, s = d.createElement('script');
+                s.src = '//devylee.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            });
+        });
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev no-cover" href="/post/2017/04/cors-reachability-detect-in-javascript.html">
+            <section class="post">
+                <h2>用Javascript检测跨域资源(CORS)的可用性</h2>
+                <p>
+  我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。
+
+
+</p>
+            </section>
+        </a>
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->
+
+
+        <footer class="site-footer clearfix">
+          <section class="copyright"><a href="/">elsewhere</a> &copy; 2017 All Rights Reserved.</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a>, hosted by <a href="https://github.com/devylee/devylee.github.io">Github</a>, theme by <a href="https://github.com/tryghost/casper">Casper</a></section>
+        </footer>
+    </div>
+    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- [[! The main JavaScript file for Casper ]] -->
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+
+    <!-- Add Google Analytics  -->
+        <!-- Google Analytics Tracking code -->
+     <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+     </script>   
+
+</body>
+</html>
+
