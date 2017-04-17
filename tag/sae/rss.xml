@@ -169,6 +169,12 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 
 <p>Enjoy!</p>
 
+<blockquote>
+  <p><strong>后记 2017-04-17</strong></p>
+
+  <p>已经整理了示例代码项目上传到Github，可以<a href="https://github.com/devylee/ghost-sae">戳这里</a>！</p>
+</blockquote>
+
 <hr />
 
 <p><em>注：</em></p>
