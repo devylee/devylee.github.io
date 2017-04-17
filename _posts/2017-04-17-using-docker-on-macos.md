@@ -100,7 +100,7 @@ $ docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysqlpwd -d mysql
 这个命令会创建一个运行mysql的容器，容器的3306端口（也就是mysql的服务端口）会被映射到docker主机的3306端口，mysql的root用户密码是`MYSQL_ROOT_PASSWORD`指定的`mysqlpwd`。我们可以用下面的命令连接这个mysql服务看看：
 
 ```shell
-$ mysql root@192.168.85.135 -p
+$ mysql 192.168.85.135 -u root -p
 ```
 
 可以了吧，好了，关于run命令的更多信息可以`docker run --help`查阅。如果要停止上面那个容器可以用`docker stop mysql`。run过之后，这个容器（Container）和镜像（Image）都已经保存在本地了，下次再运行这个容器可以直接运行`docker start mysql`而不需要再`docker run`了。
