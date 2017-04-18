@@ -1,11 +1,11 @@
 <nav class="pagination" role="pagination">
     {% if paginator.previous_page %}
-      {% capture prev_page_path %}/author/{{ site.nickname }}{% if paginator.previous_page == 1 %}/{% else %}{{ paginator.previous_page_path }}{% endif %}{% endcapture %}
+      {% capture prev_page_path %}/author/{{ page.author }}{% if paginator.previous_page == 1 %}/{% else %}{{ paginator.previous_page_path }}{% endif %}{% endcapture %}
        <a class="newer-posts" href="{{ prev_page_path | relative_url }}" title="Previous Page">&laquo; Newer Posts</a>
     {% endif %}
     <span class="page-number"> Page {{ paginator.page }} of {{ paginator.total_pages }} </span>
     {% if paginator.next_page %} 
-        {% capture next_page_path %}/author/{{ site.nickname }}{{ paginator.next_page_path }}{% endcapture %}
+        {% capture next_page_path %}/author/{{ page.author }}{{ paginator.next_page_path }}{% endcapture %}
         <a class="older-posts" href="{{ next_page_path | relative_url }}" title="Next Page">Older Posts &raquo;</a>
     {% endif %} 
 </nav>

@@ -14,7 +14,7 @@ current   : author
 
 <!-- Everything inside the #author tags pulls data from the author -->
 <!-- #author  -->
-{% assign author = site.authors[page.author] %}
+{% assign author = site.data.authors[page.author] %}
     <header class="main-header author-head {% if author.cover %}" style="background-image: url({{ author.cover | relative_url }}){% else %}no-cover{% endif %}">
         <nav class="main-nav overlay clearfix">
             {% if page.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}

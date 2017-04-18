@@ -1,0 +1,10 @@
+devy: 
+  name       : Devy
+  nickname   : devy
+  bio        : "代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'"
+  location   : "Dalian, China"
+  avatar     : "https://github.com/devylee.png"
+  cover      : "/assets/images/cover-author.jpg"
+  twitter_url: "https://twitter.com/idevylee"
+  github_url : "https://github.com/devylee"
+  weibo_url  : "https://weibo.com/devylee"

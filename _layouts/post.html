@@ -57,19 +57,19 @@ navigation: true
             {% capture author_page_path %}/author/{{ author }}/{% endcapture %}
             {% if site.image %}
             <figure class="author-image">
-                <a class="img" href="{{ author_page_path | relative_url }}" style="background-image: url({{ site.authors[author].avatar }}?size=136)"><span class="hidden">{{ site.authors[author].name }}'s Picture</span></a>
+                <a class="img" href="{{ author_page_path | relative_url }}" style="background-image: url({{ site.data.authors[author].avatar }}?size=136)"><span class="hidden">{{ site.data.authors[author].name }}'s Picture</span></a>
             </figure>
             {% endif %}
 
             <section class="author">
-                <h4><a href="{{ author_page_path | relative_url }}">{{ site.authors[author].name }}</a></h4>
+                <h4><a href="{{ author_page_path | relative_url }}">{{ site.data.authors[author].name }}</a></h4>
                 
-                {% if site.authors[author].bio %}
-                    <p> {{ site.authors[author].bio }}</p>
+                {% if site.data.authors[author].bio %}
+                    <p> {{ site.data.authors[author].bio }}</p>
                 {% endif %}
                 <div class="author-meta">
                     {% if page.location %}<span class="author-location icon-location"> {{ page.location }}</span>
-                    {% elsif site.authors[author].location %}<span class="author-location icon-location"> {{ site.authors[author].location }}</span>{% endif %} 
+                    {% elsif site.data.authors[author].location %}<span class="author-location icon-location"> {{ site.data.authors[author].location }}</span>{% endif %} 
                 </div>
             </section>
 
@@ -77,16 +77,16 @@ navigation: true
 
             <section class="share">
                 <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text={{ page.title }}&amp;url={{ site.url }}{{ page.url | remove: '/' }}"
-                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <a class="icon-twitter" href="http://twitter.com/share?text={{ page.title | uri_escape }}&url={{ page.url | absolute_url | uri_escape }}"
+                    onclick="window.open('http://twitter.com/share?text={{ page.title | uri_escape }}&url=' + encodeURIComponent(window.location.href), 'twitter-share', 'width=550,height=235');return false;">
                     <span class="hidden">Twitter</span>
                 </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url | remove: '/' }}"
-                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}"
+                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share','width=580,height=296');return false;">
                     <span class="hidden">Facebook</span>
                 </a>
-                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url={{ site.url }}{{ page.url | url_encode }}&title={{ page.title | url_encode }}"
-                   onclick="window.open(this.href, 'weibo-share', 'width=490,height=530');return false;">
+                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url={{ page.url | absolute_url | uri_escape }}&title={{ page.title | uri_escape }}"
+                   onclick="window.open('http://service.weibo.com/share/share.php?title={{ page.title | uri_escape }}&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
                     <span class="hidden">Weibo</span>
                 </a>
             </section>

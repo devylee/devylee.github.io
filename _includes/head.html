@@ -1,11 +1,11 @@
     <link rel="canonical" href="{{ '/' | relative_url }}" />
     <meta name="referrer" content="origin" />
     {% if paginator.previous_page %}
-    {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
+    {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
     <link rel="prev" href="{{ prev_page_path | relative_url }}" />
     {% endif %}
     {% if paginator.next_page %}
-    {% capture next_page_path %}{% if page.current == 'author' %}{{ site.baseurl }}/author/{{ site.nickname }}{% elsif page.current == 'tag' %}{{ site.baseurl }}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
+    {% capture next_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
     <link rel="next" href="{{ next_page_path | relative_url }}" />
     {% endif %}
 

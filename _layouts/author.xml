@@ -7,7 +7,7 @@ layout: atom
 	<item>
 	  <title>{{ post.title | xml_escape }}</title>
 	  <link>{{ post.url | absolute_url }}</link>
-	  <author>{{ site.authors[page.author].name }}</author>
+	  <author>{{ site.data.authors[page.author].name }}</author>
 	  <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
 	  <guid>{{ post.url | absolute_url }}</guid>
 	  <description><![CDATA[

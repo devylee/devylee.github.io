@@ -25,10 +25,10 @@
             <p>{% if post.excerpt %}{{ post.excerpt | strip_html }}{% else %}{{ post.content | strip_html | truncatewords: 26 }}{% endif %}<a class="read-more" href="{{ post.url | relative_url }}">&raquo;</a></p>
         </section>
         <footer class="post-meta">
-            {% if site.image %}<img class="author-thumb" src="{{ site.authors[post_author].avatar }}?size=48" alt="Author image" nopin="nopin" />{% endif %}
+            {% if site.image %}<img class="author-thumb" src="{{ site.data.authors[post_author].avatar }}?size=48" alt="Author image" nopin="nopin" />{% endif %}
             <!-- author -->
             {% capture author_page_path %}/author/{{ post_author }}/{% endcapture %}
-            <a href="{{ author_page_path | relative_url }}">{{ site.authors[post_author].name }}</a>
+            <a href="{{ author_page_path | relative_url }}">{{ site.data.authors[post_author].name }}</a>
             <!-- [[tags prefix=" on "]] -->
             {% if post.tags.size > 0 %} 
                 on 
