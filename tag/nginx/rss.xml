@@ -22,7 +22,7 @@
 
 <!--more-->
 
-<p><strong>来，容我先描述一下需求：</strong> <a href="https://devylee.github.io">https://devylee.github.io</a>，这是我的Github Page；<a href="http://devylee.me">http://devylee.me</a>这是我的一个域名，而且经过一系列的波折，在<a href="http://sinacloud.com/">新浪云</a>终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定<a href="http://devylee.me">http://devylee.me</a>这个域名，然后用Nginx把请求都proxy到<a href="https://devylee.github.io">https://devylee.github.io</a>，顺便在返回的HTML页面中注入备案号。</p>
+<p><strong>来，容我先描述一下需求：</strong> <a href="https://devylee.github.io">https://devylee.github.io</a>，这是我的Github Page；<a href="http://devylee.me">devylee.me</a>这是我的一个域名，而且经过一系列的波折，在<a href="http://sinacloud.com/">新浪云</a>终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定<a href="http://devylee.me">devylee.me</a>这个域名，然后用Nginx把请求都proxy到<a href="https://devylee.github.io">https://devylee.github.io</a>，顺便在返回的HTML页面中注入备案号。</p>
 
 <p>需求很简单吧，来，让我们撸起袖子干吧！</p>
 
