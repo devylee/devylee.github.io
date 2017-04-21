@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title>elsewhere</title>
+   <link>https://devylee.github.io</link>
+   <description>一个辅助记忆的树洞</description>
+   <language>zh-CN</language>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   
+    
+	<item>
+	  <title>用Nginx镜像远程站点并替换HTML</title>
+	  <link>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</link>
+	  <author>Devy</author>
+	  <pubDate>2017-04-21T09:30:00+08:00</pubDate>
+	  <guid>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</guid>
+	  <description><![CDATA[
+	     <blockquote>
+  <p>Nginx可以做很多事，除了我们最常用的做Web服务器和反向代理，它其实还可以让我们做很多的“小动作”，比如本文要介绍的镜像一个站点、替换HTTP的响应内容。</p>
+</blockquote>
+
+<!--more-->
+
+<p><strong>来，容我先描述一下需求：</strong> <a href="https://devylee.github.io">https://devylee.github.io</a>，这是我的Github Page；<a href="http://devylee.me">http://devylee.me</a>这是我的一个域名，而且经过一系列的波折，在<a href="http://sinacloud.com/">新浪云</a>终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定<a href="http://devylee.me">http://devylee.me</a>这个域名，然后用Nginx把请求都proxy到<a href="https://devylee.github.io">https://devylee.github.io</a>，顺便在返回的HTML页面中注入备案号。</p>
+
+<p>需求很简单吧，来，让我们撸起袖子干吧！</p>
+
+<p>首先上Dockerfile（SAE上如何部署Dockerfile可以参考我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”）：</p>
+
+<blockquote>
+  <p>我这里监听的端口是5050，这个要看你的SAE应用中环境变量<code class="highlighter-rouge">PORT</code>的具体值。</p>
+</blockquote>
+
+<pre class="highlight"><code class="language-docker">FROM nginx:alpine
+
+COPY nginx-default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 5050
+
+</code></pre>
+
+<p>nginx-default.conf：</p>
+
+<div class="language-nginx highlighter-rouge"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span> <span class="s">https://devylee.github.io</span><span class="p">;</span>
+        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+
+        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>如此，push并确认成功后，在浏览器输入devylee.me，哦，没错，这就是我的Github Page！不过，备案号呢？貌似sub_filter并未起作用啊！</p>
+
+<p>经过各种尝试（甚至是更换镜像源，从头编译nginx，然并卵！），最终找到原因原来是因为<code class="highlighter-rouge">Accept-Encoding</code>！</p>
+
+<p>怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是<code class="highlighter-rouge">Accept-Encoding: gzip</code>，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
+通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行<code class="highlighter-rouge">proxy_set_header Accept-Encoding ""</code>）就可以了：</p>
+
+<div class="language-nginx highlighter-rouge"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span> <span class="s">https://devylee.github.io</span><span class="p">;</span>
+        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">Accept-Encoding</span> <span class="s">""</span><span class="p">;</span>
+
+        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>OK！再次push，刷新浏览器~</p>
+
+<p>嗯！有没有觉得so easy啊！</p>
+
+<hr />
+
+<p><em>参考：</em></p>
+
+<ol>
+  <li><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html">Nginx <code class="highlighter-rouge">ngx_http_sub_module</code> Module</a></li>
+</ol>
+
+	  ]]></description>
+	</item>
+
+
+</channel>
+</rss>
