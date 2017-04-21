@@ -41,8 +41,9 @@ kramdown:
 #    - footnotes
 
 # Widget
-google_analytics: UA-92777218-1
-disqus          : devylee
+google_analytics : UA-92777218-1
+disqus           : devylee
+twitter_card_site: "@idevylee"
 
 # Settings for deploy rake task
 ghusername: devylee

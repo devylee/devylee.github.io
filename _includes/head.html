@@ -1,37 +1,41 @@
-    <link rel="canonical" href="{{ '/' | relative_url }}" />
+    {% capture page_path %}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{% endcapture %}
+    <link rel="canonical" href="{{ page_path | absolute_url }}" />
     <meta name="referrer" content="origin" />
     {% if paginator.previous_page %}
     {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
-    <link rel="prev" href="{{ prev_page_path | relative_url }}" />
+    <link rel="prev" href="{{ prev_page_path | absolute_url }}" />
     {% endif %}
     {% if paginator.next_page %}
     {% capture next_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
-    <link rel="next" href="{{ next_page_path | relative_url }}" />
+    <link rel="next" href="{{ next_page_path | absolute_url }}" />
     {% endif %}
+    {% capture page_title %}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{% endcapture %}
+    {% capture page_description %}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{% endcapture %}
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description | escape | strip_newlines }}" />
 
     <meta property="og:site_name" content="{{ site.name }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ site.title }}" />
-    <meta property="og:description" content="{{ site.description }}" />
-    <meta property="og:url" content="{{ '/' | absolute_url }}" />
-    <meta property="og:image" content="{{ '/assets/images/cover-home.jpg' | absolute_url }}" />
-    <meta property="og:image:width" content="1600" />
-    <meta property="og:image:height" content="1067" />
-
+    <meta property="og:url" content="{{ page_path | absolute_url }}" />
+    <meta property="og:title" content="{{ page_title | escape }}" />
+    <meta property="og:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
+    <meta property="og:image" content="{{ page.cover | absolute_url }}" />
+    {% endif %}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{ site.title }}" />
-    <meta name="twitter:description" content="{{ site.description }}" />
-    <meta name="twitter:url" content="{{ '/' | absolute_url }}" />
-    <meta name="twitter:image:src" content="{{ '/assets/images/cover-home.jpg' | absolute_url }}" />
-
+    <meta name="twitter:url" content="{{ page_path | absolute_url }}" />
+    <meta name="twitter:site" content="{{ site.twitter_card_site }}" />
+    <meta name="twitter:title" content="{{ page_title | escape }}" />
+    <meta name="twitter:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
+    <meta name="twitter:image:src" content="{{ page.cover | absolute_url }}" />
+    {% endif %}
     <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "{{ site.name }}",
     "url": "{{ '/' | absolute_url }}",
-    "image": "{{ '/assets/images/cover-home.jpg' | absolute_url }}",
-    "description": "{{ site.description }}"
+    "description": "{{ site.description }}",
+    "image": "{{ '/assets/images/cover-home.jpg' | absolute_url }}"
 }
     </script>
 
