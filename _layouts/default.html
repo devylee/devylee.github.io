@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- [[! Page Meta ]] -->
-    <title>{{ site.name }}{% if page.title %} | {{ page.title }}{% endif %}</title>
-    <meta name="description" content="{{ site.name }} - {{ site.description }}" />
+    <title>{{ site.title }}{% if page.title %} | {{ page.title }}{% endif %}</title>
+    <meta name="description" content="{{ site.title }} - {{ site.description }}" />
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +34,8 @@
         {{ content }}
 
         <footer class="site-footer clearfix">
-          <section class="copyright"><a href="{{ '/' | relative_url }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }} All Rights Reserved.</section>
-          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a>, hosted by <a href="https://github.com/devylee/devylee.github.io">Github</a>, theme by <a href="https://github.com/tryghost/casper">Casper</a></section>
+          <section class="copyright"><nobr><a href="{{ '/' | relative_url }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }}</nobr> <nobr>All Rights Reserved.</nobr></section>
+          <section class="poweredby"><nobr>Proudly published with <a href="https://jekyllrb.com/">Jekyll</a>,</nobr> <nobr>hosted by <a href="https://github.com/devylee/devylee.github.io">Github</a>,</nobr> <nobr>theme by <a href="https://github.com/tryghost/casper">Casper</a></nobr></section>
         </footer>
     </div>
     <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
