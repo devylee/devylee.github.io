@@ -14,11 +14,11 @@ comments  : true
 
 <!--more-->
 
-**来，容我先描述一下需求：** <https://devylee.github.io>，这是我的Github Page；<http://devylee.me>这是我的一个域名，而且经过一系列的波折，在[新浪云](http://sinacloud.com/)终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定<http://devylee.me>这个域名，然后用Nginx把请求都proxy到<https://devylee.github.io>，顺便在返回的HTML页面中注入备案号。
+**来，容我先描述一下需求：** <https://devylee.github.io>，这是我的Github Page；[devylee.me](http://devylee.me)这是我的一个域名，而且经过一系列的波折，在[新浪云](http://sinacloud.com/)终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定[devylee.me](http://devylee.me)这个域名，然后用Nginx把请求都proxy到<https://devylee.github.io>，顺便在返回的HTML页面中注入备案号。
 
 需求很简单吧，来，让我们撸起袖子干吧！
 
-首先上Dockerfile（SAE上如何部署Dockerfile可以参考我之前的文章“[用SAE Docker一个Ghost博客]({% post_url 2017-04-06-docker-a-ghost-blog-by-sae %})”）：
+首先上Dockerfile（SAE上如何部署Dockerfile可以参考我之前的文章“[用SAE Docker一个Ghost博客]({% post_url 2017/04/2017-04-06-docker-a-ghost-blog-by-sae %})”）：
 
 > 我这里监听的端口是5050，这个要看你的SAE应用中环境变量`PORT`的具体值。
 
