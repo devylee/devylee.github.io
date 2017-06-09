@@ -8,7 +8,7 @@ tags      :
   - Docker
   - SAE
 layout    : post
-class     : "post tag-nginx"
+class     : "post tag-nginx tag-docker tag-sae"
 comments  : true
 ---
 
