@@ -8,6 +8,23 @@
     
       
       <item>
+        <title>在Web前端开发中使用Node和webpack</title>
+        
+          <description>&lt;blockquote&gt;
+  &lt;p&gt;标题说的很明白，本文我只介绍使用&lt;a href=&quot;https://nodejs.org&quot;&gt;Node&lt;/a&gt;和&lt;a href=&quot;https://webpack.js.org/&quot;&gt;webpack&lt;/a&gt;来实现的一个Web前端的构建方案，而不是一个Node实现的全栈方案。至于后端，其实我个人觉得有很多比Node更好的选择，但这不是本文的重点。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        
+        <pubDate>Fri, 09 Jun 2017 09:30:00 +0800</pubDate>
+        <link>
+        https://devylee.github.io/post/2017/06/a-sample-front-end-solution-using-webpack.html</link>
+        <guid isPermaLink="true">https://devylee.github.io/post/2017/06/a-sample-front-end-solution-using-webpack.html</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>用Nginx镜像远程站点并替换HTML</title>
         
           <description>&lt;blockquote&gt;
