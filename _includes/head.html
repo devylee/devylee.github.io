@@ -1,41 +1,46 @@
-    {% capture page_path %}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{% endcapture %}
+{% capture page_path %}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{% endcapture %}
+{% capture page_title %}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{% endcapture %}
+{% capture page_description %}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{% endcapture %}
     <link rel="canonical" href="{{ page_path | absolute_url }}" />
     <meta name="referrer" content="origin" />
-    {% if paginator.previous_page %}
+{% if paginator.previous_page %}
     {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
     <link rel="prev" href="{{ prev_page_path | absolute_url }}" />
-    {% endif %}
-    {% if paginator.next_page %}
+{% endif %}{% if paginator.next_page %}
     {% capture next_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
     <link rel="next" href="{{ next_page_path | absolute_url }}" />
-    {% endif %}
-    {% capture page_title %}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{% endcapture %}
-    {% capture page_description %}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{% endcapture %}
+{% endif %}
     <title>{{ page_title }}</title>
     <meta name="description" content="{{ page_description | escape | strip_newlines }}" />
 
     <meta property="og:site_name" content="{{ site.name }}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="{% if page.current == 'author' %}profile{% elsif page.current == 'post' or page.layout == 'post' %}article{% else %}website{% endif %}" />
     <meta property="og:url" content="{{ page_path | absolute_url }}" />
     <meta property="og:title" content="{{ page_title | escape }}" />
     <meta property="og:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
-    <meta property="og:image" content="{{ page.cover | absolute_url }}" />
-    {% endif %}
+    <meta property="og:image" content="{{ page.cover | absolute_url }}" />{% endif %}
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="{{ page_path | absolute_url }}" />
     <meta name="twitter:site" content="{{ site.twitter_card_site }}" />
     <meta name="twitter:title" content="{{ page_title | escape }}" />
     <meta name="twitter:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
-    <meta name="twitter:image:src" content="{{ page.cover | absolute_url }}" />
-    {% endif %}
+    <meta name="twitter:image:src" content="{{ page.cover | absolute_url }}" />{% endif %}
+
     <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
-    "@type": "Website",
+    "@context": "http://schema.org",{% if page.current == 'author' %}
+    "@type": "Person",
+    "name": "{{ site.data.authors[page.author].name }}",{% elsif page.current == 'tag' %}
+    "@type": "Series",
+    "name": "{{ page.tag }}",{% elsif page.current == 'post' or page.layout == 'post' %}
+    "@type": "Article",{% assign author = page.categories[0] %}
+    "author": "{{ site.data.authors[author].name }}",{% else %}
+    "@type": "Website",{% endif %}
     "publisher": "{{ site.name }}",
-    "url": "{{ '/' | absolute_url }}",
-    "description": "{{ site.description }}",
-    "image": "{{ '/assets/images/cover-home.jpg' | absolute_url }}"
+    "url": "{{ page_path | absolute_url }}",
+    "description": "{{ page_description | escape | strip_newlines }}"{% if page.cover %},
+    "image": "{{ page.cover | absolute_url }}"{% endif %}
 }
     </script>
 
