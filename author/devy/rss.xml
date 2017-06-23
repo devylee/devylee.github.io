@@ -9,6 +9,327 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>在你的博客中集成微信分享</title>
+	  <link>https://devylee.github.io/post/2017/06/integrate-weixin-share-to-your-blog.html</link>
+	  <author>Devy</author>
+	  <pubDate>2017-06-23T17:00:00+08:00</pubDate>
+	  <guid>https://devylee.github.io/post/2017/06/integrate-weixin-share-to-your-blog.html</guid>
+	  <description><![CDATA[
+	     <blockquote>
+  <p>如今差不多是全民微信的时代了，朋友圈已经是非常重要的信息获取途径，也是很多人分享信息的重要途径，那不如我们就来聊聊集成微信分享的那点事吧~</p>
+</blockquote>
+
+<!--more-->
+
+<h1 id="为什么要集成微信分享">为什么要集成微信分享？</h1>
+
+<p>其实我们已经很容易通过手机和微信来分享一个网页，只要手机中安装了微信，现在大多的手机浏览器都有分享功能，在浏览网页时都可以选择分享到微信、QQ、推特、微博等等这些常用的社交平台。只是在不做处理的情况下，通常分享出来的样子并不那么令人满意，我们更希望有更吸引人的图片和标题、描述神马的。其实不用想，鹅场当然早就提供了解决这类需求的方案的，那就是<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115">JS-SDK</a>。所以本文其实就是介绍如何在最小化改动博客代码的情况下，将这个SDK集成进来。</p>
+
+<p>其实思路很简单，就是将<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115">JS-SDK</a>中关于分享的接口封装到一个JS函数或者对象中，然后再通过JS获取网页中的相关信息（标题、描述……），并将这些信息作为参数传递给这个函数，完成对相关分享接口的引用。</p>
+
+<h1 id="那就开始吧">那就开始吧</h1>
+
+<p>首先，我们来封装JS-SDK，创建一个js文件<code class="highlighter-rouge">wxshare.js</code>，为了让这个JS看起来更通用一些，我用了<a href="https://github.com/umdjs/umd">UMD</a>：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="nx">factory</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">define</span> <span class="o">===</span> <span class="s1">'function'</span> <span class="o">&amp;&amp;</span> <span class="nx">define</span><span class="p">.</span><span class="nx">amd</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">define</span><span class="p">([],</span> <span class="nx">factory</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">module</span> <span class="o">===</span> <span class="s1">'object'</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">root</span><span class="p">.</span><span class="nx">weixin_share</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">();</span> <span class="c1">// 对象的名称是"weixin_share"</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)(</span><span class="k">this</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="s1">'use strict'</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">isWeixin</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">"micromessenger"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="cm">/**
+     * 此方法用于加载JS-SDK
+     */</span>
+    <span class="kd">function</span> <span class="nx">load_wx_jssdk</span><span class="p">(</span><span class="nx">sdk</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+            <span class="p">};</span>
+            <span class="nx">s</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="s1">'failed to load '</span> <span class="o">+</span> <span class="nx">sdk</span><span class="p">);</span>
+            <span class="p">};</span>
+            <span class="nx">s</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">sdk</span><span class="p">;</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"head"</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+     * 这个方法用于加载JS-SDK的权限验证配置
+     * 具体说明，请参考https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115
+     * 其中的 1.1.3 步骤三：通过config接口注入权限验证配置
+     */</span>
+    <span class="kd">function</span> <span class="nx">load_config</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isWeixin</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="s1">'not weixin'</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">config</span> <span class="o">===</span> <span class="s1">'object'</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// config 可以是json对象，比如{appId:'xxx', signature:'xxx' ...}</span>
+                <span class="nx">resolve</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">config</span> <span class="o">===</span> <span class="s1">'string'</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 或者是通过网址异步获取，这是本文推荐的方式！</span>
+                <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                    <span class="na">url</span><span class="p">:</span> <span class="nx">config</span><span class="p">,</span>
+                    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="na">l</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span>
+                    <span class="p">},</span>
+                    <span class="na">type</span><span class="p">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+                    <span class="na">dataType</span><span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
+                    <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+                    <span class="p">},</span>
+                    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">reject</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="s1">'unknown config'</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+     * 这个方法就是调用JS-SDK的API方法初始化分享属性
+     */</span>
+    <span class="kd">function</span> <span class="nx">init_share</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isWeixin</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="s1">'not weixin'</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">load_wx_jssdk</span><span class="p">(</span><span class="s1">'//res.wx.qq.com/open/js/jweixin-1.2.0.js'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="nx">wx</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+                    <span class="na">debug</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                    <span class="na">appId</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">appId</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
+                    <span class="na">signature</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">signature</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
+                    <span class="na">timestamp</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
+                    <span class="na">nonceStr</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">nonceStr</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
+                    <span class="na">jsApiList</span><span class="p">:</span> <span class="p">[</span><span class="s1">'onMenuShareTimeline'</span><span class="p">,</span> <span class="s1">'onMenuShareAppMessage'</span><span class="p">,</span> <span class="s1">'onMenuShareQQ'</span><span class="p">,</span> <span class="s1">'onMenuShareQZone'</span><span class="p">,</span> <span class="s1">'showOptionMenu'</span><span class="p">]</span>
+                <span class="p">});</span>
+
+                <span class="nx">wx</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+                <span class="p">});</span>
+                <span class="nx">wx</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                    <span class="c1">// 消息</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareAppMessage</span><span class="p">({</span>
+                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
+                        <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
+                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致</span>
+                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
+                        <span class="c1">//type: '', // 分享类型,music、video或link，不填默认为link</span>
+                        <span class="c1">//dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户确认分享后执行的回调函数</span>
+                        <span class="p">},</span>
+                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户取消分享后执行的回调函数</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+                    <span class="c1">// 朋友圈</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareTimeline</span><span class="p">({</span>
+                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
+                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致</span>
+                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户确认分享后执行的回调函数</span>
+                        <span class="p">},</span>
+                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户取消分享后执行的回调函数</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+                    <span class="c1">// QQ</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareQQ</span><span class="p">({</span>
+                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
+                        <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
+                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接</span>
+                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户确认分享后执行的回调函数</span>
+                        <span class="p">},</span>
+                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户取消分享后执行的回调函数</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+                    <span class="c1">// QQ空间</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareQZone</span><span class="p">({</span>
+                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
+                        <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
+                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接</span>
+                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户确认分享后执行的回调函数</span>
+                        <span class="p">},</span>
+                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                            <span class="c1">// 用户取消分享后执行的回调函数</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+                <span class="p">});</span>
+                <span class="nx">resolve</span><span class="p">(</span><span class="nx">wx</span><span class="p">);</span>
+            <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="nx">m</span><span class="p">);</span>
+            <span class="p">});</span>
+
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**
+     * 我们的weixin_share对象将有两个方法：config和init，分别对应load_config和init_share
+     */</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">config</span><span class="p">:</span> <span class="nx">load_config</span><span class="p">,</span>
+        <span class="na">init</span><span class="p">:</span> <span class="nx">init_share</span>
+    <span class="p">};</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>接下来，我们要处理上面代码中提到的<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421135319#buzhou3">JS-SDK的权限验证配置</a>。我的建议是用后端程序写一个接口并单独部署，比如下面这个使用<a href="https://www.slimframework.com/">Slim</a>框架的PHP程序：</p>
+
+<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// Routes
+</span><span class="k">use</span> <span class="nx">Psr\Http\Message\ServerRequestInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Http\Message\ResponseInterface</span><span class="p">;</span>
+
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/path/to/wxconfig'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">ServerRequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$settings</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'settings'</span><span class="p">);</span>
+    <span class="nv">$app_id</span> <span class="o">=</span> <span class="s1">'你的微信公众号开发者ID：AppID'</span><span class="p">;</span>
+    <span class="nv">$app_secret</span> <span class="o">=</span> <span class="s1">'你的微信公众号开发者密码：AppSecret'</span><span class="p">;</span>
+    <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">time</span><span class="p">();</span>
+    <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getQueryParam</span><span class="p">(</span><span class="s1">'l'</span><span class="p">);</span>
+    <span class="nv">$noncestr</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="nb">time</span><span class="p">());</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="nv">$access_token</span> <span class="o">=</span> <span class="nx">get_wxmp_access_token</span><span class="p">(</span><span class="nv">$settings</span><span class="p">[</span><span class="s1">'datafile'</span><span class="p">][</span><span class="s1">'access_token'</span><span class="p">],</span> <span class="nv">$app_id</span><span class="p">,</span> <span class="nv">$app_secret</span><span class="p">))</span>
+                <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$ticket</span> <span class="o">=</span> <span class="nx">get_wxmp_jsapi_ticket</span><span class="p">(</span><span class="nv">$settings</span><span class="p">[</span><span class="s1">'datafile'</span><span class="p">][</span><span class="s1">'jsapi_ticket'</span><span class="p">],</span> <span class="nv">$access_token</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">withJson</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+                <span class="s1">'appId'</span><span class="o">=&gt;</span><span class="nv">$app_id</span><span class="p">,</span>
+                <span class="s1">'timestamp'</span><span class="o">=&gt;</span><span class="nv">$timestamp</span><span class="p">,</span>
+                <span class="s1">'nonceStr'</span><span class="o">=&gt;</span><span class="nv">$noncestr</span><span class="p">,</span>
+                <span class="s1">'signature'</span><span class="o">=&gt;</span><span class="nb">sha1</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s2">"jsapi_ticket=%s&amp;noncestr=%s&amp;timestamp=%d&amp;url=%s"</span><span class="p">,</span> <span class="nv">$ticket</span><span class="p">,</span> <span class="nv">$noncestr</span><span class="p">,</span> <span class="nv">$timestamp</span><span class="p">,</span> <span class="nv">$url</span><span class="p">))</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$settings</span><span class="p">[</span><span class="s1">'displayErrorDetails'</span><span class="p">])</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">withJson</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'error'</span><span class="o">=&gt;</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">(),</span> <span class="s1">'message'</span><span class="o">=&gt;</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span> <span class="s1">'trace'</span><span class="o">=&gt;</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getTraceAsString</span><span class="p">()));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">withJson</span><span class="p">(</span><span class="k">array</span><span class="p">());</span>
+<span class="p">});</span>
+
+<span class="sd">/**
+ * 获取access_token
+ * https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140183
+ */</span>
+<span class="k">function</span> <span class="nf">get_wxmp_access_token</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">,</span> <span class="nv">$app_id</span><span class="p">,</span> <span class="nv">$app_secret</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">,</span> <span class="s1">'w+'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$filesize</span> <span class="o">=</span> <span class="nb">filesize</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$data</span> <span class="o">=</span> <span class="nb">fread</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$token_data</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">'#'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$token_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">time</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+                <span class="k">return</span> <span class="nv">$token_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">((</span><span class="nv">$result</span> <span class="o">=</span> <span class="nx">curl_json</span><span class="p">(</span><span class="s2">"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=</span><span class="si">{</span><span class="nv">$app_id</span><span class="si">}</span><span class="s2">&amp;secret=</span><span class="si">{</span><span class="nv">$app_secret</span><span class="si">}</span><span class="s2">"</span><span class="p">))</span>
+                <span class="o">&amp;&amp;</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$result</span><span class="p">[</span><span class="s1">'access_token'</span><span class="p">],</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'expires_in'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nv">$access_token</span> <span class="o">=</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'access_token'</span><span class="p">];</span>
+            <span class="nv">$expires_in</span> <span class="o">=</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'expires_in'</span><span class="p">];</span>
+            <span class="nb">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">'#'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nv">$access_token</span><span class="p">,</span> <span class="nb">time</span><span class="p">()</span> <span class="o">+</span> <span class="nv">$expires_in</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="nv">$expires_in</span><span class="p">))));</span>
+            <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nv">$access_token</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="sd">/**
+ * 获取jsapi_ticket
+ * https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115#f11
+ */</span>
+<span class="k">function</span> <span class="nf">get_wxmp_jsapi_ticket</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">,</span> <span class="nv">$access_token</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">,</span> <span class="s1">'w+'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$filesize</span> <span class="o">=</span> <span class="nb">filesize</span><span class="p">(</span><span class="nv">$datafile</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$data</span> <span class="o">=</span> <span class="nb">fread</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nv">$filesize</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$ticket_data</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">'#'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$ticket_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">time</span><span class="p">())</span> <span class="p">{</span>
+                <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+                <span class="k">return</span> <span class="nv">$ticket_data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">((</span><span class="nv">$result</span> <span class="o">=</span> <span class="nx">curl_json</span><span class="p">(</span><span class="s2">"https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=</span><span class="si">{</span><span class="nv">$access_token</span><span class="si">}</span><span class="s2">&amp;type=jsapi"</span><span class="p">))</span>
+                <span class="o">&amp;&amp;</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$result</span><span class="p">[</span><span class="s1">'ticket'</span><span class="p">],</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'expires_in'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nv">$ticket</span> <span class="o">=</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'ticket'</span><span class="p">];</span>
+            <span class="nv">$expires_in</span> <span class="o">=</span> <span class="nv">$result</span><span class="p">[</span><span class="s1">'expires_in'</span><span class="p">];</span>
+            <span class="nb">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nb">implode</span><span class="p">(</span><span class="s1">'#'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nv">$ticket</span><span class="p">,</span> <span class="nb">time</span><span class="p">()</span> <span class="o">+</span> <span class="nv">$expires_in</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="nv">$expires_in</span><span class="p">))));</span>
+            <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nv">$ticket</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">function</span> <span class="nf">curl_json</span><span class="p">(</span><span class="nv">$url</span><span class="p">){</span>
+    <span class="nv">$ci</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+        
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_TIMEOUT</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_SSL_VERIFYPEER</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="k">FALSE</span><span class="p">);</span>
+        
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ci</span><span class="p">,</span> <span class="nx">CURLINFO_HEADER_OUT</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+
+    <span class="nv">$response</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ci</span><span class="p">);</span>
+
+    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ci</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span> <span class="o">?:</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>然后，我们要在页面中调用上面定义的<code class="highlighter-rouge">weixin_share</code>，其中<code class="highlighter-rouge">path/to/wxconfig</code>就是上述权限验证配置的部署路径：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
+    <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">root</span><span class="p">.</span><span class="nx">weixin_share</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="s2">"/path/to/wxconfig"</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">root</span><span class="p">.</span><span class="nx">weixin_share</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                <span class="na">title</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'meta[property="og:title"]'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'content'</span><span class="p">),</span>
+                <span class="na">desc</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'meta[property="og:description"]'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'content'</span><span class="p">),</span>
+                <span class="na">link</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'meta[property="og:url"]'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'content'</span><span class="p">),</span>
+                <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'meta[property="og:image"]'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">'content'</span><span class="p">)</span>
+            <span class="p">},</span> <span class="nx">c</span><span class="p">));</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+    <span class="nx">s</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'/path/to/wxshare.js'</span><span class="p">;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"head"</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+<span class="p">})(</span><span class="k">this</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>大家可能注意到了，我是从页面的meta元素中提取相关的标题、描述以及图片等信息，这样做的目的主要是尽可能小的改动博客代码。当前主流的博客系统貌似都使用了这种叫<a href="http://ogp.me/">Open Graph protocol</a>的东西。当然，如果不嫌麻烦，也可将上述提取meta的代码进行改造一番（比如，使用后端程序直接将相关信息输出到页面代码中）。</p>
+</blockquote>
+
+<p>好了，一切就绪！下面，你要确认一下，你的微信开发者接口权限了，在没有通过微信认证的情况下，上述分享功能的接口的权限都是“未获得”的！呵呵~</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>在Web前端开发中使用Node和webpack</title>
 	  <link>https://devylee.github.io/post/2017/06/a-sample-front-end-solution-using-webpack.html</link>
 	  <author>Devy</author>
