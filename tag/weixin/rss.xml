@@ -115,14 +115,14 @@
                     <span class="na">signature</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">signature</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
                     <span class="na">timestamp</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
                     <span class="na">nonceStr</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">nonceStr</span><span class="p">,</span> <span class="c1">//需要后端传入</span>
-                    <span class="na">jsApiList</span><span class="p">:</span> <span class="p">[</span><span class="s1">'onMenuShareTimeline'</span><span class="p">,</span> <span class="s1">'onMenuShareAppMessage'</span><span class="p">,</span> <span class="s1">'onMenuShareQQ'</span><span class="p">,</span> <span class="s1">'onMenuShareQZone'</span><span class="p">,</span> <span class="s1">'showOptionMenu'</span><span class="p">]</span>
+                    <span class="na">jsApiList</span><span class="p">:</span> <span class="p">[</span><span class="s1">'onMenuShareTimeline'</span><span class="p">,</span> <span class="s1">'onMenuShareAppMessage'</span><span class="p">]</span>
                 <span class="p">});</span>
 
                 <span class="nx">wx</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">reject</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
                 <span class="p">});</span>
                 <span class="nx">wx</span><span class="p">.</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                    <span class="c1">// 消息</span>
+                    <span class="c1">// 对话消息</span>
                     <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareAppMessage</span><span class="p">({</span>
                         <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
                         <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
@@ -141,32 +141,6 @@
                     <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareTimeline</span><span class="p">({</span>
                         <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
                         <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致</span>
-                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
-                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                            <span class="c1">// 用户确认分享后执行的回调函数</span>
-                        <span class="p">},</span>
-                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                            <span class="c1">// 用户取消分享后执行的回调函数</span>
-                        <span class="p">}</span>
-                    <span class="p">});</span>
-                    <span class="c1">// QQ</span>
-                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareQQ</span><span class="p">({</span>
-                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
-                        <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
-                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接</span>
-                        <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
-                        <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                            <span class="c1">// 用户确认分享后执行的回调函数</span>
-                        <span class="p">},</span>
-                        <span class="na">cancel</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-                            <span class="c1">// 用户取消分享后执行的回调函数</span>
-                        <span class="p">}</span>
-                    <span class="p">});</span>
-                    <span class="c1">// QQ空间</span>
-                    <span class="nx">wx</span><span class="p">.</span><span class="nx">onMenuShareQZone</span><span class="p">({</span>
-                        <span class="na">title</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="c1">// 分享标题</span>
-                        <span class="na">desc</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span> <span class="c1">// 分享描述</span>
-                        <span class="na">link</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">link</span><span class="p">,</span> <span class="c1">// 分享链接</span>
                         <span class="na">imgUrl</span><span class="p">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">imgUrl</span><span class="p">,</span> <span class="c1">// 分享图标</span>
                         <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                             <span class="c1">// 用户确认分享后执行的回调函数</span>
@@ -325,7 +299,7 @@
   <p>大家可能注意到了，我是从页面的meta元素中提取相关的标题、描述以及图片等信息，这样做的目的主要是尽可能小的改动博客代码。当前主流的博客系统貌似都使用了这种叫<a href="http://ogp.me/">Open Graph protocol</a>的东西。当然，如果不嫌麻烦，也可将上述提取meta的代码进行改造一番（比如，使用后端程序直接将相关信息输出到页面代码中）。</p>
 </blockquote>
 
-<p>好了，一切就绪！下面，你要确认一下，你的微信开发者接口权限了，在没有通过微信认证的情况下，上述分享功能的接口的权限都是“未获得”的！呵呵~</p>
+<p>好了，一切就绪！下面，你要确认一下，你的微信开发者接口权限了，在没有通过微信认证的情况下，上述分享功能的接口的权限都是“未获得”！而不论你是个人还是企业，这认证都是要每年花￥300元的，呵呵~</p>
 
 	  ]]></description>
 	</item>
