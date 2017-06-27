@@ -109,14 +109,14 @@ comments  : true
                     signature: options.signature, //需要后端传入
                     timestamp: options.timestamp, //需要后端传入
                     nonceStr: options.nonceStr, //需要后端传入
-                    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone', 'showOptionMenu']
+                    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage']
                 });
 
                 wx.error(function (res) {
                     reject(res);
                 });
                 wx.ready(function () {
-                    // 消息
+                    // 对话消息
                     wx.onMenuShareAppMessage({
                         title: options.title, // 分享标题
                         desc: options.desc, // 分享描述
@@ -135,32 +135,6 @@ comments  : true
                     wx.onMenuShareTimeline({
                         title: options.title, // 分享标题
                         link: options.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                        imgUrl: options.imgUrl, // 分享图标
-                        success: function () {
-                            // 用户确认分享后执行的回调函数
-                        },
-                        cancel: function () {
-                            // 用户取消分享后执行的回调函数
-                        }
-                    });
-                    // QQ
-                    wx.onMenuShareQQ({
-                        title: options.title, // 分享标题
-                        desc: options.desc, // 分享描述
-                        link: options.link, // 分享链接
-                        imgUrl: options.imgUrl, // 分享图标
-                        success: function () {
-                            // 用户确认分享后执行的回调函数
-                        },
-                        cancel: function () {
-                            // 用户取消分享后执行的回调函数
-                        }
-                    });
-                    // QQ空间
-                    wx.onMenuShareQZone({
-                        title: options.title, // 分享标题
-                        desc: options.desc, // 分享描述
-                        link: options.link, // 分享链接
                         imgUrl: options.imgUrl, // 分享图标
                         success: function () {
                             // 用户确认分享后执行的回调函数
@@ -317,4 +291,4 @@ function curl_json($url){
 > 大家可能注意到了，我是从页面的meta元素中提取相关的标题、描述以及图片等信息，这样做的目的主要是尽可能小的改动博客代码。当前主流的博客系统貌似都使用了这种叫[Open Graph protocol](http://ogp.me/)的东西。当然，如果不嫌麻烦，也可将上述提取meta的代码进行改造一番（比如，使用后端程序直接将相关信息输出到页面代码中）。
 
 
-好了，一切就绪！下面，你要确认一下，你的微信开发者接口权限了，在没有通过微信认证的情况下，上述分享功能的接口的权限都是“未获得”的！呵呵~
+好了，一切就绪！下面，你要确认一下，你的微信开发者接口权限了，在没有通过微信认证的情况下，上述分享功能的接口的权限都是“未获得”！而不论你是个人还是企业，这认证都是要每年花￥300元的，呵呵~
