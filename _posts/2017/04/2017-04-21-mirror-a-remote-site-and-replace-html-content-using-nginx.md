@@ -16,7 +16,7 @@ comments  : true
 
 <!--more-->
 
-**来，容我先描述一下需求：** <https://devylee.github.io>，这是我的Github Page；[devylee.me](http://devylee.me)这是我的一个域名，而且经过一系列的波折，在[新浪云](http://sinacloud.com/)终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定[devylee.me](http://devylee.me)这个域名，然后用Nginx把请求都proxy到<https://devylee.github.io>，顺便在返回的HTML页面中注入备案号。
+**来，容我先描述一下需求：** [devylee.github.io](http://devylee.github.io)是我的Github Page；[devylee.me](http://devylee.me)是我的一个域名，而且经过一系列的波折，在[新浪云](http://sinacloud.com/)终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定[devylee.me](http://devylee.me)这个域名，然后用Nginx把请求都proxy到[devylee.github.io](http://devylee.github.io)，顺便在返回的HTML页面中注入备案号。
 
 需求很简单吧，来，让我们撸起袖子干吧！
 
@@ -41,7 +41,7 @@ server {
     listen 5050;
 
     location / {
-        proxy_pass https://devylee.github.io;
+        proxy_pass http://devylee.github.io;
         proxy_redirect off;
 
         sub_filter 'All Rights Reserved.' 'All Rights Reserved. <a href="http://www.miitbeian.gov.cn">辽ICP备16011865号</a>';
@@ -62,7 +62,7 @@ server {
     listen 5050;
 
     location / {
-        proxy_pass https://devylee.github.io;
+        proxy_pass http://devylee.github.io;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
 
