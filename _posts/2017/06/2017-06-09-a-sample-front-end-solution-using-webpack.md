@@ -2,7 +2,6 @@
 title     : 在Web前端开发中使用Node和webpack
 date      : "2017-06-09 9:30:00"
 categories: devy
-layout    : post
 tags      : 
   - webpack
   - Node

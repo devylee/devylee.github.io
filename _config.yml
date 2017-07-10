@@ -51,9 +51,10 @@ repo    : "devylee.github.io"
 branch  : source
 
 # gems and other configs
-gems:
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
+#  - jekyll-feed
 
 exclude:
   - vendor

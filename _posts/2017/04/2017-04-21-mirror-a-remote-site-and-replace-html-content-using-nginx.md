@@ -2,7 +2,6 @@
 title     : 用Nginx镜像远程站点并替换HTML
 date      : "2017-04-21 9:30:00"
 categories: devy
-layout    : post
 tags      : 
   - Nginx
   - Docker
