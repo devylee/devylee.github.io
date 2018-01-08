@@ -62,73 +62,72 @@
 
 <p>我的Dockerfile大概是下面这样的（<em>GHOST_CONTENT参考注<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></em>）：</p>
 
-<pre class="highlight"><code class="language-docker">FROM node:4-slim
+<div class="language-docker highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> node:4-slim</span>
 
-ENV GHOST_SOURCE=/var/www/ghost 
-# 参考注1.
-ENV GHOST_CONTENT=/path/to/your/content
-ENV NODE_ENV=production
-ENV GOSU_VERSION=1.10 
-ENV GHOST_VERSION=0.11.5
+<span class="k">ENV</span><span class="s"> GHOST_SOURCE=/var/www/ghost </span>
+<span class="c"># 参考注1.</span>
+<span class="k">ENV</span><span class="s"> GHOST_CONTENT=/path/to/your/content</span>
+<span class="k">ENV</span><span class="s"> NODE_ENV=production</span>
+<span class="k">ENV</span><span class="s"> GOSU_VERSION=1.10 </span>
+<span class="k">ENV</span><span class="s"> GHOST_VERSION=0.11.5</span>
 
-VOLUME $GHOST_CONTENT
+<span class="k">VOLUME</span><span class="s"> $GHOST_CONTENT</span>
 
-RUN set -x \
-    &amp;&amp; apt-get update \
-    &amp;&amp; apt-get install -y curl unzip rsync ca-certificates --no-install-recommends \
-    &amp;&amp; rm -rf /var/lib/apt/lists/* \
-	&amp;&amp; curl -L "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)"  -o /usr/local/bin/gosu \
-	&amp;&amp; curl -L "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" -o /usr/local/bin/gosu.asc \
-	&amp;&amp; export GNUPGHOME="$(mktemp -d)" \
-	&amp;&amp; gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-	&amp;&amp; gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&amp;&amp; rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
-	&amp;&amp; chmod +x /usr/local/bin/gosu \
-	&amp;&amp; gosu nobody true \
-    &amp;&amp; mkdir -p "$GHOST_SOURCE" \
-    &amp;&amp; curl -L "https://github.com/TryGhost/Ghost/releases/download/$GHOST_VERSION/Ghost-$GHOST_VERSION.zip" -o /var/www/ghost.zip \
-    &amp;&amp; unzip -uo /var/www/ghost.zip -d "$GHOST_SOURCE" \
-    &amp;&amp; rm -f /var/www/ghost.zip \
-    &amp;&amp; cd "$GHOST_SOURCE" \
-    &amp;&amp; npm install -g npm@latest \
-    &amp;&amp; npm install --production \
-    &amp;&amp; npm cache clean \
-    &amp;&amp; apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false curl unzip ca-certificates \
-    &amp;&amp; rm -rf /tmp/* \
-    &amp;&amp; groupadd ghost \
-    &amp;&amp; useradd --create-home --home-dir /home/ghost -g ghost ghost \
-    &amp;&amp; chown -R ghost:ghost "$GHOST_CONTENT"
+<span class="k">RUN </span><span class="nb">set</span> <span class="nt">-x</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> apt-get update <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> curl unzip rsync ca-certificates <span class="nt">--no-install-recommends</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span> <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">"</span>  <span class="nt">-o</span> /usr/local/bin/gosu <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">.asc"</span> <span class="nt">-o</span> /usr/local/bin/gosu.asc <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="k">)</span><span class="s2">"</span> <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--keyserver</span> ha.pool.sks-keyservers.net <span class="nt">--recv-keys</span> B42F6819007F00F88E364FD4036A9C25BF357DD4 <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--batch</span> <span class="nt">--verify</span> /usr/local/bin/gosu.asc /usr/local/bin/gosu <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GNUPGHOME</span><span class="s2">"</span> /usr/local/bin/gosu.asc <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">chmod</span> +x /usr/local/bin/gosu <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> gosu nobody <span class="nb">true</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/TryGhost/Ghost/releases/download/</span><span class="nv">$GHOST_VERSION</span><span class="s2">/Ghost-</span><span class="nv">$GHOST_VERSION</span><span class="s2">.zip"</span> <span class="nt">-o</span> /var/www/ghost.zip <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> unzip <span class="nt">-uo</span> /var/www/ghost.zip <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-f</span> /var/www/ghost.zip <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> npm <span class="nb">install</span> <span class="nt">-g</span> npm@latest <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> npm <span class="nb">install</span> <span class="nt">--production</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> npm cache clean <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> apt-get purge <span class="nt">-y</span> <span class="nt">--auto-remove</span> <span class="nt">-o</span> APT::AutoRemove::RecommendsImportant<span class="o">=</span><span class="nb">false</span> <span class="nt">-o</span> APT::AutoRemove::SuggestsImportant<span class="o">=</span><span class="nb">false </span>curl unzip ca-certificates <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /tmp/<span class="k">*</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> groupadd ghost <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> useradd <span class="nt">--create-home</span> <span class="nt">--home-dir</span> /home/ghost <span class="nt">-g</span> ghost ghost <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">chown</span> <span class="nt">-R</span> ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
 
-WORKDIR $GHOST_SOURCE
+<span class="k">WORKDIR</span><span class="s"> $GHOST_SOURCE</span>
 
-COPY ghost-config.js "$GHOST_SOURCE/config.js"
+<span class="k">COPY</span><span class="s"> ghost-config.js "$GHOST_SOURCE/config.js"</span>
 
-COPY docker-entrypoint.sh /entrypoint.sh
+<span class="k">COPY</span><span class="s"> docker-entrypoint.sh /entrypoint.sh</span>
 
-ENTRYPOINT ["/entrypoint.sh"]
+<span class="k">ENTRYPOINT</span><span class="s"> ["/entrypoint.sh"]</span>
 
-CMD ["npm", "start"]
-</code></pre>
+<span class="k">CMD</span><span class="s"> ["npm", "start"]</span>
+</code></pre></div></div>
 
 <p>docker-entrypoint.sh是这个样子：</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="nb">set</span> -e
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-e</span>
 
-rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">/content/"</span> <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">/"</span>
+rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">/content/"</span> <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">/"</span>
 
-<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$*</span><span class="s2">"</span> <span class="o">==</span> npm<span class="k">*</span>start<span class="k">*</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'0'</span> <span class="o">]</span>; <span class="k">then
-	</span>chown -R ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$*</span><span class="s2">"</span> <span class="o">==</span> npm<span class="k">*</span>start<span class="k">*</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="k">)</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'0'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+	</span><span class="nb">chown</span> <span class="nt">-R</span> ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
     <span class="nb">exec </span>gosu ghost <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 <span class="k">fi
 
 </span><span class="nb">exec</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>ghost-config.js大概是这个样子（<em>url配置参考注<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></em>）：</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">),</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">),</span>
     <span class="nx">config</span><span class="p">;</span>
 
 <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
@@ -158,8 +157,7 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 <span class="p">};</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="第3步-构建你的ghost">第3步 构建你的Ghost</h3>
 
@@ -182,10 +180,10 @@ rsync -r <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span cla
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-json highlighter-rouge"><span class="err">url:</span><span class="w"> </span><span class="err">'http://'</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">process.env.APPNAME</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">'.applinzi.com/'</span></code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： <code class="language-json highlighter-rouge"><span class="err">url:</span><span class="w"> </span><span class="err">process.env.SITEURL</span></code> 。&nbsp;<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//'</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">process.env.APPNAME</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">'.applinzi.com/'</span></code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： <code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">process.env.SITEURL</span></code> 。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -32,7 +32,7 @@
 
 <p>首先，我们来封装JS-SDK，创建一个js文件<code class="highlighter-rouge">wxshare.js</code>，为了让这个JS看起来更通用一些，我用了<a href="https://github.com/umdjs/umd">UMD</a>：</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="nx">factory</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">,</span> <span class="nx">factory</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">define</span> <span class="o">===</span> <span class="s1">'function'</span> <span class="o">&amp;&amp;</span> <span class="nx">define</span><span class="p">.</span><span class="nx">amd</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">define</span><span class="p">([],</span> <span class="nx">factory</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">module</span> <span class="o">===</span> <span class="s1">'object'</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
@@ -44,7 +44,7 @@
 <span class="p">)(</span><span class="k">this</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="s1">'use strict'</span><span class="p">;</span>
 
-    <span class="kd">var</span> <span class="nx">isWeixin</span> <span class="o">=</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">"micromessenger"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">isWeixin</span> <span class="o">=</span> <span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">"micromessenger"</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span>
 
     <span class="cm">/**
      * 此方法用于加载JS-SDK
@@ -52,14 +52,14 @@
     <span class="kd">function</span> <span class="nx">load_wx_jssdk</span><span class="p">(</span><span class="nx">sdk</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">resolve</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
             <span class="p">};</span>
             <span class="nx">s</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
                 <span class="nx">reject</span><span class="p">(</span><span class="s1">'failed to load '</span> <span class="o">+</span> <span class="nx">sdk</span><span class="p">);</span>
             <span class="p">};</span>
-            <span class="nx">s</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">s</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
             <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">sdk</span><span class="p">;</span>
             <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"head"</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
         <span class="p">});</span>
@@ -71,7 +71,7 @@
      * 其中的 1.1.3 步骤三：通过config接口注入权限验证配置
      */</span>
     <span class="kd">function</span> <span class="nx">load_config</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isWeixin</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">reject</span><span class="p">(</span><span class="s1">'not weixin'</span><span class="p">);</span>
             <span class="p">}</span>
@@ -103,7 +103,7 @@
      * 这个方法就是调用JS-SDK的API方法初始化分享属性
      */</span>
     <span class="kd">function</span> <span class="nx">init_share</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isWeixin</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">reject</span><span class="p">(</span><span class="s1">'not weixin'</span><span class="p">);</span>
             <span class="p">}</span>
@@ -166,14 +166,13 @@
         <span class="na">init</span><span class="p">:</span> <span class="nx">init_share</span>
     <span class="p">};</span>
 <span class="p">});</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>接下来，我们要处理上面代码中提到的<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421135319#buzhou3">JS-SDK的权限验证配置</a>。我的建议是用后端程序写一个接口并单独部署，比如下面这个使用<a href="https://www.slimframework.com/">Slim</a>框架的PHP程序：</p>
 
-<div class="language-php highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-<span class="c1">// Routes
-</span><span class="k">use</span> <span class="nx">Psr\Http\Message\ServerRequestInterface</span><span class="p">;</span>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// Routes</span>
+<span class="k">use</span> <span class="nx">Psr\Http\Message\ServerRequestInterface</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Psr\Http\Message\ResponseInterface</span><span class="p">;</span>
 
 <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/path/to/wxconfig'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">ServerRequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$args</span><span class="p">)</span> <span class="p">{</span>
@@ -271,12 +270,11 @@
     <span class="k">return</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$response</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span> <span class="o">?:</span> <span class="nv">$response</span><span class="p">;</span>
 <span class="p">}</span>
 
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>然后，我们要在页面中调用上面定义的<code class="highlighter-rouge">weixin_share</code>，其中<code class="highlighter-rouge">path/to/wxconfig</code>就是上述权限验证配置的部署路径：</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">root</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
     <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="nx">root</span><span class="p">.</span><span class="nx">weixin_share</span><span class="p">.</span><span class="nx">config</span><span class="p">(</span><span class="s2">"/path/to/wxconfig"</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
@@ -288,12 +286,11 @@
             <span class="p">},</span> <span class="nx">c</span><span class="p">));</span>
         <span class="p">});</span>
     <span class="p">};</span>
-    <span class="nx">s</span><span class="p">.</span><span class="nx">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">s</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'/path/to/wxshare.js'</span><span class="p">;</span>
     <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"head"</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
 <span class="p">})(</span><span class="k">this</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <blockquote>
   <p>大家可能注意到了，我是从页面的meta元素中提取相关的标题、描述以及图片等信息，这样做的目的主要是尽可能小的改动博客代码。当前主流的博客系统貌似都使用了这种叫<a href="http://ogp.me/">Open Graph protocol</a>的东西。当然，如果不嫌麻烦，也可将上述提取meta的代码进行改造一番（比如，使用后端程序直接将相关信息输出到页面代码中）。</p>
