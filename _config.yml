@@ -46,7 +46,7 @@ disqus           : devylee
 twitter_card_site: "@idevylee"
 
 # Settings for deploy rake task
-ghusername: devylee
+username: devylee
 repo    : "devylee.github.io"
 branch  : source
 
