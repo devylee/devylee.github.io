@@ -47,6 +47,7 @@ twitter_card_site: "@idevylee"
 
 # Settings for deploy rake task
 username: devylee
+email   : "devyli@gmail.com"
 repo    : "devylee.github.io"
 branch  : source
 

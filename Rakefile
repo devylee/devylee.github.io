@@ -175,7 +175,7 @@ namespace :site do
   desc "Generate the site"
   task :build do
     check_destination
-    sh "bundle exec jekyll build"
+    sh "JEKYLL_ENV=production bundle exec jekyll build"
   end
 
   desc "Generate the site and serve locally"
@@ -192,9 +192,9 @@ namespace :site do
   desc "Generate the site and push changes to remote origin"
   task :deploy do
     # Make sure destination folder exists as git repo
-    check_destination
-
     sh "bundle exec jekyll clean"
+
+    check_destination
 
     Dir.chdir(CONFIG["destination"]) { sh "git checkout #{DESTINATION_BRANCH}" }
 
@@ -205,6 +205,8 @@ namespace :site do
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
     Dir.chdir(CONFIG["destination"]) do
       sh "git add --all ."
+      sh "git config user.name '#{USERNAME}'"
+      sh "git config user.email #{CONFIG["email"]}"
       sh "git commit -m 'Updating to #{USERNAME}/#{REPO}@#{sha}.'"
       sh "git push --quiet origin #{DESTINATION_BRANCH}"
       puts "Pushed updated branch #{DESTINATION_BRANCH} to GitHub Pages"
