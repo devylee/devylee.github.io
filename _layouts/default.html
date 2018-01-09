@@ -1,49 +1,146 @@
+{%- if page.layout == 'post' -%}
+{%- capture body_class -%}post-template{% for tag in page.tags %} tag-{{tag|downcase}}{% endfor %}{%- endcapture -%}
+{%- elsif page.layout == 'page' -%}
+{%- capture body_class -%}page-template page-{{page.current}}{%- endcapture -%}
+{%- elsif page.tag -%}
+{%- capture body_class -%}tag-template tag-{{page.tag|downcase}}{%- endcapture -%}
+{%- elsif page.author -%}
+{%- capture body_class -%}author-template author-{{page.author}}{%- endcapture -%}
+{%- else -%}
+{%- assign body_class = 'home-template' -%}
+{%- endif -%}
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- [[! Document Settings ]] -->
+    
+{%- comment -%} Document Settings ]] {%- endcomment -%}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}" >
-
-    <!-- [[! Styles'n'Scripts ]] -->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
-    <link rel="stylesheet" type="text/css" href="{{ 'assets/css/screen.css' | relative_url }}" />
+{%- comment -%} Styles'n'Scripts {%- endcomment -%}
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/built/screen.css' | relative_url }}" />
     <link rel="stylesheet" type="text/css" href="{{ 'assets/css/syntax.css' | relative_url }}" />
 
-    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
     {% include head.html %}
 
 </head>
-
-<body class="{% if paginator.page > 1 %}paged archive-template{% elsif layout.class %}{{ layout.class }}{% else %}home-template{% endif %} nav-closed">
-
-    {% include navigation.html %}
+<body class="{{body_class}}">
 
     <div class="site-wrapper">
 
-        <!-- [[! Everything else gets inserted here ]] -->
+{% comment %} All the main content gets inserted here {% endcomment %}
         {{ content }}
 
-        <footer class="site-footer clearfix">
-          <section class="copyright"><nobr><a href="{{ '/' | relative_url }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }}</nobr> <nobr>All Rights Reserved.</nobr></section>
-          <section class="poweredby"><nobr>Proudly published with <a href="https://jekyllrb.com/">Jekyll</a>,</nobr> <nobr>hosted by <a href="https://github.com/devylee/devylee.github.io">Github</a>,</nobr> <nobr>theme by <a href="https://github.com/tryghost/casper">Casper</a></nobr></section>
+{% comment %} The footer at the very bottom of the screen {% endcomment %}
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="{{ '/' | relative_url }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }}</section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
         </footer>
+
     </div>
-    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <!-- [[! The main JavaScript file for Casper ]] -->
+
+{% comment %} jQuery + Fitvids, which makes all video embeds responsive ]] {% endcomment %}
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
     <script type="text/javascript" src="{{ '/assets/js/jquery.fitvids.js' | relative_url }}"></script>
-    <script type="text/javascript" src="{{ '/assets/js/index.js' | relative_url }}"></script>
+    
+    {%- assign posts_pages = site.posts | size | divided_by:10 | plus:1 -%}
+    
+    {% if posts_pages > 0 %}
+    <script>
+        var maxPages = parseInt('{{posts_pages}}');
+    </script>
+    <script src="{{ '/assets/js/infinitescroll.js' | relative_url }}"></script>
+    {% endif %}
+    
     <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
-{% if jekyll.environment == "production" and site.google_analytics %}
-    <!-- Add Google Analytics  -->
-    {% include google_analytics.html %}   
-{% endif %}
+    {% if jekyll.environment == "production" and site.google_analytics %}
+        {% include google_analytics.html %}   
+    {% endif %}
+
+    {% if layout.current == 'post' %}
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    {% elsif layout.current == 'page' %}
+    <script>
+        $(function() {
+            var $postContent = $(".post-full-content");
+            $postContent.fitVids();
+        });
+    </script>
+    {% endif %}
 </body>
 </html>
 

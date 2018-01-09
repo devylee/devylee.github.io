@@ -1,0 +1,20 @@
+<nav class="site-nav">
+        <div class="site-nav-left">
+            {%- unless page.current == 'home' -%}
+                {%- if  site.logo -%}
+            <a class="site-nav-logo" href="{{ '/' | relative_url }}"><img src="{{ site.logo | relative_url }}" alt="{{ site.name }}" /></a>
+                {%- else -%}
+            <a class="site-nav-logo" href="{{ '/' | relative_url }}">{{ site.name }}</a>
+                {%- endif -%}
+            {%- endunless -%}
+            <ul class="nav" role="menu">
+                <li class="nav-home {% if page.current == 'home' %} nav-current{% endif %}" role="menuitem"><a href="{{ '/' | relative_url }}">Home</a></li>
+                <li class="nav-about {% if page.current == 'about' %} nav-current{% endif %}" role="menuitem"><a href="{{ '/about/' | relative_url }}">About</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="{{ '/feed.xml' | absolute_url }}" target="_blank" rel="noopener">{% include icons/rss.html %}</a>
+        </div>
+    </nav>
+    

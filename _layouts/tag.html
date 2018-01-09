@@ -7,35 +7,35 @@ navigation: true
 current   : tag
 ---
 
-<!-- < default}} -->
-<!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
+{%- assign tag = site.data.tags[page.tag] -%}
 
-<!-- If we have a tag cover, display that - else blog cover - else nothing -->
-<header class="main-header tag-head {% if page.cover %}" style="background-image: url({{ page.cover | relative_url }}){% else %}no-cover{% endif %}">
-    <nav class="main-nav overlay clearfix">
-        {% if layout.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
-        {% if page.navigation %}
-            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        {% endif %}
-    </nav>
-    <div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">{{ page.tag }}</h1>
-            <h2 class="page-description">
-            {% if tag_description %}
-                {{ tag_description }}
-            {% elsif page.tag %}
-			    A {{ paginator.total_posts }}-post collection
-            {% endif %}
-            </h2>
+{% comment %} The tag above means - insert everything in this file into the [body] of the default.html template {% endcomment %}
+
+{% comment %} The big featured header, it uses blog cover image as a BG if available {% endcomment %}
+    <header class="site-header outer {% if page.cover %}" style="background-image: url({{page.cover | relative_url}}){% else %}no-cover{% endif %}">
+        <div class="inner">
+            {% include site-nav.html %}
+            <div class="site-header-content">
+                <h1 class="site-title">{{ page.tag }}</h1>
+                <h2 class="site-description">
+                    {% if tag.description %}
+                        {{ tag.description }}
+                    {% elsif page.tag %}
+                        A collection of {% if paginator.total_posts > 1%}{{ paginator.total_posts }} posts{% elsif paginator.total_posts == 1 %} 1 post{% else %} posts{% endif %}
+                    {% endif %}
+                </h2>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<!-- The main content area on the homepage -->
-<main id="content" class="content" role="main">
-
-    <!-- The tag below includes the post loop - partials/loop.hbs -->
-    {% include loop.html %}
-
-</main>
+{% comment %} The main content area {% endcomment %}
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <div class="post-feed">
+            {% for post in paginator.posts %}
+            {% comment %} The tag below includes the markup for each post - _includes/post-card.html {% endcomment %}
+                {% include post-card.html post=post %}
+            {% endfor %}
+            </div>
+        </div>
+    </main>

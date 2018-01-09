@@ -1,0 +1,28 @@
+{% assign post_author = include.post.categories[0] %}
+            <article class="post-card {{include.post.class}}{% unless include.post.cover %} no-image{% endunless %}">
+            {%- if include.post.cover -%}
+                <a class="post-card-image-link" href="{{ include.post.url | relative_url }}">
+                    <div class="post-card-image" style="background-image: url({{include.post.cover}})"></div>
+                </a>
+            {%- endif -%}
+                <div class="post-card-content">
+                    <a class="post-card-content-link" href="{{include.post.url | relative_url}}">
+                        <header class="post-card-header">
+                        {%- for tag in include.post.tags limit:1 -%}
+                            <span class="post-card-tags">{{tag}}</span>
+                        {%- endfor -%}
+                            <h2 class="post-card-title">{{include.post.title}}</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>{% if include.post.excerpt %}{{ include.post.excerpt | strip_html }}{% else %}{{ include.post.content | strip_html | truncatewords: 33 }}{% endif %}</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta">
+                    {%- if site.data.authors[post_author].avatar -%}
+                        <img class="author-profile-image" src="{{site.data.authors[post_author].avatar}}?size=50" alt="{{site.data.authors[post_author].name}}" />
+                    {%- endif -%}
+                        {%- capture author_page_path -%}/author/{{ post_author }}/{%- endcapture -%}
+                        <span class="post-card-author"><a href="{{ author_page_path | relative_url }}">{{site.data.authors[post_author].name}}</a></span>
+                    </footer>
+                </div>
+            </article>

@@ -5,126 +5,121 @@ class     : post-template
 navigation: true
 current   : post
 ---
+{%- assign author = page.categories[0] -%}
+{%- assign author_info = site.data.authors[author] -%}
+{%- capture author_page_path -%}/author/{{ author }}/{%- endcapture -%}
+{% comment %} The tag above means: insert everything in this file into the {body} of the default.hbs template {% endcomment %}
+    
+    <header class="site-header outer">
+        <div class="inner">
+                {% include site-nav.html %}
+        </div>
+    </header>
+    
+{% comment %} Everything inside the #post tags pulls data from the post {% endcomment %}
 
-<!-- < default -->
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
 
-<!-- The comment above "< default" means - insert everything in this file into -->
-    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+            <article class="post-full {{ page.class }}{% unless page.cover %} no-image{% endunless %}">
 
-<!-- Everything inside the #post tags pulls data from the post -->
-<!-- #post -->
-<header class="main-header post-head {% if page.cover %}" style="background-image: url({{ page.cover | relative_url }}) {% else %}no-cover{% endif %}">
-    <nav class="main-nav {% if page.cover %} overlay {% endif %} clearfix">
-        {% if page.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
-        {% if page.navigation or layout.navigation and page.navigation != false %}
-            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        {% endif %}
-    </nav>
-</header>
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="{{ post.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
+                            {% for tag in page.tags %}
+                            {%- capture tag_page_path -%}/tag/{{ tag | downcase }}/{%- endcapture -%}
+                                <span class="date-divider">/</span> <a href="{{ tag_page_path | relative_url }}">{{ tag | replace : '-', ' ' }}</a>
+                            {% endfor %}
+                        </section>
+                        <h1 class="post-full-title">{{ page.title }}</h1>
+                </header>
 
-<main class="content" role="main">
-{% assign author = page.categories[0] %}
-    <article class="{% if page.class %}{{ page.class }}{% else %}post{% endif %}">
-
-        <header class="post-header">
-            <h1 class="post-title">{{ page.title }}</h1>
-            <section class="post-meta">
-            <time class="post-date" datetime="{{ page.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
-                <!-- [[tags prefix=" on "]] -->
-                {% if page.tags.size > 0 %} 
-                on 
-                {% for tag in page.tags %}
-                    {% capture tag_page_path %}/tag/{{ tag | downcase }}/{% endcapture %}
-                    {% if forloop.index == page.tags.size %}
-                       <a href='{{ tag_page_path | relative_url }}'>{{ tag | replace : '-', ' ' }}</a>
-                    {% else %}
-                       <a href='{{ tag_page_path | relative_url }}'>{{ tag | replace : '-', ' ' }}</a>,
-                    {% endif %}   
-                {% endfor %}
+                {% if page.cover %}
+                <figure class="post-full-image" style="background-image: url({{ page.cover | relative_url }})">
+                </figure>
                 {% endif %}
-            </section>
-        </header>
 
-        <section class="post-content">
-            
-            {{ content }}
+                <section class="post-full-content">
+                    {{content}}
+                </section>
 
-        </section>
+                <footer class="post-full-footer">
+{% comment %} Everything inside the #author tags pulls data from the author {% endcomment %}
+    
+                    <section class="author-card">
+                        {% if author_info.avatar %}
+                            <img class="author-profile-image" src="{{author_info.avatar}}?size=120" alt="{{author_info.name}}" />
+                        {% endif %}
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="{{ author_page_path | relative_url }}">{{name}}</a></h4>
+                                {% if author_info.bio %}
+                                    <p> {{ author_info.bio }}</p>
+                                {% else %}
+                                    <p>Read <a href="{{ author_page_path | relative_url }}">more posts</a> by this author.</p>
+                                {% endif %}
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="{{ author_page_path | relative_url }}">Read More</a>
+                        </div>
+        
+                </footer>
 
-        <footer class="post-footer">
-
-            <!-- Everything inside the #author tags pulls data from the author -->
-            <!-- #author-->
-            {% capture author_page_path %}/author/{{ author }}/{% endcapture %}
-            {% if site.image %}
-            <figure class="author-image">
-                <a class="img" href="{{ author_page_path | relative_url }}" style="background-image: url({{ site.data.authors[author].avatar }}?size=136)"><span class="hidden">{{ site.data.authors[author].name }}'s Picture</span></a>
-            </figure>
-            {% endif %}
-
-            <section class="author">
-                <h4><a href="{{ author_page_path | relative_url }}">{{ site.data.authors[author].name }}</a></h4>
-                
-                {% if site.data.authors[author].bio %}
-                    <p> {{ site.data.authors[author].bio }}</p>
-                {% endif %}
-                <div class="author-meta">
-                    {% if page.location %}<span class="author-location icon-location"> {{ page.location }}</span>
-                    {% elsif site.data.authors[author].location %}<span class="author-location icon-location"> {{ site.data.authors[author].location }}</span>{% endif %} 
-                </div>
-            </section>
-
-            <!-- /author  -->
-
-            <section class="share">
-                <h4>Share this post</h4>
-                <a class="icon-twitter" href="http://twitter.com/share?text={{ page.title | uri_escape }}&url={{ page.url | absolute_url | uri_escape }}"
-                    onclick="window.open('http://twitter.com/share?text={{ page.title | uri_escape }}&url=' + encodeURIComponent(window.location.href), 'twitter-share', 'width=550,height=235');return false;">
-                    <span class="hidden">Twitter</span>
-                </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | uri_escape }}"
-                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share','width=580,height=296');return false;">
-                    <span class="hidden">Facebook</span>
-                </a>
-                <a class="icon-weibo" href="http://service.weibo.com/share/share.php?url={{ page.url | absolute_url | uri_escape }}&title={{ page.title | uri_escape }}"
-                   onclick="window.open('http://service.weibo.com/share/share.php?title={{ page.title | uri_escape }}&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
-                    <span class="hidden">Weibo</span>
-                </a>
-            </section>
-            
             {% if jekyll.environment == "production" and site.disqus and page.comments %}
-                <!-- Add Disqus Comments -->
                 {% include disqus.html %}
             {% endif %}
-            
-        </footer>
 
-    </article>
+            </article>
 
-</main>
+        </div>
+    </main>
 
-<aside class="read-next">
+{% comment %} Links to Previous/Next posts {% endcomment %}
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            {% for tag in page.tags limit:1 %}
+                {%- assign tag_info = site.data.tags[tag] -%}
+                {%- assign related_posts = site.tags[tag] -%}
+                {%- assign related_posts_count = related_posts | size -%}
+                {%- capture tag_page_path -%}/tag/{{ tag | downcase }}/{%- endcapture -%}
+                {% if related_posts_count > 0 %}
+                <article class="read-next-card"
+                        {%- if tag_info.cover -%}
+                            style="background-image: url({{ tag_info.cover | relative_url }})"
+                        {%- elsif site.cover -%}
+                                style="background-image: url({{ site.cover | relative_url }})"
+                        {%- endif -%}>
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; {{site.name}} &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="{{ tag_page_path | relative_url }}">{{ tag | replace : '-', ' ' }}</a></h3>
+                    </header>
+                    <div class="read-next-divider">{% include icons/infinity.html %}</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            {% for post in related_posts limit:3 %}
+                            <li><a href="{{ post.url | relative_url }}">{{post.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="{{ tag_page_path | relative_url }}">{% if related_posts_count > 1 %}See all {{related_posts_count}} posts{% elsif related_posts_count == 1 %}1 post{% else %}No posts{% endif %} →</a>
+                    </footer>
+                </article>
+                {% endif %}
+            {% endfor %}
 
-    <!-- [[! next_post ]] -->
-    {% if page.next %}
-        <a class="read-next-story {% if page.next.cover %}" style="background-image: url({{ page.next.cover | relative_url }}){% else %}no-cover{% endif %}" href="{{ page.next.url | relative_url }}">
-            <section class="post">
-                <h2>{{ page.next.title }}</h2>
-                <p>{% if page.next.excerpt %}{{ page.next.excerpt | strip_html }}{% else %}{{ page.next.content | strip_html | truncatewords: 15 }}{% endif %}</p>
-            </section>
-        </a>
-    {% endif %}
-    <!-- [[! /next_post ]] -->
-    <!-- [[! prev_post ]] -->
-    {% if page.previous %}
-        <a class="read-next-story prev {% if page.previous.cover %}" style="background-image: url({{ page.previous.cover | relative_url }}){% else %}no-cover{% endif %}" href="{{ page.previous.url | relative_url }}">
-            <section class="post">
-                <h2>{{ page.previous.title }}</h2>
-                <p>{% if page.previous.excerpt %}{{ page.previous.excerpt | strip_html }}{% else %}{{ page.previous.content | strip_html | truncatewords: 15 }}{% endif %}</p>
-            </section>
-        </a>
-    {% endif %}
-    <!-- [[! /prev_post ]] -->
-</aside>
+{% comment %} If there's a next post, display it using the same markup included from - _includes/post-card.html {% endcomment %}
+            {% if page.next %}
+                {% include post-card.html post=page.next %}
+            {% endif %}
+{% comment %} If there's a previous post, display it using the same markup included from - _includes/post-card.html {% endcomment %}
+            {% if page.previous %}
+                {% include post-card.html post=page.previous %}
+            {% endif %}
+            </div>
+        </div>
+    </aside>
 
-<!-- /post -->
+{% comment %} Floating header which appears on-scroll, included from includes/floating-header.hbs {% endcomment %}
+    {% include floating-header.html %}

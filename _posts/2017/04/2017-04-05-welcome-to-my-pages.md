@@ -4,6 +4,7 @@ date      : "2017-04-05 17:30:00"
 categories: devy
 layout    : post
 cover     : "/uploads/2017/04/cover-welcome.jpg"
+class     : "post"
 ---
 
 欢迎来到我的Github Page，当然这也将被用作我的个人博客。

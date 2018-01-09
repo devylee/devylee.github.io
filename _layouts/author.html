@@ -7,47 +7,53 @@ navigation: true
 current   : author
 ---
 
-<!-- < default}} -->
-<!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
+{%- assign author = site.data.authors[page.author] -%}
+{%- capture author_rss_url -%}/author/{{ page.author }}/rss.xml{%- endcapture -%}
 
-<!-- The big featured header -->
+{% comment %} The tag above means - insert everything in this file into the [body] of the default.html template {% endcomment %}
 
-<!-- Everything inside the #author tags pulls data from the author -->
-<!-- #author  -->
-{% assign author = site.data.authors[page.author] %}
-    <header class="main-header author-head {% if author.cover %}" style="background-image: url({{ author.cover | relative_url }}){% else %}no-cover{% endif %}">
-        <nav class="main-nav overlay clearfix">
-            {% if page.logo %}<a class="blog-logo" href="{{ '/' | relative_url }}"><img src="{{ page.logo | relative_url }}" alt="Blog Logo" /></a>{% endif %}
-            {% if page.navigation %}
-                <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+{% comment %} Everything inside the #author tags pulls data from the author {% endcomment %}
+    <header class="site-header outer {% if author.cover %}" style="background-image: url({{author.cover}}){% else %} no-cover{% endif %}">
+        <div class="inner">
+            {% include site-nav.html %}
+            <div class="site-header-content">
+            {% if author.avatar %}
+                <img class="author-profile-image" src="{{ author.avatar }}?size=200" alt="{{author.name}}" />
             {% endif %}
-        </nav>
+                <h1 class="site-title">{{author.name}}</h1>
+            {% if author.bio %}
+                <h2 class="author-bio">{{ author.bio }}</h2>
+            {% endif %}
+                <div class="author-meta">
+                {% if author.location %}
+                    <div class="author-location">{{author.location}} <span class="bull">&bull;</span></div>
+                {% endif %}
+                    <div class="author-stats">
+                        {% if paginator.total_posts == 0 %}No posts{% elsif paginator.total_posts == 1 %}1 post{% else %}{{ paginator.total_posts }} posts{% endif %} <span class="bull">&bull;</span>
+                    </div>
+                {% if author.github_url %}
+                    <a class="social-link social-link-gh" href="{{author.github_url}}" target="_blank" rel="noopener">{% include icons/github.html %}</a>
+                {% endif %}
+                {% if author.twitter_url %}
+                    <a class="social-link social-link-tw" href="{{author.twitter_url}}" target="_blank" rel="noopener">{% include icons/twitter.html %}</a>
+                {% endif %}
+                {% if author.weibo_url %}
+                    <a class="social-link social-link-swb" href="{{author.weibo_url}}" target="_blank" rel="noopener">{% include icons/weibo.html %}</a>
+                {% endif %}
+                    <a class="social-link social-link-rss" href="{{ author_rss_url | absolute_url }}" target="_blank" rel="noopener">{% include icons/rss.html %}</a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <section class="author-profile inner">
-        {% if site.image %}
-        <figure class="author-image">
-            <div class="img" style="background-image: url({{ author.avatar}}?size=228)"><span class="hidden">{{ author.mame }}'s Picture</span></div>
-        </figure>
-        {% endif %}
-        <h1 class="author-title">{{ author.name }}</h1>
-        {% if author.bio %}
-            <h2 class="author-bio">{{ author.bio }}</h2>
-        {% endif %}
-        <div class="author-meta">
-            {% if author.location %}<span class="author-location icon-location">{{ author.location }}</span>{% endif %}
-            <span class="author-stats"><i class="icon-stats"></i>{% if paginator.total_posts == 0 %}No posts{% elsif paginator.total_posts == 1 %}1 post{% else %}{{ paginator.total_posts }} posts{% endif %}</span>
-            {% if author.github_url %}<span class="author-link icon-github"><a href="{{ author.github_url }}"> Github</a></span>{% endif %} 
-            {% if author.twitter_url %}<span class="author-link icon-twitter"><a href="{{ author.twitter_url }}"> Twitter</a></span>{% endif %} 
-            {% if author.weibo_url %}<span class="author-link icon-weibo"><a href="{{ author.weibo_url }}"> Weibo</a></span>{% endif %} 
+{% comment %} The main content area {% endcomment %}
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <div class="post-feed">
+                {% for post in paginator.posts %}
+                {% comment %} The tag below includes the markup for each post - _includes/post-card.html {% endcomment %}
+                    {% include post-card.html post=post %}
+                {% endfor %}
+            </div>
         </div>
-    </section>
-<!-- /author -->
-
-<!-- The main content area on the homepage -->
-<main id="content" class="content" role="main">
-
-    <!-- The tag below includes the post loop - partials/loop.hbs  -->
-    {% include loop.html %}
-
-</main>
+    </main>

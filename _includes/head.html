@@ -1,15 +1,17 @@
-{% capture page_path %}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{% endcapture %}
-{% capture page_title %}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{% endcapture %}
-{% capture page_description %}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{% endcapture %}
+{%- comment -%} Ghost outputs important style and meta data with this tag {%- endcomment -%}
+{%- capture page_path -%}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{%- endcapture -%}
+{%- capture page_title -%}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{%- endcapture -%}
+{%- capture page_description -%}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{%- endcapture -%}
     <link rel="canonical" href="{{ page_path | absolute_url }}" />
     <meta name="referrer" content="origin" />
-{% if paginator.previous_page %}
-    {% capture prev_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{% endcapture %}
+{%- if paginator.previous_page -%}
+    {%- capture prev_page_path -%}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.previous_page_path }}{%- endcapture -%}
     <link rel="prev" href="{{ prev_page_path | absolute_url }}" />
-{% endif %}{% if paginator.next_page %}
-    {% capture next_page_path %}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{% endcapture %}
+{%- endif -%}
+{%- if paginator.next_page -%}
+    {%- capture next_page_path -%}{% if page.current == 'author' %}/author/{{ page.author }}{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}{% endif %}{{ paginator.next_page_path }}{%- endcapture -%}
     <link rel="next" href="{{ next_page_path | absolute_url }}" />
-{% endif %}
+{%- endif -%}
     <title>{{ page_title }}</title>
     <meta name="description" content="{{ page_description | escape | strip_newlines }}" />
 
@@ -45,4 +47,4 @@
     </script>
 
     <meta name="generator" content="Jekyll" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ '/feed.xml' | relative_url }}" />
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ '/feed.xml' | absolute_url }}" />
