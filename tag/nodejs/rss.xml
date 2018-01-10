@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere &ndash; NodeJS</title>
+   <title>elsewhere - NodeJS</title>
    <link>https://devylee.github.io/tag/nodejs/rss.xml</link>
    <description>A JavaScript runtime built on Chrome's V8 JavaScript engine.</description>
    <language>zh-CN</language>

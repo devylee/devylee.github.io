@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere &ndash; MacPorts</title>
+   <title>elsewhere - MacPorts</title>
    <link>https://devylee.github.io/tag/macports/rss.xml</link>
    <description>An open-source community initiative to design an easy-to-use system for compiling, installing, and upgrading either command-line, X11 or Aqua based open-source software on the Mac operating system.</description>
    <language>zh-CN</language>
