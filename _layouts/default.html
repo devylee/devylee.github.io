@@ -22,6 +22,7 @@
 
 {%- comment -%} Styles'n'Scripts {%- endcomment -%}
     <link rel="stylesheet" type="text/css" href="{{ 'assets/built/screen.css' | relative_url }}" />
+    <link rel="stylesheet" type="text/css" href="{{ 'assets/css/customize.css' | relative_url }}" />
     <link rel="stylesheet" type="text/css" href="{{ 'assets/css/syntax.css' | relative_url }}" />
 
     {% include head.html %}
@@ -37,9 +38,14 @@
 {% comment %} The footer at the very bottom of the screen {% endcomment %}
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="{{ '/' | relative_url }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }}</section>
+                <section class="copyright">
+                    <a href="{{ '/' | relative_url }}">{{ site.name }}</a> 
+                    &copy; {{  site.time | date: '%Y' }} 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
                 <nav class="site-footer-nav">
                     <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
                     <a href="https://github.com/tryghost/casper">Theme by Casper</a>
                 </nav>
             </div>
@@ -64,12 +70,12 @@
     <script src="{{ '/assets/js/infinitescroll.js' | relative_url }}"></script>
     {% endif %}
     
-    <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
     {% if jekyll.environment == "production" and site.google_analytics %}
         {% include google_analytics.html %}   
     {% endif %}
 
     {% if layout.current == 'post' %}
+    <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
     <script>
 
     // NOTE: Scroll performance is poor in Safari

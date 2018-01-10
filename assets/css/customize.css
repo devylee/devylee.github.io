@@ -1,0 +1,21 @@
+
+.floating-header-share-swb {
+    background: #e6162d;
+    display: block;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    color: #fff;
+    line-height: 48px;
+    text-align: center;
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.social-link-gh svg {
+    height: 1.5rem;
+    margin-left: 2px;
+}
+
+.social-link-swb svg {
+    height: 1.6rem;
+}

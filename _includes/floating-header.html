@@ -19,7 +19,7 @@
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             {% include icons/facebook.html %}
         </a>
-        <a class="floating-header-share-wb" href="http://service.weibo.com/share/share.php?url={{ page.url | absolute_url | uri_escape }}&title={{ page.title | uri_escape }}"
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url={{ page.url | absolute_url | uri_escape }}&title={{ page.title | uri_escape }}"
            onclick="window.open('http://service.weibo.com/share/share.php?title={{ page.title | uri_escape }}&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
            {% include icons/weibo.html %}
         </a>
