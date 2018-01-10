@@ -10,8 +10,6 @@
 
 `$ rougify style monokai.sublime > assets/css/syntax.css`
 
-`$ rake site:deploy`
-
 ## Deploy to Github
 
 `$ rake site:deploy`
