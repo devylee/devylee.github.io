@@ -16,13 +16,13 @@ current   : tag
         <div class="inner">
             {% include site-nav.html %}
             <div class="site-header-content">
-                <h1 class="site-title">{{ page.tag }}</h1>
+                <h1 class="site-title">{% if tag %}{{ tag.name }}{% else %}{{ page.tag }}{% endif %}</h1>
                 <h2 class="site-description">
-                    {% if tag.description %}
-                        {{ tag.description }}
-                    {% elsif page.tag %}
+                    {%- if tag -%}
+                        {{ tag.desc }}
+                    {%- elsif page.tag -%}
                         A collection of {% if paginator.total_posts > 1%}{{ paginator.total_posts }} posts{% elsif paginator.total_posts == 1 %} 1 post{% else %} posts{% endif %}
-                    {% endif %}
+                    {%- endif -%}
                 </h2>
             </div>
         </div>

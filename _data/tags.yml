@@ -1,0 +1,33 @@
+docker:
+  name: Docker
+  desc: A software containerization platform.
+ghost: 
+  name: Ghost
+  desc: A blog publishing platform.
+sae:
+  name: SAE
+  desc: Sina Application Engine
+javascript:
+  name: Javascript
+  desc: Javascript
+cors:
+  name: CORS
+  desc: Cross-Origin Resource Sharing
+disqus:
+  name: Disqus
+  desc: Disqus offers add-on tools for websites to increase engagement, and help publishers power online discussions with comments and earn revenue with native advertising.
+macos:
+  name: macOS
+  desc: Apple Mac operating system
+macports:
+  name: MacPorts
+  desc: An open-source community initiative to design an easy-to-use system for compiling, installing, and upgrading either command-line, X11 or Aqua based open-source software on the Mac operating system.
+nginx:
+  name: nginx
+  desc: An HTTP and reverse proxy server, a mail proxy server, and a generic TCP/UDP proxy server, originally written by Igor Sysoev.
+nodejs:
+  name: NodeJS
+  desc: A JavaScript runtime built on Chrome's V8 JavaScript engine.
+weixin:
+  name: 微信
+  desc: A social App

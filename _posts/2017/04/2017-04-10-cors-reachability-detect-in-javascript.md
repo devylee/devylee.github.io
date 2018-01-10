@@ -3,9 +3,9 @@ title     : 用Javascript检测跨域资源(CORS)的可用性
 date      : "2017-04-10 15:30:00"
 categories: devy
 tags      : 
-  - Javascript
-  - CORS
-  - Disqus
+  - javascript
+  - cors
+  - disqus
 layout    : post
 class     : "post tag-javascript tag-cors tag-disqus"
 comments  : true

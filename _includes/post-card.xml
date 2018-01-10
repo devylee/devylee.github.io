@@ -1,0 +1,15 @@
+{%- assign post_author = include.post.categories[0] -%}
+
+<item>
+    <title>{{ include.post.title | xml_escape }}</title>
+    <author>{{ site.data.authors[post_author].name }}</author>
+    <link>{{ include.post.url | absolute_url }}</link>
+    <pubDate>{{ include.post.date | date_to_xmlschema }}</pubDate>
+    <description><![CDATA[
+    {%- if include.post.excerpt -%}{{ include.post.excerpt | expand_urls : site.url }}{%- else -%}{{ include.post.content | expand_urls : site.url }}{%- endif -%}
+	]]></description>
+    <guid isPermaLink="true">{{ include.post.url | absolute_url }}</guid>
+    {% if include.post.cover -%}
+    <image>{{ include.post.cover | absolute_url }}</image>
+    {%- endif %}
+</item>

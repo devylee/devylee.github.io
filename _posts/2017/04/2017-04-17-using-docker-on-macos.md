@@ -3,9 +3,9 @@ title     : Mac下Docker的使用
 date      : "2017-04-17 14:00:00"
 categories: devy
 tags      : 
-  - Docker
-  - macOS
-  - MacPorts
+  - docker
+  - macos
+  - macports
 layout    : post
 class     : "post tag-docker tag-macos tag-macports"
 comments  : true

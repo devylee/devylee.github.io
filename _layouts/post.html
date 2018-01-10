@@ -27,8 +27,9 @@ current   : post
                         <section class="post-full-meta">
                             <time class="post-full-meta-date" datetime="{{ post.date | date:'%Y-%m-%d' }}">{{ page.date | date_to_string }}</time>
                             {% for tag in page.tags %}
+                            {%- assign tag_info = site.data.tags[tag] -%}
                             {%- capture tag_page_path -%}/tag/{{ tag | downcase }}/{%- endcapture -%}
-                                <span class="date-divider">/</span> <a href="{{ tag_page_path | relative_url }}">{{ tag | replace : '-', ' ' }}</a>
+                                <span class="date-divider">/</span> <a href="{{ tag_page_path | relative_url }}">{% if tag_info %}{{ tag_info.name }}{% else %}{{ tag }}{% endif %}</a>
                             {% endfor %}
                         </section>
                         <h1 class="post-full-title">{{ page.title }}</h1>

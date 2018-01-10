@@ -9,7 +9,8 @@
                     <a class="post-card-content-link" href="{{include.post.url | relative_url}}">
                         <header class="post-card-header">
                         {%- for tag in include.post.tags limit:1 -%}
-                            <span class="post-card-tags">{{tag}}</span>
+                        {%- assign tag_info = site.data.tags[tag] -%}
+                            <span class="post-card-tags">{% if tag_info %}{{tag_info.name}}{% else %}{{tag}}{% endif %}</span>
                         {%- endfor -%}
                             <h2 class="post-card-title">{{include.post.title}}</h2>
                         </header>

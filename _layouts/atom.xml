@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>{{ site.title}}</title>
-   <link>{{ site.url }}</link>
-   <description>{{ site.description }}</description>
+   <title>{{ site.title | xml_escape }}{% if page.title %} &ndash; {{ page.title | xml_escape }}{% endif %}</title>
+   <link>{{ page.url | absolute_url }}</link>
+   <description>{% if page.description %}{{ page.description | xml_escape }}{% else %}{{ site.description | xml_escape }}{% endif %}</description>
    <language>{{ site.language }}</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    {{content}}

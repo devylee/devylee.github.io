@@ -1,17 +1,7 @@
 ---
-title : nil
 layout: atom
 ---
 
-{% for post in page.posts %}
-	<item>
-	  <title>{{ post.title | xml_escape }}</title>
-	  <link>{{ post.url | absolute_url }}</link>
-	  <author>{{ site.data.authors[page.author].name }}</author>
-	  <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
-	  <guid>{{ post.url | absolute_url }}</guid>
-	  <description><![CDATA[
-	     {{ post.content | expand_urls : site.url }}
-	  ]]></description>
-	</item>
-{% endfor %}
+{%- for post in site.categories[page.author] -%}
+	{% include post-card.xml post = post %}
+{%- endfor -%}

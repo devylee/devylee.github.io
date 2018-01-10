@@ -4,9 +4,9 @@ date      : "2017-06-09 9:30:00"
 categories: devy
 tags      : 
   - webpack
-  - Node
+  - nodejs
 layout    : post
-class     : "post tag-webpack tag-node"
+class     : "post tag-webpack tag-nodejs"
 comments  : true
 ---
 

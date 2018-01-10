@@ -3,8 +3,8 @@ title     : 在你的博客中集成微信分享
 date      : "2017-06-23 17:00:00"
 categories: devy
 tags      : 
-  - Javascript
-  - Weixin
+  - javascript
+  - weixin
 layout    : post
 class     : "post tag-javascript tag-weixin"
 comments  : true

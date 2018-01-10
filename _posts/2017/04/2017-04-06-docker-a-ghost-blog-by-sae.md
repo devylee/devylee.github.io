@@ -3,9 +3,9 @@ title     : 用SAE Docker一个Ghost博客
 date      : "2017-04-06 09:00:00"
 categories: devy
 tags      : 
-  - Docker
-  - Ghost
-  - SAE
+  - docker
+  - ghost
+  - sae
 layout    : post
 class     : "post tag-docker tag-ghost tag-sae"
 comments  : true

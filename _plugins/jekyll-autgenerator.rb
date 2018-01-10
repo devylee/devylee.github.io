@@ -63,7 +63,14 @@ module Jekyll
       self.read_yaml(File.join(base, '_layouts'), "author.xml")
       self.data[type] = val
       self.data["grouptype"] = type
-      self.data["posts"] = posts[0..9]
+
+      author = site.data['authors'][val]
+      unless author.nil?
+        self.data["title"] = author['name']
+        self.data["description"] = author['bio']
+      else
+        self.data["title"] = val
+      end
     end
   end
 end

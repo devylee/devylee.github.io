@@ -63,7 +63,14 @@ module Jekyll
       self.read_yaml(File.join(base, '_layouts'), "tag.xml")
       self.data[type] = val
       self.data["grouptype"] = type
-      self.data["posts"] = posts[0..9]
+      
+      tag = site.data['tags'][val]
+      unless tag.nil?
+        self.data["title"] = tag['name']
+        self.data["description"] = tag['desc']
+      else
+        self.data["title"] = val
+      end
     end
   end
 end
