@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere &ndash; webpack</title>
-   <link>https://devylee.github.io/tag/webpack/rss.xml</link>
-   <description>一个辅助记忆的树洞</description>
+   <title>elsewhere &ndash; NodeJS</title>
+   <link>https://devylee.github.io/tag/nodejs/rss.xml</link>
+   <description>A JavaScript runtime built on Chrome's V8 JavaScript engine.</description>
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>

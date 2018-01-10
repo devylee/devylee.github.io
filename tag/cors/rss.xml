@@ -1,166 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere</title>
-   <link>https://devylee.github.io</link>
-   <description>一个辅助记忆的树洞</description>
+   <title>elsewhere &ndash; CORS</title>
+   <link>https://devylee.github.io/tag/cors/rss.xml</link>
+   <description>Cross-Origin Resource Sharing</description>
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
-   
-    
-	<item>
-	  <title>用Javascript检测跨域资源(CORS)的可用性</title>
-	  <link>https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html</link>
-	  <author>Devy</author>
-	  <pubDate>2017-04-10T15:30:00+08:00</pubDate>
-	  <guid>https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html</guid>
-	  <description><![CDATA[
-	     <blockquote>
+   <item>
+    <title>用Javascript检测跨域资源(CORS)的可用性</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html</link>
+    <pubDate>2017-04-10T15:30:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
   <p>我相信和国外的程序猿比起来，国内的同行们至少要比他们多了解一个概念，那就是“翻墙”！其实这项技术本身而言，也并没有多复杂，尤其现在的工具也简单易用了很多，但在翻的过程中，还是会激发我们很多的idea，比如本文要说的，用js检测CORS资源的可用性。</p>
 </blockquote>
 
-<!--more-->
-
-<p>其实我之所以会冒出这个想法，也是源于我的自身需求，因为要在博客中集成<a href="https://disqus.com">Disqus</a>评论。但是正如你所知，Disqus在国内是被墙的，这样会导致一个问题，就是页面加载后，因为Disqus的资源（js）始终加载不进来，浏览器就始终在那里loading…，虽然不影响页面内容的阅读，但我是无法接受的！所以我的需求很简单：<strong>要在页面加载后检测Disqus的资源是否能够加载，如果不能，那就停止对这些资源的请求。</strong></p>
-
-<blockquote>
-  <p>是的，在国内不翻墙的情况下，你是看不到我博客有评论功能的！</p>
-</blockquote>
-
-<p>先来看看Disqus官方提供的通用集成代码：</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="cm">/**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-    */</span>
-    <span class="kd">var</span> <span class="nx">disqus_config</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">page</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">PAGE_URL</span><span class="p">;</span>  <span class="c1">// Replace PAGE_URL with your page's canonical URL variable</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">page</span><span class="p">.</span><span class="nx">identifier</span> <span class="o">=</span> <span class="nx">PAGE_IDENTIFIER</span><span class="p">;</span> <span class="c1">// Replace PAGE_IDENTIFIER with your page's unique identifier variable</span>
-    <span class="p">};</span>
-    <span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="c1">// DON'T EDIT BELOW THIS LINE</span>
-        <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
-
-        <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-
-        <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
-        <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-    <span class="p">})();</span>
-</code></pre></div></div>
-
-<p>其实很简单，就是在页面中加载<code class="highlighter-rouge">//EXAMPLE.disqus.com/embed.js</code>这个js文件，所以，我只要判断这个js是否可以访问。我第一个想到了<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">XMLHttpRequest</a>，我只要向这个资源发一个HEAD请求，然后判断状态码就可以知道这个资源是否可用。于是，第一个方案诞生：</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-
-    <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span> <span class="nb">window</span><span class="p">.</span><span class="nx">ActiveXObject</span> <span class="o">||</span> <span class="nx">XMLHttpRequest</span> <span class="p">)(</span> <span class="s1">'Microsoft.XMLHTTP'</span> <span class="p">);</span>
-    <span class="nx">r</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'HEAD'</span><span class="p">,</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js?data-timestamp='</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">r</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
-    <span class="nx">r</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> 
-                <span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span> <span class="o">||</span> <span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">301</span> <span class="o">||</span> <span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">302</span> <span class="o">||</span> <span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">304</span> <span class="o">||</span> <span class="nx">r</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">307</span><span class="p">))</span> <span class="p">{</span>
-            <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>  <span class="c1">// REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW</span>
-                <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
-                
-                <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-                
-                <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
-                <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-            <span class="p">})();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">r</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
-</code></pre></div></div>
-
-<p>事实证明，很多事情并没有我们想的那么简单，这个方案遇到了CORS的安全策略限制，提示：<code class="highlighter-rouge">XMLHttpRequest has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code> <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> 这个问题的解决办法有两种：</p>
-<ol>
-  <li>Disqus在response的header中提供<code class="highlighter-rouge">Access-Control-Allow-Origin： *</code>；</li>
-  <li>换一种方案！</li>
-</ol>
-
-<p>想来要Disqus在header中加入Access-Control-Allow-Origin也并非是件容易的事，所以还是自己动手丰衣足食吧！Google了一通，得知jQuery的ajax方法，在<code class="highlighter-rouge">dataType</code>是<code class="highlighter-rouge">jsonp</code>或者<code class="highlighter-rouge">script</code>的时候，不会有这个Access-Control-Allow-Origin的问题，于是，我的第二个方案诞生了：</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-
-    <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'DOMContentLoaded'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
-                <span class="na">url</span><span class="p">:</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">,</span> <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-                <span class="na">dataType</span><span class="p">:</span> <span class="s1">'script'</span><span class="p">,</span> <span class="c1">// jsonp 会有parseerror</span>
-                <span class="na">jsonp</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-                <span class="na">timeout</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
-                <span class="na">error</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">xhr</span><span class="p">.</span><span class="nx">abort</span><span class="p">(</span><span class="nx">status</span><span class="p">);</span>
-                <span class="p">},</span>
-                <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
-                    <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-                    <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
-                    <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-                <span class="p">}</span>
-            <span class="p">});</span>
-        <span class="p">});</span>
-    <span class="p">})();</span>
-</code></pre></div></div>
-
-<p>这个方案成功绕开了CORS的安全策略问题，但新的问题又来了：即使是timeout了，ajax请求也无法被abort，浏览器还会在不停的loading…！分析原因：jQuery的ajax其实也是对XMLHttpRequest的封装，但貌似<code class="highlighter-rouge">dataType</code>在<code class="highlighter-rouge">jsonp</code>或<code class="highlighter-rouge">script</code>的情况下并不是走的XMLHttpRequest，而是通过向页面吐script标签来实现，也正因此，才不会受CORS策略的限制。</p>
-
-<p>所以，看来还是要自己借助页面script或者img标签的加载来实现。不过，历史证明：<strong>大多数的轮子人家已经造好了的！</strong>这不，我就找到了这个<a href="https://github.com/jdfreder/pingjs">pingjs</a>。不过，pingjs也不会在超时后停止对资源的请求，所以我们要对这个js做点hack，第43行，在timeout时将img.src置空，如下：</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-
-<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span> <span class="nx">img</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="nx">reject</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="s1">'Timeout'</span><span class="p">));</span> <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
-
-<span class="p">...</span>
-
-</code></pre></div></div>
-
-<p>如此，我的最终方案就变成这样：</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-
-    <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'DOMContentLoaded'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">ping</span><span class="p">(</span><span class="s1">'https://EXAMPLE.disqus.com/count.js'</span><span class="p">)</span>
-                <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">delta</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">);</span>
-                <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-                <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
-                <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-            <span class="p">});</span>
-        <span class="p">});</span>
-    <span class="p">})();</span>
-</code></pre></div></div>
-
-<p>问题解决！不知道大家注意到没有，我ping的是<code class="highlighter-rouge">https://EXAMPLE.disqus.com/count.js</code>而不是<code class="highlighter-rouge">//EXAMPLE.disqus.com/embed.js</code>。其实原因很简单，count.js(1.5k)要远远小于embed.js(18k)！直接使用https也是因为这样省去了远端的redirect。</p>
-
-<p><em>** 其实，我还试过另外一种不奏效的方案：</em></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-
-    <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-        <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">,</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'script'</span><span class="p">),</span>
-            <span class="nx">t</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span> <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span> <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span> <span class="c1">// 定义一个定时器用于在超时后移除这个script</span>
-        <span class="nx">s</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'//EXAMPLE.disqus.com/embed.js'</span><span class="p">;</span>  <span class="c1">// IMPORTANT: Replace EXAMPLE with your forum shortname!</span>
-        <span class="nx">s</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'data-timestamp'</span><span class="p">,</span> <span class="o">+</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
-        <span class="nx">s</span><span class="p">.</span><span class="k">async</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-        <span class="nx">s</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span> <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">t</span><span class="p">);</span> <span class="p">};</span> <span class="c1">// 成功加载后移除定时器</span>
-        <span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span> <span class="o">||</span> <span class="nx">d</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-    <span class="p">})();</span>
-
-</code></pre></div></div>
-
-<p>貌似<code class="highlighter-rouge">&lt;script /&gt;</code>只要append就无法停止加载（直到努力加载到无能为力），也许正是因此，上述的第二种ajax检测方案在timeout时abort操作会不起作用吧。</p>
-
-<hr />
-
-<p><em>注：</em></p>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS访问控制</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-
-	  ]]></description>
-	</item>
-
-
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html</guid>
+    
+</item>
 </channel>
 </rss>

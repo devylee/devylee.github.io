@@ -1,279 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere</title>
-   <link>https://devylee.github.io</link>
-   <description>一个辅助记忆的树洞</description>
+   <title>elsewhere &ndash; SAE</title>
+   <link>https://devylee.github.io/tag/sae/rss.xml</link>
+   <description>Sina Application Engine</description>
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
-   
-    
-	<item>
-	  <title>用Nginx镜像远程站点并替换HTML</title>
-	  <link>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</link>
-	  <author>Devy</author>
-	  <pubDate>2017-04-21T09:30:00+08:00</pubDate>
-	  <guid>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</guid>
-	  <description><![CDATA[
-	     <blockquote>
+   <item>
+    <title>用Nginx镜像远程站点并替换HTML</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</link>
+    <pubDate>2017-04-21T09:30:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
   <p>Nginx可以做很多事，除了我们最常用的做Web服务器和反向代理，它其实还可以让我们做很多的“小动作”，比如本文要介绍的镜像一个站点、替换HTTP的响应内容。</p>
 </blockquote>
 
-<!--more-->
-
-<p><strong>来，容我先描述一下需求：</strong> <a href="http://devylee.github.io">devylee.github.io</a>是我的Github Page；<a href="http://devylee.me">devylee.me</a>是我的一个域名，而且经过一系列的波折，在<a href="http://sinacloud.com/">新浪云</a>终于通过了工信部的备案，可以在国内用了。so，那就不要让这个域名闲着了，但我又并不想直接把这域名绑定在我的Github Page上（GH上只能绑定一个独立域名，而且不支持HTTPS），所以，我就用SAE部署一个Docker容器并绑定<a href="http://devylee.me">devylee.me</a>这个域名，然后用Nginx把请求都proxy到<a href="http://devylee.github.io">devylee.github.io</a>，顺便在返回的HTML页面中注入备案号。</p>
-
-<p>需求很简单吧，来，让我们撸起袖子干吧！</p>
-
-<p>首先上Dockerfile（SAE上如何部署Dockerfile可以参考我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”）：</p>
-
-<blockquote>
-  <p>我这里监听的端口是5050，这个要看你的SAE应用中环境变量<code class="highlighter-rouge">PORT</code>的具体值。</p>
-</blockquote>
-
-<div class="language-docker highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> nginx:alpine</span>
-
-<span class="k">COPY</span><span class="s"> nginx-default.conf /etc/nginx/conf.d/default.conf</span>
-
-<span class="k">EXPOSE</span><span class="s"> 5050</span>
-
-</code></pre></div></div>
-
-<p>nginx-default.conf：</p>
-
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
-
-    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://devylee.github.io</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-
-        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>如此，push并确认成功后，在浏览器输入devylee.me，哦，没错，这就是我的Github Page！不过，备案号呢？貌似sub_filter并未起作用啊！</p>
-
-<p>经过各种尝试（甚至是更换镜像源，从头编译nginx，然并卵！），最终找到原因原来是因为<code class="highlighter-rouge">Accept-Encoding</code>！</p>
-
-<p>怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是<code class="highlighter-rouge">Accept-Encoding: gzip</code>，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
-通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行<code class="highlighter-rouge">proxy_set_header Accept-Encoding ""</code>）就可以了：</p>
-
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
-
-    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://devylee.github.io</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">Accept-Encoding</span> <span class="s">""</span><span class="p">;</span>
-
-        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>OK！再次push，刷新浏览器~</p>
-
-<p>嗯！有没有觉得so easy啊！</p>
-
-<hr />
-
-<p><em>参考：</em></p>
-
-<ol>
-  <li><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html">Nginx <code class="highlighter-rouge">ngx_http_sub_module</code> Module</a></li>
-</ol>
-
-	  ]]></description>
-	</item>
-
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</guid>
     
-	<item>
-	  <title>用SAE Docker一个Ghost博客</title>
-	  <link>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
-	  <author>Devy</author>
-	  <pubDate>2017-04-06T09:00:00+08:00</pubDate>
-	  <guid>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</guid>
-	  <description><![CDATA[
-	     <blockquote>
+</item><item>
+    <title>用SAE Docker一个Ghost博客</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</link>
+    <pubDate>2017-04-06T09:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
   <p>其实这是之前在SAE部署Ghost之后写下的，迁移至此仅供参考，只是我已改投<a href="https://jekyllrb.com">Jekyll</a>和<a href="https://pages.github.com/">Github Pages</a>。</p>
 </blockquote>
 
-<!--more-->
-
-<p>首先我们先来认识一下本文即将出场的几位主角（其实它们都在标题里了）：</p>
-
-<ul>
-  <li><a href="https://ghost.org/">Ghost</a>：基于NodeJS的开源博客系统</li>
-  <li><a href="https://www.docker.com/">Docker</a>：应该是时下最流行的容器技术了吧，我们要基于它来构建Ghost服务</li>
-  <li><a href="http://www.sinacloud.com/sae.html">SAE</a>：新浪云的云应用，也就是我们要用新浪云的云应用服务来运行我们的博客</li>
-</ul>
-
-<blockquote>
-  <p>新浪云的<a href="http://sae.sina.com.cn/?m=appmarket&amp;a=index">云市场</a>里是有Ghost镜像的，你完全可以点击几下鼠标就可以用它来很轻松的部署一个Ghost实例，但对于我这种喜欢自己鼓捣的人来说，当然是不愿意在这方面节省时间的。</p>
-</blockquote>
-
-<p>好了，言归正传！</p>
-
-<h3 id="第1步-创建云应用sae">第1步 创建云应用SAE</h3>
-
-<p>盖房子要先买地的，所以，首先我们要申请一个SAE（当然你要先保证自己的账户中有足够的云豆，其实就是充值啦）：进入云应用SAE控制台，在<em>“应用管理”</em>中点击<em>“+创建新应用”</em>，然后就会进入如下应用创建页面</p>
-
-<p><img src="/uploads/2017/04/create-sae.png" alt="创建云应用" /></p>
-
-<blockquote>
-  <p>开发语言选<em>“自定义”</em>，部署环境选<em>“Dockerfile”</em>，环境配置和实例个数我建议先选1个基础配置就可以了，这个配置可以在部署成功以后随时根据实际需求来调整的，当然越多越高的配置也相应会有更多的支出。</p>
-</blockquote>
-
-<p>云应用创建成功，进入云应用管理，接下来我们要申请数据库和存储，虽然容器有5G的空间，你完全可以使用sqlite作为数据库，把内容数据和文件都保存在这个容器中，但问题是，只要你更新Dockerfile，容器就会重新构建，你的数据也就没了！所以就不要吝啬这点投入了，在<em>“数据库与缓存服务”</em>中，创建一个<em>“共享型MySQL”</em>，当然，够豪的话，你也可以创建独享型MySQL；在<em>“存储与CDN服务”</em>中新建一个<em>“共享存储”</em>，容量视个人需求而定吧，反正也是随时可以调整的。这个存储在后续的步骤中是要挂载到容器上的。</p>
-
-<h3 id="第2步-编写dockerfile">第2步 编写Dockerfile</h3>
-
-<blockquote>
-  <p>考验你的时刻到了，这里你要用到Git、Dockerfile、nodejs、bash等等相关知识</p>
-</blockquote>
-
-<p>首先我们要git迁出代码，在SAE控制台的“应用”»“代码管理”中，可以看到你的Git仓库及代码部署说明，可以参照他的sample来操作，也可以clone迁出，当然不管哪种方式，你看到的是一个空仓库，我们要自己来创建必要的Dockerfile文件、ENTRYPOINT文件和Ghost的config.js配置文件。</p>
-
-<blockquote>
-  <p>其实<a href="https://hub.docker.com/">Docker Hub</a>中也有Ghost官方提供的镜像的(<a href="https://hub.docker.com/_/ghost/">点这里</a>)，你可以参考他的Dockerfile，我并没有试过这个镜像是否可以直接在SAE上运行</p>
-</blockquote>
-
-<p>我的Dockerfile大概是下面这样的（<em>GHOST_CONTENT参考注<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></em>）：</p>
-
-<div class="language-docker highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> node:4-slim</span>
-
-<span class="k">ENV</span><span class="s"> GHOST_SOURCE=/var/www/ghost </span>
-<span class="c"># 参考注1.</span>
-<span class="k">ENV</span><span class="s"> GHOST_CONTENT=/path/to/your/content</span>
-<span class="k">ENV</span><span class="s"> NODE_ENV=production</span>
-<span class="k">ENV</span><span class="s"> GOSU_VERSION=1.10 </span>
-<span class="k">ENV</span><span class="s"> GHOST_VERSION=0.11.5</span>
-
-<span class="k">VOLUME</span><span class="s"> $GHOST_CONTENT</span>
-
-<span class="k">RUN </span><span class="nb">set</span> <span class="nt">-x</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> apt-get update <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> curl unzip rsync ca-certificates <span class="nt">--no-install-recommends</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span> <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">"</span>  <span class="nt">-o</span> /usr/local/bin/gosu <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">.asc"</span> <span class="nt">-o</span> /usr/local/bin/gosu.asc <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="k">)</span><span class="s2">"</span> <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--keyserver</span> ha.pool.sks-keyservers.net <span class="nt">--recv-keys</span> B42F6819007F00F88E364FD4036A9C25BF357DD4 <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--batch</span> <span class="nt">--verify</span> /usr/local/bin/gosu.asc /usr/local/bin/gosu <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GNUPGHOME</span><span class="s2">"</span> /usr/local/bin/gosu.asc <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> <span class="nb">chmod</span> +x /usr/local/bin/gosu <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> gosu nobody <span class="nb">true</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/TryGhost/Ghost/releases/download/</span><span class="nv">$GHOST_VERSION</span><span class="s2">/Ghost-</span><span class="nv">$GHOST_VERSION</span><span class="s2">.zip"</span> <span class="nt">-o</span> /var/www/ghost.zip <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> unzip <span class="nt">-uo</span> /var/www/ghost.zip <span class="nt">-d</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-f</span> /var/www/ghost.zip <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">"</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> npm <span class="nb">install</span> <span class="nt">-g</span> npm@latest <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> npm <span class="nb">install</span> <span class="nt">--production</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> npm cache clean <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> apt-get purge <span class="nt">-y</span> <span class="nt">--auto-remove</span> <span class="nt">-o</span> APT::AutoRemove::RecommendsImportant<span class="o">=</span><span class="nb">false</span> <span class="nt">-o</span> APT::AutoRemove::SuggestsImportant<span class="o">=</span><span class="nb">false </span>curl unzip ca-certificates <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /tmp/<span class="k">*</span> <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> groupadd ghost <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> useradd <span class="nt">--create-home</span> <span class="nt">--home-dir</span> /home/ghost <span class="nt">-g</span> ghost ghost <span class="se">\
-</span>    <span class="o">&amp;&amp;</span> <span class="nb">chown</span> <span class="nt">-R</span> ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
-
-<span class="k">WORKDIR</span><span class="s"> $GHOST_SOURCE</span>
-
-<span class="k">COPY</span><span class="s"> ghost-config.js "$GHOST_SOURCE/config.js"</span>
-
-<span class="k">COPY</span><span class="s"> docker-entrypoint.sh /entrypoint.sh</span>
-
-<span class="k">ENTRYPOINT</span><span class="s"> ["/entrypoint.sh"]</span>
-
-<span class="k">CMD</span><span class="s"> ["npm", "start"]</span>
-</code></pre></div></div>
-
-<p>docker-entrypoint.sh是这个样子：</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="nb">set</span> <span class="nt">-e</span>
-
-rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">/content/"</span> <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">/"</span>
-
-<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$*</span><span class="s2">"</span> <span class="o">==</span> npm<span class="k">*</span>start<span class="k">*</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="k">)</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'0'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-	</span><span class="nb">chown</span> <span class="nt">-R</span> ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
-    <span class="nb">exec </span>gosu ghost <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
-<span class="k">fi
-
-</span><span class="nb">exec</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
-</code></pre></div></div>
-
-<p>ghost-config.js大概是这个样子（<em>url配置参考注<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></em>）：</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">),</span>
-    <span class="nx">config</span><span class="p">;</span>
-
-<span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">production</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">url</span><span class="p">:</span> <span class="s1">'http://yourdomain.com/'</span><span class="p">,</span> <span class="c1">// 参考注2</span>
-        <span class="na">mail</span><span class="p">:</span> <span class="p">{},</span>
-        <span class="na">logging</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="na">database</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">client</span><span class="p">:</span> <span class="s2">"mysql"</span><span class="p">,</span>
-            <span class="na">connection</span><span class="p">:</span> <span class="p">{</span>
-                <span class="na">host</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MYSQL_HOST</span><span class="p">,</span>
-                <span class="na">port</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MYSQL_PORT</span><span class="p">,</span>
-                <span class="na">user</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ACCESSKEY</span><span class="p">,</span>
-                <span class="na">password</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SECRETKEY</span><span class="p">,</span>
-                <span class="na">database</span><span class="p">:</span> <span class="s1">'app_'</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">APPNAME</span><span class="p">,</span>
-                <span class="na">charset</span><span class="p">:</span> <span class="s2">"utf8"</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-        <span class="na">paths</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">contentPath</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">GHOST_CONTENT</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="na">server</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">host</span><span class="p">:</span> <span class="s1">'0.0.0.0'</span><span class="p">,</span>
-            <span class="na">port</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="第3步-构建你的ghost">第3步 构建你的Ghost</h3>
-
-<p>其实这一步就是git comit &amp; push你的代码，然后你就静待花开吧，如果一切顺利，在push收到成功的信息后，你的blog就在那里了。</p>
-
-<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中$GHOST_CONTENT所指定的路径上并重启你的容器。</p>
-
-<p>Enjoy!</p>
-
-<blockquote>
-  <p><strong>后记 2017-04-17</strong></p>
-
-  <p>已经整理了示例代码项目上传到Github，可以<a href="https://github.com/devylee/ghost-sae">戳这里</a>！</p>
-</blockquote>
-
-<hr />
-
-<p><em>注：</em></p>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:1">
-      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:2">
-      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//'</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">process.env.APPNAME</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">'.applinzi.com/'</span></code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： <code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">process.env.SITEURL</span></code> 。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-
-	  ]]></description>
-	</item>
-
-
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2017/04/docker-a-ghost-blog-by-sae.html</guid>
+    
+</item>
 </channel>
 </rss>
