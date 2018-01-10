@@ -5,6 +5,7 @@
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
 
     <link rel="canonical" href="https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html" />
@@ -255,19 +256,15 @@
 <section class="post-full-comments">
     <div id="disqus_thread"></div>
     <script>
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-        */
         var disqus_config = function () {
-            this.page.url = 'https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html';  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = '/post/2017/04/cors-reachability-detect-in-javascript.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            this.page.url = 'https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html';
+            this.page.identifier = '/post/2017/04/cors-reachability-detect-in-javascript.html';
         };
         (function(){
             document.addEventListener('DOMContentLoaded', function() {
                 ping('https://devylee.disqus.com/count.js').then(function(delta) {
                     var d = document, s = d.createElement('script');
-                    s.src = '//devylee.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+                    s.src = '//devylee.disqus.com/embed.js';
                     s.setAttribute('data-timestamp', +new Date());
                     (d.head || d.body).appendChild(s);
                 });
@@ -381,7 +378,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
         </a>
-        <a class="floating-header-share-wb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html&title=%E7%94%A8Javascript%E6%A3%80%E6%B5%8B%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90(CORS)%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2017/04/cors-reachability-detect-in-javascript.html&title=%E7%94%A8Javascript%E6%A3%80%E6%B5%8B%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90(CORS)%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"
            onclick="window.open('http://service.weibo.com/share/share.php?title=%E7%94%A8Javascript%E6%A3%80%E6%B5%8B%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90(CORS)%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
            <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
         </a>
@@ -398,9 +395,14 @@
 
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="/">elsewhere</a> &copy; 2018</section>
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2018 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
                 <nav class="site-footer-nav">
                     <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
                     <a href="https://github.com/tryghost/casper">Theme by Casper</a>
                 </nav>
             </div>
@@ -421,7 +423,6 @@
     <script src="/assets/js/infinitescroll.js"></script>
     
     
-    <script type="text/javascript" src="/assets/js/ping.js"></script>
     
         <!-- Google Analytics Tracking code -->
     <script>
@@ -437,6 +438,7 @@
     
 
     
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
     <script>
 
     // NOTE: Scroll performance is poor in Safari
