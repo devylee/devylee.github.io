@@ -6,9 +6,15 @@
 
 > This is my github page (also my personal blog since 5 April 2017) published by Jekyll, and the Theme customized from Ghost Casper.
 
+## Generate higilighter css
+
+`$ rougify style monokai.sublime > assets/css/syntax.css`
+
+`$ rake site:deploy`
+
 ## Deploy to Github
 
-`$ bundle exec rake site:deploy`
+`$ rake site:deploy`
 
 ## Thanks
 
