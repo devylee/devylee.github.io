@@ -10,19 +10,19 @@
 
     <link rel="canonical" href="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
     <meta name="referrer" content="origin" /><title>elsewhere | macOS下PHP与Python的多版本环境共存</title>
-    <meta name="description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+    <meta name="description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。" />
 
     <meta property="og:site_name" content="elsewhere" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
     <meta property="og:title" content="elsewhere | macOS下PHP与Python的多版本环境共存" />
-    <meta property="og:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+    <meta property="og:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
     <meta name="twitter:site" content="@idevylee" />
     <meta name="twitter:title" content="elsewhere | macOS下PHP与Python的多版本环境共存" />
-    <meta name="twitter:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+    <meta name="twitter:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。" />
 
     <script type="application/ld+json">
 {
@@ -31,7 +31,7 @@
     "author": "Devy",
     "publisher": "elsewhere",
     "url": "https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html",
-    "description": "对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～"
+    "description": "对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。"
 }
     </script>
 
@@ -89,7 +89,7 @@
 
                 <section class="post-full-content">
                     <blockquote>
-  <p>对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～</p>
+  <p>对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。</p>
 </blockquote>
 
 <!--more-->
@@ -97,7 +97,7 @@
 <p>macOS是自带了php、python和ruby的，升级到High Sierra后，php的版本是7.1.7，python的版本是2.7.10，ruby的版本是2.3.3。我猜大部分的程序开发者都像我一样，不会使用系统自带的运行环境，我们更多的会选择手动安装，或者选择另外的包管理工具，比如<a href="https://www.macports.org/">MacPorts</a>或者<a href="https://brew.sh/">Homebrew</a>。</p>
 
 <blockquote>
-  <p>其实我本来是MacPorts的粉儿，升级到High Sierra后，我转粉了Homebrew。很难说两者孰优孰劣，我改投Homebrew的最主要原因是它不需要sudo。至于Homebrew的安装，就不用我说了吧。</p>
+  <p>其实我本来是MacPorts的粉儿，升级到High Sierra后，我转粉了Homebrew。很难说两者孰优孰劣，我改投Homebrew的最主要原因是它不需要sudo。至于Homebrew的安装，我想应该就不用我说了。好啦，Talk is cheap！放码～</p>
 </blockquote>
 
 <h2 id="php">PHP</h2>
@@ -210,7 +210,7 @@ $ pyenv rehash
 
 <p>设置python的版本，可以设置全局global，也可以使用local设置当前目录的：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv gloabl 3.6.3
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv global 3.6.3
 $ pyenv local 2.7.14
 </code></pre></div></div>
 
