@@ -13,13 +13,13 @@ class     : "post tag-multiple-version tag-php tag-python tag-macos"
 comments  : true
 ---
 
-> 对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～
+> 对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。
 
 <!--more-->
 
 macOS是自带了php、python和ruby的，升级到High Sierra后，php的版本是7.1.7，python的版本是2.7.10，ruby的版本是2.3.3。我猜大部分的程序开发者都像我一样，不会使用系统自带的运行环境，我们更多的会选择手动安装，或者选择另外的包管理工具，比如[MacPorts](https://www.macports.org/)或者[Homebrew](https://brew.sh/)。
 
-> 其实我本来是MacPorts的粉儿，升级到High Sierra后，我转粉了Homebrew。很难说两者孰优孰劣，我改投Homebrew的最主要原因是它不需要sudo。至于Homebrew的安装，就不用我说了吧。
+> 其实我本来是MacPorts的粉儿，升级到High Sierra后，我转粉了Homebrew。很难说两者孰优孰劣，我改投Homebrew的最主要原因是它不需要sudo。至于Homebrew的安装，我想应该就不用我说了。好啦，Talk is cheap！放码～
 
 ## PHP
 
