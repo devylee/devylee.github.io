@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <link rel="canonical" href="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
+    <meta name="referrer" content="origin" /><title>elsewhere | macOS下PHP与Python的多版本环境共存</title>
+    <meta name="description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
+    <meta property="og:title" content="elsewhere | macOS下PHP与Python的多版本环境共存" />
+    <meta property="og:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html" />
+    <meta name="twitter:site" content="@idevylee" />
+    <meta name="twitter:title" content="elsewhere | macOS下PHP与Python的多版本环境共存" />
+    <meta name="twitter:description" content="对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～" />
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "author": "Devy",
+    "publisher": "elsewhere",
+    "url": "https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html",
+    "description": "对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～"
+}
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="https://devylee.github.io/feed.xml" />
+
+
+</head>
+<body class="post-template tag-multiple-version tag-php tag-python tag-macos tag-homebrew">
+
+    <div class="site-wrapper">
+
+
+        
+    
+    <header class="site-header outer">
+        <div class="inner">
+                <nav class="site-nav">
+        <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
+                <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
+                <li class="nav-about " role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="https://devylee.github.io/feed.xml" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+        </div>
+    </nav>
+    
+        </div>
+    </header>
+    
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+
+            <article class="post-full post tag-multiple-version tag-php tag-python tag-macos no-image">
+
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="">11 Jan 2018</time>
+                            <span class="date-divider">/</span> <a href="/tag/multiple-version/">Multiple Version</a>
+                            <span class="date-divider">/</span> <a href="/tag/php/">PHP</a>
+                            <span class="date-divider">/</span> <a href="/tag/python/">Python</a>
+                            <span class="date-divider">/</span> <a href="/tag/macos/">macOS</a>
+                            <span class="date-divider">/</span> <a href="/tag/homebrew/">Homebrew</a>
+                            
+                        </section>
+                        <h1 class="post-full-title">macOS下PHP与Python的多版本环境共存</h1>
+                </header>
+
+                
+
+                <section class="post-full-content">
+                    <blockquote>
+  <p>对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～</p>
+</blockquote>
+
+<!--more-->
+
+<p>macOS是自带了php、python和ruby的，升级到High Sierra后，php的版本是7.1.7，python的版本是2.7.10，ruby的版本是2.3.3。我猜大部分的程序开发者都像我一样，不会使用系统自带的运行环境，我们更多的会选择手动安装，或者选择另外的包管理工具，比如<a href="https://www.macports.org/">MacPorts</a>或者<a href="https://brew.sh/">Homebrew</a>。</p>
+
+<blockquote>
+  <p>其实我本来是MacPorts的粉儿，升级到High Sierra后，我转粉了Homebrew。很难说两者孰优孰劣，我改投Homebrew的最主要原因是它不需要sudo。至于Homebrew的安装，就不用我说了吧。</p>
+</blockquote>
+
+<h2 id="php">PHP</h2>
+
+<p>“PHP是世界上最好的编程语言！”作为LNMP的忠实粉儿，这句话总是在我提到PHP时余音绕梁般浮现在我脑中！果然是真爱啊！公司的项目后端主要是PHP栈，虽然现在PHP的版本已经7.2了，但是由于历史原因，当前线上环境还是跑的5.6，我们还用的<a href="https://phalconphp.com">Phalcon</a>框架，它的Release版本已经是3.2，但我们线上还停留在2时代。于是乎，我也会纠结于安装哪个版本？PHP56+Phalcon2吧，无法体验到PHP新版本的特性，技术总要面向未来啊；PHP7+Phalcon3吧，项目代码的执行就会有问题了！所以，对我来说，最理想的还是两个环境都有，只要彼此不冲突，可以随时切换就好。好在，Homebrew是可以实现这个需求的！</p>
+
+<h3 id="先tap">先tap：</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew tap homebrew/homebrew-php
+</code></pre></div></div>
+
+<h3 id="然后我们先来安装php72">然后我们先来安装PHP72：</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php72 php72-phalcon
+</code></pre></div></div>
+
+<p>* <em>当然这里你可以安装其他你需要的PHP扩展。</em></p>
+
+<h3 id="接下来我们安装php56">接下来我们安装PHP56</h3>
+
+<p>安装之前要unlink php72</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php72
+</code></pre></div></div>
+
+<p>安装php56</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php56
+</code></pre></div></div>
+
+<p>安装Phalcon2扩展（由于Homebrew自带的php56-phalcon扩展版本是3.2，所以这里我选择从代码编译安装）：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone git://github.com/phalcon/cphalcon.git
+$ cd cphalcon
+$ git checkout 2.1.x
+$ cd ext
+$ ./install 
+</code></pre></div></div>
+
+<p>* <em>这里我用cphalcon/ext替换了官方文档中使用的cphalcon/build进行安装，因为使用build运行时会出现一些难以预料的问题，可能是某些编译参数不同的原因。</em></p>
+
+<p>install成功最后会看到这样的信息：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Build complete.
+Don't forget to run 'make test'.
+
+Password:
+Installing shared extensions:     /usr/local/Cellar/php56/5.6.32_8/lib/php/extensions/no-debug-non-zts-20131226/
+Installing header files:           /usr/local/Cellar/php56/5.6.32_8/include/php/
+</code></pre></div></div>
+
+<p>添加php扩展：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /usr/local/etc/php/5.6/conf.d/ext-phalcon.ini
+</code></pre></div></div>
+<p>内容如下：</p>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[phalcon]</span>
+<span class="py">extension</span><span class="p">=</span><span class="s">"/usr/local/Cellar/php56/5.6.32_8/lib/php/extensions/no-debug-non-zts-20131226/phalcon.so"</span>
+</code></pre></div></div>
+
+<p>好了，执行<code class="highlighter-rouge">php -v</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ php -v
+PHP 5.6.32 (cli) (built: Oct 27 2017 11:55:27) 
+Copyright (c) 1997-2016 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
+</code></pre></div></div>
+
+<p>切到PHP7：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php56
+$ brew link php72
+$ php -v
+PHP 7.2.0 (cli) (built: Dec  3 2017 21:46:44) ( NTS )
+Copyright (c) 1997-2017 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
+</code></pre></div></div>
+
+<p>也就是需要的时候，只要使用brew的unlink和link命令在不同的php版本间切换即可。方便多了吧？！</p>
+
+<h2 id="python">Python</h2>
+
+<blockquote>
+  <p>Homebrew中的python2和python3并无冲突，也就是可以执行<code class="highlighter-rouge">$ brew install python2 python3</code>就可以同时安装这两个版本。而且python2有virtualenv；python3有pyvenv，都可以用来维护虚拟运行环境。但是python2如果要使用ipython或者pythonw就会出现错误，提示要安装framework。如果你要是用matplotlib这类图形库时就不行了。好在我们还有另一个选择，那就是<a href="https://github.com/pyenv/pyenv">pyenv</a>。</p>
+</blockquote>
+
+<p>首先我们安装pyenv，用homebrew就可以了：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install pyenv
+</code></pre></div></div>
+
+<p>然后初始化一下pyenv的运行环境参数，其实也就是在你的.bash_profile中做了些配置，执行<code class="highlighter-rouge">$ pyenv init</code>就可以了。</p>
+
+<p>查看可用的python版本：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install --list
+</code></pre></div></div>
+
+<p>安装你需要的python版本，比如2.7.14、3.6.3，注意安装之后（或者pip安装了带有可执行命令的包之后）要执行rehash：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install 2.7.14
+$ pyenv install 3.6.3
+$ pyenv rehash
+</code></pre></div></div>
+
+<p>需要注意的是，如果需要支持Framework，要加上–enable-framework参数：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 2.7.14
+</code></pre></div></div>
+
+<p>设置python的版本，可以设置全局global，也可以使用local设置当前目录的：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv gloabl 3.6.3
+$ pyenv local 2.7.14
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">pyenv version</code> 查看当前的python版本，<code class="highlighter-rouge">pyenv versions</code>列出系统已安装的的python版本。更多的pyenv命令和配置可以参考：</p>
+
+<ul>
+  <li><a href="https://github.com/pyenv/pyenv/wiki">Wiki</a></li>
+  <li><a href="https://github.com/pyenv/pyenv/blob/master/COMMANDS.md">Command Reference</a></li>
+</ul>
+
+<p>还是很简单方便的是吧！</p>
+
+<h2 id="ruby">Ruby</h2>
+
+<p>对于这货，其实只要安装了<a href="https://rvm.io/">RVM</a>就OK了！</p>
+
+                </section>
+
+                <footer class="post-full-footer">
+
+    
+                    <section class="author-card">
+                        
+                            <img class="author-profile-image" src="https://github.com/devylee.png?size=120" alt="Devy" />
+                        
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
+                                
+                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/devy/">Read More</a>
+                        </div>
+        
+                </footer>
+
+            
+                
+
+<section class="post-full-comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = 'https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html';
+            this.page.identifier = '/post/2018/01/multiple-version-of-php-and-python-on-macos.html';
+        };
+        (function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//devylee.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                });
+            });
+        })();
+    </script>
+</section>
+            
+
+            </article>
+
+        </div>
+    </main>
+
+
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; elsewhere &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="/tag/multiple-version/">Multiple Version</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            
+                            <li><a href="/post/2018/01/multiple-version-of-php-and-python-on-macos.html">macOS下PHP与Python的多版本环境共存</a></li>
+                            
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/multiple-version/">1 post →</a>
+                    </footer>
+                </article>
+                
+            
+
+
+            
+
+            
+                
+            <article class="post-card post no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2018/01/new-year-new-look.html">
+                        <header class="post-card-header"><h2 class="post-card-title">新年新面貌</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>已经过去的2017对我的博客而言，是没什么产出的一年，整个下半年竟然一篇都没写，好吧，说什么都是借口！看到Ghost Casper已经变了样子，遂将Theme做了升级，希望2018有个新面貌，我也可以多多的写吧。
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
+
+            
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://devylee.github.io">
+            
+            <span>elsewhere</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">macOS下PHP与Python的多版本环境共存</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=macOS%E4%B8%8BPHP%E4%B8%8EPython%E7%9A%84%E5%A4%9A%E7%89%88%E6%9C%AC%E7%8E%AF%E5%A2%83%E5%85%B1%E5%AD%98&amp;url=https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html&title=macOS%E4%B8%8BPHP%E4%B8%8EPython%E7%9A%84%E5%A4%9A%E7%89%88%E6%9C%AC%E7%8E%AF%E5%A2%83%E5%85%B1%E5%AD%98"
+           onclick="window.open('http://service.weibo.com/share/share.php?title=macOS%E4%B8%8BPHP%E4%B8%8EPython%E7%9A%84%E5%A4%9A%E7%89%88%E6%9C%AC%E7%8E%AF%E5%A2%83%E5%85%B1%E5%AD%98&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
+           <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2018 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script>
+        var maxPages = parseInt('1');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script>
+    
+    
+    
+        <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script>   
+    
+
+    
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    
+</body>
+</html>
+

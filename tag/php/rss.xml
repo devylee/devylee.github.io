@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-   <title>elsewhere - macOS</title>
-   <link>https://devylee.github.io/tag/macos/rss.xml</link>
-   <description>Apple Mac operating system</description>
+   <title>elsewhere - PHP</title>
+   <link>https://devylee.github.io/tag/php/rss.xml</link>
+   <description>A popular general-purpose scripting language that is especially suited to web development.</description>
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>
@@ -17,18 +17,6 @@
 
 ]]></description>
     <guid isPermaLink="true">https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html</guid>
-    
-</item><item>
-    <title>Mac下Docker的使用</title>
-    <author>Devy</author>
-    <link>https://devylee.github.io/post/2017/04/using-docker-on-macos.html</link>
-    <pubDate>2017-04-17T14:00:00+08:00</pubDate>
-    <description><![CDATA[<blockquote>
-  <p>自从接触了<a href="https://www.docker.com/">Docker</a>，我就深深的觉得：<strong>Docker的使用应该是一个开发人员，尤其是基于Linux的Web服务端开发人员应该具备的基本技能之一！</strong>其实Docker的使用也并不复杂，熟悉两个命令<code class="highlighter-rouge">docker</code>、<code class="highlighter-rouge">docker-machine</code>和一个<code class="highlighter-rouge">Dockerfile</code>就可以在你的本机开发环境中跑起来了。</p>
-</blockquote>
-
-]]></description>
-    <guid isPermaLink="true">https://devylee.github.io/post/2017/04/using-docker-on-macos.html</guid>
     
 </item>
 </channel>

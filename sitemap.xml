@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://devylee.github.io/about/</loc>
-<lastmod>2018-01-10T17:59:23+08:00</lastmod>
+<lastmod>2018-01-11T16:07:07+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/post/2017/04/welcome-to-my-pages.html</loc>
@@ -35,6 +35,10 @@
 <url>
 <loc>https://devylee.github.io/post/2018/01/new-year-new-look.html</loc>
 <lastmod>2018-01-10T16:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html</loc>
+<lastmod>2018-01-11T09:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/</loc>
@@ -74,6 +78,18 @@
 </url>
 <url>
 <loc>https://devylee.github.io/tag/weixin/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/multiple-version/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/php/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/python/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/homebrew/</loc>
 </url>
 <url>
 <loc>https://devylee.github.io/author/devy/</loc>

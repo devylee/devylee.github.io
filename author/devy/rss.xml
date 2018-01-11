@@ -7,6 +7,18 @@
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>
+    <title>macOS下PHP与Python的多版本环境共存</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html</link>
+    <pubDate>2018-01-11T09:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。好啦，talk is cheap！放码～</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2018/01/multiple-version-of-php-and-python-on-macos.html</guid>
+    
+</item><item>
     <title>新年新面貌</title>
     <author>Devy</author>
     <link>https://devylee.github.io/post/2018/01/new-year-new-look.html</link>
