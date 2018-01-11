@@ -16,7 +16,7 @@ current   : tag
         <div class="inner">
             {% include site-nav.html %}
             <div class="site-header-content">
-                <h1 class="site-title">{% if tag %}{{ tag.name }}{% else %}{{ page.tag }}{% endif %}</h1>
+                <h1 class="site-title">{% if tag %}{{ tag.name }}{% else %}{{ page.tag | replace : '-', ' ' }}{% endif %}</h1>
                 <h2 class="site-description">
                     {%- if tag -%}
                         {{ tag.desc }}

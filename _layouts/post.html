@@ -29,7 +29,7 @@ current   : post
                             {% for tag in page.tags %}
                             {%- assign tag_info = site.data.tags[tag] -%}
                             {%- capture tag_page_path -%}/tag/{{ tag | downcase }}/{%- endcapture -%}
-                                <span class="date-divider">/</span> <a href="{{ tag_page_path | relative_url }}">{% if tag_info %}{{ tag_info.name }}{% else %}{{ tag }}{% endif %}</a>
+                                <span class="date-divider">/</span> <a href="{{ tag_page_path | relative_url }}">{% if tag_info %}{{ tag_info.name }}{% else %}{{ tag | replace : '-', ' ' }}{% endif %}</a>
                             {% endfor %}
                         </section>
                         <h1 class="post-full-title">{{ page.title }}</h1>
@@ -93,7 +93,7 @@ current   : post
                         {%- endif -%}>
                     <header class="read-next-card-header">
                         <small class="read-next-card-header-sitetitle">&mdash; {{site.name}} &mdash;</small>
-                        <h3 class="read-next-card-header-title"><a href="{{ tag_page_path | relative_url }}">{{ tag | replace : '-', ' ' }}</a></h3>
+                        <h3 class="read-next-card-header-title"><a href="{{ tag_page_path | relative_url }}">{% if tag_info %}{{ tag_info.name }}{% else %}{{ tag | replace : '-', ' ' }}{% endif %}</a></h3>
                     </header>
                     <div class="read-next-divider">{% include icons/infinity.html %}</div>
                     <div class="read-next-card-content">
