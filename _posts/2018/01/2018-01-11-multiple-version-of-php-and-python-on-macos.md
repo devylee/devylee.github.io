@@ -146,7 +146,7 @@ $ env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 2.7.14
 设置python的版本，可以设置全局global，也可以使用local设置当前目录的：
 
 ```
-$ pyenv gloabl 3.6.3
+$ pyenv global 3.6.3
 $ pyenv local 2.7.14
 ```
 
