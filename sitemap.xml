@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://devylee.github.io/about/</loc>
-<lastmod>2018-01-11T16:22:34+08:00</lastmod>
+<lastmod>2018-01-12T10:31:09+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/post/2017/04/welcome-to-my-pages.html</loc>
@@ -93,5 +93,11 @@
 </url>
 <url>
 <loc>https://devylee.github.io/author/devy/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/author/devy/page/2/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/page/2/</loc>
 </url>
 </urlset>

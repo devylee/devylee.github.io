@@ -102,27 +102,26 @@
   <p>我这里监听的端口是5050，这个要看你的SAE应用中环境变量<code class="highlighter-rouge">PORT</code>的具体值。</p>
 </blockquote>
 
-<div class="language-docker highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> nginx:alpine</span>
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> nginx:alpine</span>
 
 <span class="k">COPY</span><span class="s"> nginx-default.conf /etc/nginx/conf.d/default.conf</span>
 
 <span class="k">EXPOSE</span><span class="s"> 5050</span>
-
 </code></pre></div></div>
 
 <p>nginx-default.conf：</p>
 
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
+    <span class="n">listen</span> <span class="m">5050</span>;
 
-    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://devylee.github.io</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+    <span class="n">location</span> / {
+        <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="n">devylee</span>.<span class="n">github</span>.<span class="n">io</span>;
+        <span class="n">proxy_redirect</span> <span class="n">off</span>;
 
-        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
-    <span class="p">}</span>
+        <span class="n">sub_filter</span> <span class="s1">'All Rights Reserved.'</span> <span class="s1">'All Rights Reserved. &lt;a href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span>;
+    }
 
-<span class="p">}</span>
+}
 </code></pre></div></div>
 
 <p>如此，push并确认成功后，在浏览器输入devylee.me，哦，没错，这就是我的Github Page！不过，备案号呢？貌似sub_filter并未起作用啊！</p>
@@ -132,18 +131,18 @@
 <p>怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是<code class="highlighter-rouge">Accept-Encoding: gzip</code>，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
 通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行<code class="highlighter-rouge">proxy_set_header Accept-Encoding ""</code>）就可以了：</p>
 
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">5050</span><span class="p">;</span>
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
+    <span class="n">listen</span> <span class="m">5050</span>;
 
-    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://devylee.github.io</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">Accept-Encoding</span> <span class="s">""</span><span class="p">;</span>
+    <span class="n">location</span> / {
+        <span class="n">proxy_pass</span> <span class="n">http</span>://<span class="n">devylee</span>.<span class="n">github</span>.<span class="n">io</span>;
+        <span class="n">proxy_redirect</span> <span class="n">off</span>;
+        <span class="n">proxy_set_header</span> <span class="n">Accept</span>-<span class="n">Encoding</span> <span class="s2">""</span>;
 
-        <span class="kn">sub_filter</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.'</span> <span class="s">'All</span> <span class="s">Rights</span> <span class="s">Reserved.</span> <span class="s">&lt;a</span> <span class="s">href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span><span class="p">;</span>
-    <span class="p">}</span>
+        <span class="n">sub_filter</span> <span class="s1">'All Rights Reserved.'</span> <span class="s1">'All Rights Reserved. &lt;a href="http://www.miitbeian.gov.cn"&gt;辽ICP备16011865号&lt;/a&gt;'</span>;
+    }
 
-<span class="p">}</span>
+}
 </code></pre></div></div>
 
 <p>OK！再次push，刷新浏览器~</p>
@@ -346,7 +345,7 @@
     </script>
     <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
     <script>
-        var maxPages = parseInt('1');
+        var maxPages = parseInt('2');
     </script>
     <script src="/assets/js/infinitescroll.js"></script>
     

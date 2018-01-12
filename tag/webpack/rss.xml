@@ -3,7 +3,7 @@
 <channel>
    <title>elsewhere - webpack</title>
    <link>https://devylee.github.io/tag/webpack/rss.xml</link>
-   <description>一个辅助记忆的树洞</description>
+   <description>A static module bundler for modern JavaScript applications.</description>
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>

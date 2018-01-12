@@ -214,13 +214,13 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
 
 <p>build成功后，执行<code class="highlighter-rouge">docker images</code>就可以看到本地的镜像列表，如果是第一次执行可以用<code class="highlighter-rouge">docker run</code>，如果已经作为容器运行了（<code class="highlighter-rouge">docker ps -a</code>查看）则可以用<code class="highlighter-rouge">docker start</code>来启动容器。另外<code class="highlighter-rouge">docker run</code>时也可以指定环境变量，例如：我在“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中的Dockerfile，因为用到了SAE的环境变量，所以，在本地测试环境中，我就把本地环境配置放到一个名为env-dev.list的文件中，内容类似这样：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MYSQL_HOST=192.168.85.135
-MYSQL_PORT=3306
-ACCESSKEY=ghost
-SECRETKEY=ghost
-APPNAME=ghost
-GHOST_URL=http://192.168.85.135:7000/
-PORT=2467
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">MYSQL_HOST</span><span class="p">=</span><span class="s">192.168.85.135</span>
+<span class="py">MYSQL_PORT</span><span class="p">=</span><span class="s">3306</span>
+<span class="py">ACCESSKEY</span><span class="p">=</span><span class="s">ghost</span>
+<span class="py">SECRETKEY</span><span class="p">=</span><span class="s">ghost</span>
+<span class="py">APPNAME</span><span class="p">=</span><span class="s">ghost</span>
+<span class="py">GHOST_URL</span><span class="p">=</span><span class="s">http://192.168.85.135:7000/</span>
+<span class="py">PORT</span><span class="p">=</span><span class="s">2467</span>
 </code></pre></div></div>
 
 <p>然后<code class="highlighter-rouge">docker run</code>：</p>
@@ -436,7 +436,7 @@ PORT=2467
     </script>
     <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
     <script>
-        var maxPages = parseInt('1');
+        var maxPages = parseInt('2');
     </script>
     <script src="/assets/js/infinitescroll.js"></script>
     
