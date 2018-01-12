@@ -45,7 +45,6 @@ comments  : true
 
 我的Dockerfile大概是下面这样的（*GHOST_CONTENT参考注[^1]*）：
 
-{:.highlight}
 ```docker
 FROM node:4-slim
 
@@ -152,7 +151,7 @@ module.exports = config;
 
 其实这一步就是git comit & push你的代码，然后你就静待花开吧，如果一切顺利，在push收到成功的信息后，你的blog就在那里了。
 
-哦，别忘了把你的*"共享存储"*挂载到Dockerfile中$GHOST_CONTENT所指定的路径上并重启你的容器。
+哦，别忘了把你的*"共享存储"*挂载到Dockerfile中`$GHOST_CONTENT`所指定的路径上并重启你的容器。
 
 Enjoy!
 
@@ -167,4 +166,4 @@ Enjoy!
 
 [^1]: GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径
 
-[^2]: 这是你博客的网址，你可以用SAE的二级网址，比如这样：`url: 'http://' + process.env.APPNAME + '.applinzi.com/'`{:.language-json}；或者像我，先在SAE控制台的“应用”>“环境变量”中添加一个环境变量，例如：SITEURL，值为："http://yourdomain.com/"，然后你的配置就可以这样写： `url: process.env.SITEURL`{:.language-json} 。
+[^2]: 这是你博客的网址，你可以用SAE的二级网址，比如这样：`url: 'http://' + process.env.APPNAME + '.applinzi.com/'`；或者像我，先在SAE控制台的“应用”>“环境变量”中添加一个环境变量，例如：SITEURL，值为：`http://yourdomain.com/`，然后你的配置就可以这样写： `url: process.env.SITEURL` 。
