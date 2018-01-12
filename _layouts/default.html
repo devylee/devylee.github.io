@@ -61,9 +61,9 @@
     </script>
     <script type="text/javascript" src="{{ '/assets/js/jquery.fitvids.js' | relative_url }}"></script>
     
-    {%- assign posts_pages = site.posts | size | divided_by:10 | plus:1 -%}
+    {%- assign posts_pages = site.posts | size | divided_by:site.paginate | plus:1 -%}
     
-    {% if posts_pages > 0 %}
+    {% if posts_pages > 1 %}
     <script>
         var maxPages = parseInt('{{posts_pages}}');
     </script>
