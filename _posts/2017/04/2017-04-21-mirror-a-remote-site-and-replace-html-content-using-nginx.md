@@ -23,19 +23,17 @@ comments  : true
 
 > 我这里监听的端口是5050，这个要看你的SAE应用中环境变量`PORT`的具体值。
 
-{:.highlight}
 ```docker
 FROM nginx:alpine
 
 COPY nginx-default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 5050
-
 ```
 
 nginx-default.conf：
 
-```nginx
+```conf
 server {
     listen 5050;
 
@@ -56,7 +54,7 @@ server {
 怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是`Accept-Encoding: gzip`，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
 通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行`proxy_set_header Accept-Encoding ""`）就可以了：
 
-```nginx
+```conf
 server {
     listen 5050;
 

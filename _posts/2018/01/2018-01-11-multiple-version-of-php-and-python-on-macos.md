@@ -83,6 +83,7 @@ Installing header files:           /usr/local/Cellar/php56/5.6.32_8/include/php/
 $ vi /usr/local/etc/php/5.6/conf.d/ext-phalcon.ini
 ```
 内容如下：
+
 ```ini
 [phalcon]
 extension="/usr/local/Cellar/php56/5.6.32_8/lib/php/extensions/no-debug-non-zts-20131226/phalcon.so"

@@ -308,7 +308,7 @@ output: {
     path: path.resolve(__dirname, 'dist/static/'),
     publicPath: '/'
   },
-  ...
+...
 ```
 
 然后执行`node_modules/.bin/webpack -p --config ./webpack.config.js`，当然，你也可以把这个命令配置到到`package.json`的`scripts`中：

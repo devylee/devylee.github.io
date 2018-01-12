@@ -135,7 +135,7 @@ $ docker build -t image_name --no-cache .
 
 build成功后，执行`docker images`就可以看到本地的镜像列表，如果是第一次执行可以用`docker run`，如果已经作为容器运行了（`docker ps -a`查看）则可以用`docker start`来启动容器。另外`docker run`时也可以指定环境变量，例如：我在“[用SAE Docker一个Ghost博客]({% post_url 2017/04/2017-04-06-docker-a-ghost-blog-by-sae %})”中的Dockerfile，因为用到了SAE的环境变量，所以，在本地测试环境中，我就把本地环境配置放到一个名为env-dev.list的文件中，内容类似这样：
 
-```
+```ini
 MYSQL_HOST=192.168.85.135
 MYSQL_PORT=3306
 ACCESSKEY=ghost
