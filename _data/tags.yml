@@ -40,3 +40,6 @@ php:
 python:
   name: Python
   desc: A programming language that lets you work quickly and integrate systems more effectively.
+webpack:
+  name: webpack
+  desc: A static module bundler for modern JavaScript applications.
