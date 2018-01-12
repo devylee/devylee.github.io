@@ -54,25 +54,10 @@
     </div>
 
 {% comment %} jQuery + Fitvids, which makes all video embeds responsive ]] {% endcomment %}
-    <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ '/assets/js/jquery.fitvids.js' | relative_url }}"></script>
-    
+
     {%- assign posts_pages = site.posts | size | divided_by:site.paginate | plus:1 -%}
-    
-    {% if posts_pages > 1 %}
-    <script>
-        var maxPages = parseInt('{{posts_pages}}');
-    </script>
-    <script src="{{ '/assets/js/infinitescroll.js' | relative_url }}"></script>
-    {% endif %}
-    
-    {% if jekyll.environment == "production" and site.google_analytics %}
-        {% include google_analytics.html %}   
-    {% endif %}
 
     {% if layout.current == 'post' %}
     <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
@@ -146,7 +131,16 @@
             $postContent.fitVids();
         });
     </script>
+    {% elsif posts_pages > 1 %}
+    <script>
+        var maxPages = parseInt('{{posts_pages}}');
+    </script>
+    <script src="{{ '/assets/js/infinitescroll.js' | relative_url }}"></script>
     {% endif %}
+    
+    {%- if jekyll.environment == "production" and site.google_analytics -%}
+        {% include google_analytics.html %}   
+    {%- endif -%}
 </body>
 </html>
 
