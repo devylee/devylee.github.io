@@ -19,6 +19,11 @@
 .social-link-swb svg {
     height: 1.6rem;
 }
+
+.page-about .post-full .post-full-image {
+    height: 400px;
+}
+
 @media (max-width: 900px) {
     .floating-header-share-swb {
         width: 40px;
