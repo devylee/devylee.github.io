@@ -132,7 +132,7 @@
 
 <p>我的Dockerfile大概是下面这样的（<em>GHOST_CONTENT参考注<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></em>）：</p>
 
-<div class="language-docker highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> node:4-slim</span>
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> node:4-slim</span>
 
 <span class="k">ENV</span><span class="s"> GHOST_SOURCE=/var/www/ghost </span>
 <span class="c"># 参考注1.</span>
@@ -233,7 +233,7 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
 
 <p>其实这一步就是git comit &amp; push你的代码，然后你就静待花开吧，如果一切顺利，在push收到成功的信息后，你的blog就在那里了。</p>
 
-<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中$GHOST_CONTENT所指定的路径上并重启你的容器。</p>
+<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中<code class="highlighter-rouge">$GHOST_CONTENT</code>所指定的路径上并重启你的容器。</p>
 
 <p>Enjoy!</p>
 
@@ -253,7 +253,7 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
       <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'http</span><span class="p">:</span><span class="err">//'</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">process.env.APPNAME</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">'.applinzi.com/'</span></code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：”http://yourdomain.com/”，然后你的配置就可以这样写： <code class="language-json highlighter-rouge"><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">process.env.SITEURL</span></code> 。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="highlighter-rouge">url: 'http://' + process.env.APPNAME + '.applinzi.com/'</code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：<code class="highlighter-rouge">http://yourdomain.com/</code>，然后你的配置就可以这样写： <code class="highlighter-rouge">url: process.env.SITEURL</code> 。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -445,33 +445,8 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
     </div>
 
 
-    <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
-    <script>
-        var maxPages = parseInt('2');
-    </script>
-    <script src="/assets/js/infinitescroll.js"></script>
-    
-    
-    
-        <!-- Google Analytics Tracking code -->
-    <script>
-	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	    ga('create', 'UA-92777218-1', 'auto');
-	    ga('send', 'pageview');
-
-    </script>   
-    
-
-    
     <script type="text/javascript" src="/assets/js/ping.js"></script>
     <script>
 
@@ -536,7 +511,16 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
         update();
     });
     </script>
-    
-</body>
+    <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script></body>
 </html>
 
