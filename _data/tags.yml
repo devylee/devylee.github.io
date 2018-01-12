@@ -6,7 +6,7 @@ ghost:
   desc: A blog publishing platform.
 sae:
   name: SAE
-  desc: Sina Application Engine
+  desc: 新浪云应用(Sina App Engine)
 javascript:
   name: Javascript
   desc: Javascript
