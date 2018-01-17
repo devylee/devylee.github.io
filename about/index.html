@@ -9,7 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
 
     <link rel="canonical" href="https://devylee.github.io/about/index.html" />
-    <meta name="referrer" content="origin" /><title>elsewhere | About</title>
+    <meta name="referrer" content="origin" />
+    <title>elsewhere | About</title>
     <meta name="description" content="这是我的Github Page，同时自2017年4月5日起，这也将用作我的个人博客." />
 
     <meta property="og:site_name" content="elsewhere" />
@@ -56,6 +57,7 @@
         <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
                 <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
                 <li class="nav-about  nav-current" role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-archives " role="menuitem"><a href="/archives/">Archives</a></li>
                 <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
             </ul>
         </div>
@@ -138,11 +140,15 @@
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    
+    
     <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
     <script>
-        var maxPages = parseInt('2');
+        $(function() {
+            var $postContent = $(".post-full-content");
+            $postContent.fitVids();
+        });
     </script>
-    <script src="/assets/js/infinitescroll.js"></script>
     <!-- Google Analytics Tracking code -->
     <script>
 	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

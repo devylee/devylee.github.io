@@ -7,10 +7,10 @@
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>
-    <title>用Nginx镜像远程站点并替换HTML</title>
+    <title>用nginx镜像远程站点并替换HTML</title>
     <author>Devy</author>
     <link>https://devylee.github.io/post/2017/04/mirror-a-remote-site-and-replace-html-content-using-nginx.html</link>
-    <pubDate>2017-04-21T09:30:00+08:00</pubDate>
+    <pubDate>2017-04-21T17:30:00+08:00</pubDate>
     <description><![CDATA[<blockquote>
   <p>Nginx可以做很多事，除了我们最常用的做Web服务器和反向代理，它其实还可以让我们做很多的“小动作”，比如本文要介绍的镜像一个站点、替换HTTP的响应内容。</p>
 </blockquote>

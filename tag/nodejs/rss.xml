@@ -10,7 +10,7 @@
     <title>在Web前端开发中使用Node和webpack</title>
     <author>Devy</author>
     <link>https://devylee.github.io/post/2017/06/a-sample-front-end-solution-using-webpack.html</link>
-    <pubDate>2017-06-09T09:30:00+08:00</pubDate>
+    <pubDate>2017-06-09T17:30:00+08:00</pubDate>
     <description><![CDATA[<blockquote>
   <p>标题说的很明白，本文我只介绍使用<a href="https://nodejs.org">Node</a>和<a href="https://webpack.js.org/">webpack</a>来实现的一个Web前端的构建方案，而不是一个Node实现的全栈方案。至于后端，其实我个人觉得有很多比Node更好的选择，但这不是本文的重点。</p>
 </blockquote>
