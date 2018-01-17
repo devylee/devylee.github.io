@@ -1,13 +1,13 @@
 ---
 title     : 用SAE Docker一个Ghost博客
-date      : "2017-04-06 09:00:00"
-categories: devy
+date      : 2017-04-06 09:00:00
+category  : devy
 tags      : 
   - docker
   - ghost
   - sae
 layout    : post
-class     : "post tag-docker tag-ghost tag-sae"
+class     : post tag-docker tag-ghost tag-sae
 comments  : true
 ---
 

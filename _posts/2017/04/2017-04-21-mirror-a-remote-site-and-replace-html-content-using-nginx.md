@@ -1,13 +1,13 @@
 ---
-title     : 用Nginx镜像远程站点并替换HTML
-date      : "2017-04-21 9:30:00"
-categories: devy
+title     : 用nginx镜像远程站点并替换HTML
+date      : 2017-04-21 9:30:00
+category  : devy
 tags      : 
   - nginx
   - docker
   - sae
 layout    : post
-class     : "post tag-nginx tag-docker tag-sae"
+class     : post tag-nginx tag-docker tag-sae
 comments  : true
 ---
 

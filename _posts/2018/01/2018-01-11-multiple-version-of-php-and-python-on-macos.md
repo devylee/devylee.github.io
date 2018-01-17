@@ -1,7 +1,7 @@
 ---
 title     : macOS下PHP与Python的多版本环境共存
-date      : "2018-01-11 9:00:00"
-categories: devy
+date      : 2018-01-11 9:00:00
+category  : devy
 layout    : post
 tags      : 
   - Multiple-Version
@@ -9,7 +9,7 @@ tags      :
   - python
   - macos
   - homebrew
-class     : "post tag-multiple-version tag-php tag-python tag-macos"
+class     : post tag-multiple-version tag-php tag-python tag-macos
 comments  : true
 ---
 

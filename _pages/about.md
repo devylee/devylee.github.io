@@ -1,9 +1,9 @@
 ---
-title: About
-layout: page
-current: about
-cover: /assets/images/cover-about.jpg
-class: "post page"
+title   : About
+layout  : page
+current : about
+cover   : /assets/images/cover-about.jpg
+class   : post page
 ---
 
 这是[我](/author/devy/)的[Github Page](https://pages.github.com/)，同时自2017年4月5日起，这也将用作我的个人博客.

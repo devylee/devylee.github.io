@@ -1,12 +1,12 @@
 ---
 title     : 在Web前端开发中使用Node和webpack
-date      : "2017-06-09 9:30:00"
-categories: devy
+date      : 2017-06-09 9:30:00
+category  : devy
 tags      : 
   - webpack
   - nodejs
 layout    : post
-class     : "post tag-webpack tag-nodejs"
+class     : post tag-webpack tag-nodejs
 comments  : true
 ---
 

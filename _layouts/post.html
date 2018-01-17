@@ -5,6 +5,7 @@ class     : post-template
 navigation: true
 current   : post
 ---
+
 {%- assign author = page.categories[0] -%}
 {%- assign author_info = site.data.authors[author] -%}
 {%- capture author_page_path -%}/author/{{ author }}/{%- endcapture -%}

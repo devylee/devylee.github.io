@@ -1,7 +1,7 @@
 ---
 title     : 新年新面貌
-date      : "2018-01-10 16:00:00"
-categories: devy
+date      : 2018-01-10 16:00:00
+category  : devy
 layout    : post
 class     : post
 comments  : true
