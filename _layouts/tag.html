@@ -1,24 +1,28 @@
 ---
 layout    : default
 cover     : /assets/images/cover-tags.jpg
-logo      : false
 class     : tag-template
-navigation: true
 current   : tag
 ---
 
 {%- assign tag = site.data.tags[page.tag] -%}
 
-{% comment %} The tag above means - insert everything in this file into the [body] of the default.html template {% endcomment %}
+{%- if tag and tag.cover -%}
+{% assign page_cover = tag.cover %}
+{%- else -%}
+{% assign page_cover = page.cover %}
+{%- endif -%}
+
+{%- comment -%} The tag above means - insert everything in this file into the [body] of the default.html template {%- endcomment -%}
 
 {% comment %} The big featured header, it uses blog cover image as a BG if available {% endcomment %}
-    <header class="site-header outer {% if page.cover %}" style="background-image: url({{page.cover | relative_url}}){% else %}no-cover{% endif %}">
+    <header class="site-header outer {% if page_cover %}" style="background-image: url({{page_cover | relative_url}}){% else %}no-cover{% endif %}">
         <div class="inner">
             {% include site-nav.html %}
             <div class="site-header-content">
                 <h1 class="site-title">{% if tag %}{{ tag.name }}{% else %}{{ page.tag | replace : '-', ' ' }}{% endif %}</h1>
                 <h2 class="site-description">
-                    {%- if tag -%}
+                    {%- if tag and tag.desc -%}
                         {{ tag.desc }}
                     {%- elsif page.tag -%}
                         A collection of {% if paginator.total_posts > 1%}{{ paginator.total_posts }} posts{% elsif paginator.total_posts == 1 %} 1 post{% else %} posts{% endif %}
@@ -37,5 +41,17 @@ current   : tag
                 {% include post-card.html post=post %}
             {% endfor %}
             </div>
+            <nav class="post-paginate" role="pagination">
+                {% if paginator.previous_page %}
+                    {% if paginator.previous_page == 1 %}
+                        <a class="newer-posts" href="{{ '/' | relative_url }}" title="Previous Page">&laquo; Newer Posts</a>
+                    {% else %}
+                        <a class="newer-posts" href="{{ paginator.previous_page_path | relative_url }}" title="Previous Page">&laquo; Newer Posts</a>
+                  {% endif %}
+                {% endif %}
+                {% if paginator.next_page %} 
+                    <a class="older-posts" href="{{ paginator.next_page_path | relative_url }}" title="Next Page">Older Posts &raquo;</a>
+                {% endif %} 
+            </nav>
         </div>
     </main>

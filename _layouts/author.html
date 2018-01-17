@@ -1,19 +1,24 @@
 ---
 layout    : default
 cover     : /assets/images/cover-author.jpg
-logo      : false
 class     : author-template
-navigation: true
 current   : author
 ---
 
 {%- assign author = site.data.authors[page.author] -%}
+
 {%- capture author_rss_url -%}/author/{{ page.author }}/rss.xml{%- endcapture -%}
 
-{% comment %} The tag above means - insert everything in this file into the [body] of the default.html template {% endcomment %}
+{%- if author and author.cover -%}
+{% assign page_cover = author.cover %}
+{%- else -%}
+{% assign page_cover = page.cover %}
+{%- endif -%}
+
+{%- comment -%} The tag above means - insert everything in this file into the [body] of the default.html template {%- endcomment -%}
 
 {% comment %} Everything inside the #author tags pulls data from the author {% endcomment %}
-    <header class="site-header outer {% if author.cover %}" style="background-image: url({{author.cover}}){% else %} no-cover{% endif %}">
+    <header class="site-header outer {% if page_cover %}" style="background-image: url({{page_cover | relative_url}}){% else %} no-cover{% endif %}">
         <div class="inner">
             {% include site-nav.html %}
             <div class="site-header-content">
@@ -55,5 +60,17 @@ current   : author
                     {% include post-card.html post=post %}
                 {% endfor %}
             </div>
+            <nav class="post-paginate" role="pagination">
+                {% if paginator.previous_page %}
+                    {% if paginator.previous_page == 1 %}
+                        <a class="newer-posts" href="{{ '/' | relative_url }}" title="Previous Page">&laquo; Newer Posts</a>
+                    {% else %}
+                        <a class="newer-posts" href="{{ paginator.previous_page_path | relative_url }}" title="Previous Page">&laquo; Newer Posts</a>
+                  {% endif %}
+                {% endif %}
+                {% if paginator.next_page %} 
+                    <a class="older-posts" href="{{ paginator.next_page_path | relative_url }}" title="Next Page">Older Posts &raquo;</a>
+                {% endif %} 
+            </nav>
         </div>
     </main>

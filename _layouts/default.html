@@ -1,13 +1,13 @@
-{%- if page.layout == 'post' -%}
+{%- if page.layout == 'post' or layout.current == 'post' -%}
 {%- capture body_class -%}post-template{% for tag in page.tags %} tag-{{tag|downcase}}{% endfor %}{%- endcapture -%}
-{%- elsif page.layout == 'page' -%}
+{%- elsif page.layout == 'page' or layout.current == 'page' -%}
 {%- capture body_class -%}page-template page-{{page.current}}{%- endcapture -%}
-{%- elsif page.tag -%}
+{%- elsif page.layout == 'tag' or page.current == 'tag' or page.grouptype == 'tag' -%}
 {%- capture body_class -%}tag-template tag-{{page.tag|downcase}}{%- endcapture -%}
-{%- elsif page.author -%}
+{%- elsif page.layout == 'author' or page.current == 'author' or page.grouptype == 'author' -%}
 {%- capture body_class -%}author-template author-{{page.author}}{%- endcapture -%}
 {%- else -%}
-{%- assign body_class = 'home-template' -%}
+{%- capture body_class -%}{% if page.class %}{{page.class}}{% elsif layout.class %}{{layout.class}}{% else%}home-template{% endif %}{%- endcapture -%}
 {%- endif -%}
 <!DOCTYPE html>
 <html>
@@ -55,11 +55,18 @@
 
 {% comment %} jQuery + Fitvids, which makes all video embeds responsive ]] {% endcomment %}
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{ '/assets/js/jquery.fitvids.js' | relative_url }}"></script>
 
-    {%- assign posts_pages = site.posts | size | divided_by:site.paginate | plus:1 -%}
-
-    {% if layout.current == 'post' %}
+{%- if page.current == 'home' or layout.current == 'home' -%}
+    {% assign posts_pages = site.posts | size | divided_by:site.paginate | plus:1 %}
+{%- elsif page.layout == 'tag' or page.current == 'tag' or page.grouptype == 'tag' -%}
+    {% assign posts_pages = site.tags[page.tag] | size | divided_by:site.paginate | plus:1 %}
+{%- elsif page.layout == 'author' or page.current == 'author' or page.grouptype == 'author' -%}
+    {% assign posts_pages = site.categories[page.author] | size | divided_by:site.paginate | plus:1 %}
+{%- else -%}
+    {% assign posts_pages = 0 %}
+{%- endif -%}
+    
+    {% if page.layout == 'post' or layout.current == 'post' %}
     <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
     <script>
 
@@ -124,14 +131,15 @@
         update();
     });
     </script>
-    {% elsif layout.current == 'page' %}
+    {% elsif page.layout == 'page' or page.layout == 'page' %}
+    <script type="text/javascript" src="{{ '/assets/js/jquery.fitvids.js' | relative_url }}"></script>
     <script>
         $(function() {
             var $postContent = $(".post-full-content");
             $postContent.fitVids();
         });
     </script>
-    {% elsif posts_pages > 1 %}
+    {% elsif posts_pages > 0 %}
     <script>
         var maxPages = parseInt('{{posts_pages}}');
     </script>

@@ -9,7 +9,7 @@ sae:
   desc: 新浪云应用(Sina App Engine)
 javascript:
   name: Javascript
-  desc: Javascript
+  desc: A high-level, dynamic, weakly typed, prototype-based, multi-paradigm, and interpreted programming language.
 cors:
   name: CORS
   desc: Cross-Origin Resource Sharing

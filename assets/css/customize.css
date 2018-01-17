@@ -24,6 +24,11 @@
     height: 400px;
 }
 
+.post-paginate {
+    display: none;
+    visibility: hidden;
+}
+
 @media (max-width: 900px) {
     .floating-header-share-swb {
         width: 40px;
