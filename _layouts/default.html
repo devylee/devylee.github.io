@@ -55,16 +55,6 @@
 
 {% comment %} jQuery + Fitvids, which makes all video embeds responsive ]] {% endcomment %}
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-{%- if page.current == 'home' or layout.current == 'home' -%}
-    {% assign posts_pages = site.posts | size | divided_by:site.paginate | plus:1 %}
-{%- elsif page.layout == 'tag' or page.current == 'tag' or page.grouptype == 'tag' -%}
-    {% assign posts_pages = site.tags[page.tag] | size | divided_by:site.paginate | plus:1 %}
-{%- elsif page.layout == 'author' or page.current == 'author' or page.grouptype == 'author' -%}
-    {% assign posts_pages = site.categories[page.author] | size | divided_by:site.paginate | plus:1 %}
-{%- else -%}
-    {% assign posts_pages = 0 %}
-{%- endif -%}
     
     {% if page.layout == 'post' or layout.current == 'post' %}
     <script type="text/javascript" src="{{ '/assets/js/ping.js' | relative_url }}"></script>
@@ -139,9 +129,9 @@
             $postContent.fitVids();
         });
     </script>
-    {% elsif posts_pages > 0 %}
+    {% elsif paginator.total_pages > 0 %}
     <script>
-        var maxPages = parseInt('{{posts_pages}}');
+        var maxPages = parseInt('{{paginator.total_pages}}');
     </script>
     <script src="{{ '/assets/js/infinitescroll.js' | relative_url }}"></script>
     {% endif %}

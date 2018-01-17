@@ -5,32 +5,32 @@ module Jekyll
     safe true
 
     def generate(site)
-      site.categories.each do |author|
-        build_subpages(site, "author", author)
+      site.categories.each do |author, posts|
+        build_subpages(site, author, posts)
       end
     end
 
-    def build_subpages(site, type, posts) 
-      posts[1] = posts[1].sort_by { |p| -p.date.to_f }     
-      atomize(site, type, posts)
-      paginate(site, type, posts)
+    def build_subpages(site, author, posts) 
+      posts = posts.sort_by { |p| -p.date.to_f }     
+      atomize(site, author, posts)
+      paginate(site, author, posts)
     end
 
-    def atomize(site, type, posts)
-      path = "/author/#{posts[0].downcase}"
-      atom = AtomPageAuthor.new(site, site.source, path, type, posts[0], posts[1])
+    def atomize(site, author, posts)
+      path = "/author/#{author.downcase}"
+      atom = AtomPageAuthor.new(site, site.source, path, "author", author)
       site.pages << atom
     end
 
-    def paginate(site, type, posts)
-      pages = Jekyll::Paginate::Pager.calculate_pages(posts[1], site.config['paginate'].to_i)
+    def paginate(site, author, posts)
+      pages = Jekyll::Paginate::Pager.calculate_pages(posts, site.config['paginate'].to_i)
       (1..pages).each do |num_page|
-        pager = Jekyll::Paginate::Pager.new(site, num_page, posts[1], pages)
-        path = "/author/#{posts[0].downcase}"
+        pager = Jekyll::Paginate::Pager.new(site, num_page, posts, pages)
+        path = "/author/#{author.downcase}"
         if num_page > 1
           path = path + site.config['paginate_path'].gsub(/:num/, num_page.to_s)
         end
-        newpage = GroupSubPageAuthor.new(site, site.source, path, type, posts[0])
+        newpage = GroupSubPageAuthor.new(site, site.source, path, "author", author)
         newpage.pager = pager
         site.pages << newpage 
 
@@ -53,7 +53,7 @@ module Jekyll
   end
   
   class AtomPageAuthor < Page
-    def initialize(site, base, dir, type, val, posts)
+    def initialize(site, base, dir, type, val)
       @site = site
       @base = base
       @dir = dir

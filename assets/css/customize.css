@@ -36,3 +36,18 @@
         line-height: 38px;
     }
 }
+
+.page-archives .post-full-content h3 {
+    clear: both;
+}
+
+.page-archives .post-full-content ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 0 15px;
+    line-height: 2em;
+}
+
+.page-archives .post-full-content ul li sub {
+    bottom: -0.15em;
+}

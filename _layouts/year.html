@@ -1,0 +1,30 @@
+---
+layout    : default
+class     : archive-template
+current   : archives
+---
+
+    <header class="site-header outer {% if layout.cover %}" style="background-image: url({{ layout.cover | relative_url }}){% else %}no-cover{% endif %}">
+        <div class="inner">
+            {% include site-nav.html %}
+            <div class="site-header-content">
+                <h1 class="site-title">{{ page.year }}</h1>
+                <h2 class="site-description">
+                    Archive of posts from {{ page.year }}
+                </h2>
+            </div>
+        </div>
+    </header>
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+            <div class="post-feed">
+            {% for post in paginator.posts %}
+            {% comment %} The tag below includes the markup for each post - _includes/post-card.html {% endcomment %}
+                {% include post-card.html post=post %}
+            {% endfor %}
+            </div>
+            {% assign prefix = '/year/' | append: page.year %}
+            {% include pagination.html prefix=prefix %}
+        </div>
+    </main>

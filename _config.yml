@@ -40,6 +40,15 @@ kramdown:
 #  extensions:
 #    - footnotes
 
+# archives
+#jekyll-archives:
+#  enabled: 
+#    - year
+#  layouts:
+#    year: year
+#  permalinks:
+#    year: '/year/:year/'
+
 # Widget
 google_analytics : UA-92777218-1
 disqus           : devylee
@@ -55,6 +64,7 @@ branch  : source
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
+#  - jekyll-archives
 #  - jekyll-feed
 
 exclude:
