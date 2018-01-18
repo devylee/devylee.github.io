@@ -1,41 +1,77 @@
 {%- comment -%} Ghost outputs important style and meta data with this tag {%- endcomment -%}
-{%- capture page_path -%}{% if page.current == 'author' %}/author/{{ page.author }}/{% elsif page.current == 'tag' %}/tag/{{ page.tag | downcase }}/{% else %}{{ page.url }}{% endif %}{%- endcapture -%}
-{%- capture page_title -%}{{ site.title }}{% if page.current == 'author' %} - {{site.data.authors[page.author].name }}{% elsif page.current == 'tag' %} - {{ page.tag }} {% elsif page.title %} | {{ page.title }}{% endif %}{%- endcapture -%}
-{%- capture page_description -%}{% if page.current == 'author' %}{{site.data.authors[page.author].bio }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip }}{% elsif page.current == 'post' and page.content %}{{ page.content | strip_html | truncatewords : 144 | strip }}{% else %}{{ site.description }}{% endif %}{%- endcapture -%}
-    <link rel="canonical" href="{{ page_path | absolute_url }}" />
-    <meta name="referrer" content="origin" />
+
+{%- capture page_title -%}
+    {{ site.title }}
+    {%- if page.current == 'author' %} | {{site.data.authors[page.author].name }}
+    {%- elsif page.current == 'tag' %} | {% if site.data.tags[page.tag] %}{{ site.data.tags[page.tag].name }}{% else %}{{ page.tag }}{% endif %}
+    {%- elsif page.title %} | {{ page.title }}
+    {%- endif -%}
+{%- endcapture -%}
+{%- capture page_description -%}
+    {%- if page.current == 'author' -%}
+        A series of posts written by {{site.data.authors[page.author].name }}
+    {%- elsif page.current == 'tag' -%}
+        A series of posts about {% if site.data.tags[page.tag] %}{{ site.data.tags[page.tag].name }}{% else %}{{ page.tag }}{% endif %}
+    {%- elsif page.current == 'year' -%}
+        Archive of  posts from {{ page.year }}
+    {%- elsif layout.current == 'post' or layout.current == 'page' -%}
+        {%- if page.excerpt -%}
+            {{ page.excerpt | strip_html | strip }}
+        {%- else -%}
+            {{ page.content | strip_html | truncatewords : 144 | strip }}
+        {%- endif -%}
+    {%- else -%}
+        {{ site.description }}
+    {%- endif -%}
+{%- endcapture -%}
+    
     <title>{{ page_title }}</title>
-    <meta name="description" content="{{ page_description | escape | strip_newlines }}" />
+    <link rel="canonical" href="{{ page.url | absolute_url }}" />
+    <meta name="referrer" content="origin" />
+
+    <meta name="twitter:card" content="{% if page.cover %}summary_large_image{% else %}summary{% endif %}" />
+    <meta name="twitter:site" content="{{ site.twitter_card_site }}" />
+    {%- if layout.current == 'post' %}
+    {%- assign author = page.categories[0] %}
+    <meta name="twitter:creator" content="{{ site.data.authors[author].twitter }}" />
+    {%- elsif page.current == 'author' %}
+    <meta name="twitter:creator" content="{{ site.data.authors[page.author].twitter }}" />
+    {%- endif %}
 
     <meta property="og:site_name" content="{{ site.name }}" />
-    <meta property="og:type" content="{% if page.current == 'author' %}profile{% elsif page.current == 'post' or page.layout == 'post' %}article{% else %}website{% endif %}" />
-    <meta property="og:url" content="{{ page_path | absolute_url }}" />
+    <meta property="og:type" content="{% if page.current == 'author' %}profile{% elsif layout.current == 'post' %}article{% else %}website{% endif %}" />
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
     <meta property="og:title" content="{{ page_title | escape }}" />
-    <meta property="og:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
-    <meta property="og:image" content="{{ page.cover | absolute_url }}" />{% endif %}
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="{{ page_path | absolute_url }}" />
-    <meta name="twitter:site" content="{{ site.twitter_card_site }}" />
-    <meta name="twitter:title" content="{{ page_title | escape }}" />
-    <meta name="twitter:description" content="{{ page_description | escape | strip_newlines }}" />{% if page.cover %}
-    <meta name="twitter:image:src" content="{{ page.cover | absolute_url }}" />{% endif %}
+    <meta property="og:description" name="description" content="{{ page_description | escape | strip_newlines }}" />
+    {%- if page.cover %}
+    <meta property="og:image" content="{{ page.cover | absolute_url }}" />
+    {%- endif %}
 
     <script type="application/ld+json">
-{
-    "@context": "http://schema.org",{% if page.current == 'author' %}
-    "@type": "Person",
-    "name": "{{ site.data.authors[page.author].name }}",{% elsif page.current == 'tag' %}
-    "@type": "Series",
-    "name": "{{ page.tag }}",{% elsif page.current == 'post' or page.layout == 'post' %}
-    "@type": "Article",{% assign author = page.categories[0] %}
-    "author": "{{ site.data.authors[author].name }}",{% else %}
-    "@type": "Website",{% endif %}
-    "publisher": "{{ site.name }}",
-    "url": "{{ page_path | absolute_url }}",
-    "description": "{{ page_description | escape | strip_newlines }}"{% if page.cover %},
-    "image": "{{ page.cover | absolute_url }}"{% endif %}
-}
+    {
+        "@context": "http://schema.org",
+    {%- if page.current == 'author' %}
+        "@type": "Person",
+        "name": "{{ site.data.authors[page.author].name }}",
+    {%- elsif page.current == 'tag' %}
+        "@type": "Series",
+        "name": "{% if site.data.tags[page.tag] %}{{ site.data.tags[page.tag].name }}{% else %}{{ page.tag }}{% endif %}",
+    {%- elsif page.current == 'year' %}
+        "@type": "Series",
+        "name": "{{ page.year }}",
+    {%- elsif layout.current == 'post' %}
+        "@type": "Article",
+        "author": "{{ site.data.authors[author].name }}",
+    {%- else %}
+        "@type": "Website",
+    {%- endif %}
+        "publisher": "{{ site.name }}",
+        "url": "{{ page.url | absolute_url }}",
+        "description": "{{ page_description | escape | strip_newlines }}"
+    {%- if page.cover %},
+        "image": "{{ page.cover | absolute_url }}"
+    {%- endif %}
+    }
     </script>
 
     <meta name="generator" content="Jekyll" />

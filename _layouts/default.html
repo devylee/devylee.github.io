@@ -1,13 +1,15 @@
 {%- if page.layout == 'post' or layout.current == 'post' -%}
-{%- capture body_class -%}post-template{% for tag in page.tags %} tag-{{tag|downcase}}{% endfor %}{%- endcapture -%}
+    {%- capture body_class -%}post-template{% for tag in page.tags %} tag-{{tag|downcase}}{% endfor %}{%- endcapture -%}
 {%- elsif page.layout == 'page' or layout.current == 'page' -%}
-{%- capture body_class -%}page-template page-{{page.current}}{%- endcapture -%}
+    {%- capture body_class -%}page-template page-{{page.current}}{%- endcapture -%}
 {%- elsif page.layout == 'tag' or page.current == 'tag' or page.grouptype == 'tag' -%}
-{%- capture body_class -%}tag-template tag-{{page.tag|downcase}}{%- endcapture -%}
+    {%- capture body_class -%}tag-template tag-{{page.tag|downcase}}{%- endcapture -%}
 {%- elsif page.layout == 'author' or page.current == 'author' or page.grouptype == 'author' -%}
-{%- capture body_class -%}author-template author-{{page.author}}{%- endcapture -%}
+    {%- capture body_class -%}author-template author-{{page.author}}{%- endcapture -%}
+{%- elsif page.layout == 'year' or page.current == 'year' or page.grouptype == 'year' -%}
+    {%- capture body_class -%}{{page.class}} year-{{page.year}}{%- endcapture -%}
 {%- else -%}
-{%- capture body_class -%}{% if page.class %}{{page.class}}{% elsif layout.class %}{{layout.class}}{% else%}home-template{% endif %}{%- endcapture -%}
+    {%- capture body_class -%}{% if page.class %}{{page.class}}{% elsif layout.class %}{{layout.class}}{% else%}home-template{% endif %}{%- endcapture -%}
 {%- endif -%}
 <!DOCTYPE html>
 <html>

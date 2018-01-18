@@ -5,6 +5,9 @@ current : archives
 class   : post page page-archives
 ---
 
+> The post archives by years, authors and tags.
+
+<!--more-->
 
 ### Years:
 

@@ -5,6 +5,7 @@ devy:
   location   : "Dalian, China"
   avatar     : "https://github.com/devylee.png"
   cover      : "/assets/images/cover-author.jpg"
+  twitter    : "@idevylee"
   twitter_url: "https://twitter.com/idevylee"
   github_url : "https://github.com/devylee"
   weibo_url  : "https://weibo.com/devylee"
