@@ -92,7 +92,7 @@ extension="/usr/local/Cellar/php56/5.6.xx_x/lib/php/extensions/no-debug-non-zts-
 > 当然其实我们还可以用`brew create`来新建一个phalcon2的Formula，这种方式更方便用homebrew来维护：
 
 ```
-$ brew create https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz --tap homebrew/php
+$ brew create https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz --tap homebrew/homebrew-php
 ```
 
 上面命令会创建一个`/usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb`文件，我们可以把这个文件重命名：
