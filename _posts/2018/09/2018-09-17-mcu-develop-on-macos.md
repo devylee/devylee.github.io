@@ -1,6 +1,6 @@
 ---
 title     : macOS下51单片机的开发
-date      : 2018-09-17 13:00:00
+date      : 2018-09-17 10:00:00
 category  : devy
 layout    : post
 cover     : /uploads/2018/09/helloworld.png
@@ -28,7 +28,7 @@ Windows下有集成的开发环境[Keil µVersion](http://www2.keil.com/mdk5/uv
 $ brew install sdcc
 ```
 
-虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及往上的说法：
+虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：
 
 
 | |Mac sdcc|Windows Keil c|
@@ -53,57 +53,52 @@ $ brew install sdcc
 #define dula P2_6
 #define wela P2_7
 
-uchar table[]="Hello World!";
+uchar table[] = "Hello World!";
 uchar num;
 
-void delay(uint z)
-{
-	uint x,y;
-	for(x=z;x>0;x--)
-		for(y=110;y>0;y--);
+void delay(uint z) {
+    uint x, y;
+    for(x = z; x > 0; x--)
+        for(y = 110; y > 0; y--);
 }
 
-void write_com(uchar com)
-{
-	lcdrs=0;
-	P0=com;
-	delay(5);
-	lcden=1;
-	delay(5);
-	lcden=0;
+void write_com(uchar com) {
+    lcdrs = 0;
+    P0 = com;
+    delay(5);
+    lcden = 1;
+    delay(5);
+    lcden = 0;
 }
 
-void write_data(uchar date)
-{
-	lcdrs=1;
-	P0=date;
-	delay(5);
-	lcden=1;
-	delay(5);
-	lcden=0;
+void write_data(uchar date) {
+    lcdrs = 1;
+    P0 = date;
+    delay(5);
+    lcden = 1;
+    delay(5);
+    lcden = 0;
 }
 
-void init()
-{	
-    rw=0;
-    dula=0;
-    wela=0;
-	lcden=0;
-	write_com(0x38);
-	write_com(0x0e);
-	write_com(0x06);
-	write_com(0x01);
-	write_com(0x80);
+void init() {	
+    rw = 0;
+    dula = 0;
+    wela = 0;
+    lcden = 0;
+    write_com(0x38);
+    write_com(0x0e);
+    write_com(0x06);
+    write_com(0x01);
+    write_com(0x80);
 }
-void main()
-{
-	init();
-	for(num=0;num<12;num++)
-	{
-		write_data(table[num]);
-		delay(100);
-	}
-	while(1);
+
+void main() {
+    init();
+    for(num = 0; num < 12; num++) {
+        write_data(table[num]);
+        delay(100);
+    }
+    while(1);
 }
 
 ```
@@ -141,7 +136,7 @@ $python -m serial.tools.list_ports -v
 1 ports found
 ```
 
-后来，考虑是不是USB驱动的问题？好在板上提供usb和串口转换的芯片CH340G，[WCH官方](http://www.wch.cn/)有提供[mac的驱动下载](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)。下载来安装并重启后，再list_ports()：
+后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，[WCH官方](http://www.wch.cn/)有提供[mac的驱动下载](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)。下载来安装并重启后，再list_ports()：
 
 ```
 $ python -m serial.tools.list_ports -v
