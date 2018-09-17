@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <title>elsewhere | macOS下51单片机的开发</title>
+    <link rel="canonical" href="https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html" />
+    <meta name="referrer" content="origin" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@idevylee" />
+    <meta name="twitter:creator" content="@idevylee" />
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html" />
+    <meta property="og:title" content="elsewhere | macOS下51单片机的开发" />
+    <meta property="og:description" name="description" content="可能是因为闲大了，也可能是因为以前一直想做却没做，现在终于可以做了！总之最近某宝淘了一块树莓派、一块STM32和一块STC89C52。今天从最低级的51板STC89开始鼓捣一下，这第一步，就是在mac上配置开发环境。" />
+    <meta property="og:image" content="https://devylee.github.io/uploads/2018/09/helloworld.png" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "author": "Devy",
+        "publisher": "elsewhere",
+        "url": "https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html",
+        "description": "可能是因为闲大了，也可能是因为以前一直想做却没做，现在终于可以做了！总之最近某宝淘了一块树莓派、一块STM32和一块STC89C52。今天从最低级的51板STC89开始鼓捣一下，这第一步，就是在mac上配置开发环境。",
+        "image": "https://devylee.github.io/uploads/2018/09/helloworld.png"
+    }
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="https://devylee.github.io/feed.xml" />
+
+
+</head>
+<body class="post-template tag-mcu tag-macos tag-sdcc">
+
+    <div class="site-wrapper">
+
+
+        
+    
+    <header class="site-header outer">
+        <div class="inner">
+                <nav class="site-nav">
+        <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
+                <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
+                <li class="nav-about " role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-archives " role="menuitem"><a href="/archives/">Archives</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="https://devylee.github.io/feed.xml" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+        </div>
+    </nav>
+    
+        </div>
+    </header>
+    
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+
+            <article class="post-full post tag-mcu tag-macos tag-sdcc">
+
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="">17 Sep 2018</time>
+                            <span class="date-divider">/</span> <a href="/tag/mcu/">MCU</a>
+                            <span class="date-divider">/</span> <a href="/tag/macos/">macOS</a>
+                            <span class="date-divider">/</span> <a href="/tag/sdcc/">sdcc</a>
+                            
+                        </section>
+                        <h1 class="post-full-title">macOS下51单片机的开发</h1>
+                </header>
+
+                
+                <figure class="post-full-image" style="background-image: url(/uploads/2018/09/helloworld.png)">
+                </figure>
+                
+
+                <section class="post-full-content">
+                    <blockquote>
+  <p>可能是因为闲大了，也可能是因为以前一直想做却没做，现在终于可以做了！总之最近某宝淘了一块树莓派、一块STM32和一块STC89C52。今天从最低级的51板STC89开始鼓捣一下，这第一步，就是在mac上配置开发环境。</p>
+</blockquote>
+
+<!--more-->
+
+<p>51单片机的大部分开发资源都是针对Windows的，我这块开发板的配套资料也一样，可是我实在是不想为它再另购一台电脑或者用Windows虚拟机。而且我也坚信，这不是我一个人的想法，所以还是求教Google啦。所幸，相关的资料虽然少，但好在还是有的。其实编辑器是不用担心的，主要就是编译器和下载工具。</p>
+
+<h2 id="编译器">编译器</h2>
+
+<p>Windows下有集成的开发环境<a href="http://www2.keil.com/mdk5/uvision/">Keil µVersion</a>，芯片是<a href="http://www.stcmcu.com/">宏晶</a>的STC89C51RC，烧录软件和下载软件都可以从他的<a href="http://www.stcmicro.com/">官网</a>下载到。</p>
+
+<p>对于macOS就没那么好运，首先要找到可用的编译器，好在找到了<a href="http://sdcc.sourceforge.net/">SDCC - Small Device C Compiler</a>，它的安装也很简单，我用的<a href="https://brew.sh/">Homebrew</a>直接运行<code class="highlighter-rouge">brew</code>命令安装：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install sdcc
+</code></pre></div></div>
+
+<p>虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Mac sdcc</th>
+      <th>Windows Keil c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>头文件</td>
+      <td>8051.h/8052.h</td>
+      <td>reg51.h/reg52.h</td>
+    </tr>
+    <tr>
+      <td>IO端口</td>
+      <td>P2_0</td>
+      <td>P2^0</td>
+    </tr>
+    <tr>
+      <td>IO口定义</td>
+      <td>#define LED P2_0</td>
+      <td>sbit LED = P2^0</td>
+    </tr>
+    <tr>
+      <td>中断函数</td>
+      <td>void INT0_ISR() __interrupt 0</td>
+      <td>void INT0_ISR() interrupt 0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>因为有配套设备中有个1602液晶屏，所以先来一个<code class="highlighter-rouge">Hello World!</code>吧，新建文件<code class="highlighter-rouge">helloworld.c</code>，代码如下：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">#include&lt;8052.h&gt;
+</span>
+<span class="cp">#define uchar unsigned char
+#define uint unsigned int
+</span>
+<span class="cp">#define lcden P2_5
+#define lcdrs P1_0
+#define rw P1_1
+#define dula P2_6
+#define wela P2_7
+</span>
+<span class="n">uchar</span> <span class="n">table</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"Hello World!"</span><span class="p">;</span>
+<span class="n">uchar</span> <span class="n">num</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">delay</span><span class="p">(</span><span class="n">uint</span> <span class="n">z</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">uint</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span><span class="o">--</span><span class="p">)</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">110</span><span class="p">;</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span><span class="o">--</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">write_com</span><span class="p">(</span><span class="n">uchar</span> <span class="n">com</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">lcdrs</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">P0</span> <span class="o">=</span> <span class="n">com</span><span class="p">;</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">lcden</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">lcden</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">write_data</span><span class="p">(</span><span class="n">uchar</span> <span class="n">date</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">lcdrs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">P0</span> <span class="o">=</span> <span class="n">date</span><span class="p">;</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">lcden</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">lcden</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>	
+    <span class="n">rw</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">dula</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">wela</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">lcden</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">write_com</span><span class="p">(</span><span class="mh">0x38</span><span class="p">);</span>
+    <span class="n">write_com</span><span class="p">(</span><span class="mh">0x0e</span><span class="p">);</span>
+    <span class="n">write_com</span><span class="p">(</span><span class="mh">0x06</span><span class="p">);</span>
+    <span class="n">write_com</span><span class="p">(</span><span class="mh">0x01</span><span class="p">);</span>
+    <span class="n">write_com</span><span class="p">(</span><span class="mh">0x80</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">init</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">;</span> <span class="n">num</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">write_data</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">num</span><span class="p">]);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>然后编译：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sdcc helloword.c
+</code></pre></div></div>
+
+<p>成功执行后，生成了一堆文件，.asm、.ihx、.lk、.lst…，这里要下载到单片机ROM的只有.ihx文件。</p>
+
+<h2 id="下载工具">下载工具</h2>
+
+<p>接下来是下载工具，我最先找到了<a href="https://github.com/laborer/stcflash">stcflash</a>，这是一个python脚本工具，首先安装依赖<a href="https://github.com/pyserial/pyserial">pySerial</a>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install pyserial
+</code></pre></div></div>
+
+<p>然后下载stcflash到本地，执行：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python stcflash.py
+</code></pre></div></div>
+
+<p>但是这个工具在我这里怎么都无法成功，而且用pyserial的list_ports()命令页列不出usb设备：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$python -m serial.tools.list_ports -v 
+/dev/cu.Bluetooth-Incoming-Port
+    desc: n/a
+    hwid: n/a
+1 ports found
+</code></pre></div></div>
+
+<p>后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，<a href="http://www.wch.cn/">WCH官方</a>有提供<a href="http://www.wch.cn/download/CH341SER_MAC_ZIP.html">mac的驱动下载</a>。下载来安装并重启后，再list_ports()：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python -m serial.tools.list_ports -v
+/dev/cu.Bluetooth-Incoming-Port
+    desc: n/a
+    hwid: n/a
+/dev/cu.wchusbserialfd130
+    desc: USB2.0-Serial
+    hwid: USB VID:PID=1A86:7523 LOCATION=253-1.3
+2 ports found
+</code></pre></div></div>
+
+<p>好了，终于出来了，在用stcflash看一下设备信息：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python stcflash.py --protocol 89 --port /dev/cu.wchusbserialfd130
+Connect to /dev/cu.wchusbserialfd130 at baudrate 2400
+Detecting target...Traceback (most recent call last):
+  File "stcflash.py", line 701, in &lt;module&gt;
+    main()
+  File "stcflash.py", line 697, in main
+    program(Programmer(conn, opts.protocol), code, opts.erase_eeprom)
+  File "stcflash.py", line 509, in program
+    prog.detect()
+  File "stcflash.py", line 243, in detect
+    raise IOError()
+OSError
+</code></pre></div></div>
+
+<p>额～ 依然不成功！</p>
+
+<p>换了些参数继续尝试也未成功，于是乎继续Google，找到了<a href="https://github.com/grigorig/stcgal">stcgal</a>，同样是python写的，安装stcgal以及依赖包tqdm：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install git+https://github.com/grigorig/stcgal.git
+$ pip install tqdm
+</code></pre></div></div>
+
+<p>先来看下设备信息：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130
+Waiting for MCU, please cycle power: done
+Target model:
+  Name: STC89C52RC/LE52R
+  Magic: F002
+  Code flash: 8.0 KB
+  EEPROM flash: 6.0 KB
+Target frequency: 11.030 MHz
+Target BSL version: 6.6C
+Target options:
+  cpu_6t_enabled=False
+  bsl_pindetect_enabled=False
+  eeprom_erase_enabled=False
+  clock_gain=high
+  ale_enabled=True
+  xram_enabled=True
+  watchdog_por_enabled=False
+Disconnected!
+</code></pre></div></div>
+
+<p>OK了，<strong>注意</strong>在提示“Waiting for MCU, please cycle power:”的时候关掉电源再打开就可以了。</p>
+
+<p>好啦，下载来试试烧录吧，就用上面生成的<code class="highlighter-rouge">helloworld.ihx</code>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130 helloworld.ihx
+Waiting for MCU, please cycle power: done
+Target model:
+  Name: STC89C52RC/LE52R
+  Magic: F002
+  Code flash: 8.0 KB
+  EEPROM flash: 6.0 KB
+Target frequency: 11.030 MHz
+Target BSL version: 6.6C
+Target options:
+  cpu_6t_enabled=False
+  bsl_pindetect_enabled=False
+  eeprom_erase_enabled=False
+  clock_gain=high
+  ale_enabled=True
+  xram_enabled=True
+  watchdog_por_enabled=False
+Loading flash: 293 bytes (Intel HEX)
+Switching to 19200 baud: checking setting testing done
+Erasing 2 blocks: done
+Writing flash: 640 Bytes [00:00, 1699.01 Bytes/s]
+Setting options: done
+Disconnected!
+</code></pre></div></div>
+
+<p>看下效果：</p>
+
+<p><img src="/uploads/2018/09/helloworld.gif" alt="Helloworld" /></p>
+
+                </section>
+
+                <footer class="post-full-footer">
+
+    
+                    <section class="author-card">
+                        
+                            <img class="author-profile-image" src="https://github.com/devylee.png?size=120" alt="Devy" />
+                        
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
+                                
+                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/devy/">Read More</a>
+                        </div>
+        
+                </footer>
+
+            
+                
+
+<section class="post-full-comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = 'https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html';
+            this.page.identifier = '/post/2018/09/mcu-develop-on-macos.html';
+        };
+        (function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//devylee.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                });
+            });
+        })();
+    </script>
+</section>
+            
+
+            </article>
+
+        </div>
+    </main>
+
+
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; elsewhere &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="/tag/mcu/">MCU</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            
+                            <li><a href="/post/2018/09/mcu-develop-on-macos.html">macOS下51单片机的开发</a></li>
+                            
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/mcu/">1 post →</a>
+                    </footer>
+                </article>
+                
+            
+
+
+            
+
+            
+                
+            <article class="post-card post tag-multiple-version tag-php tag-python tag-macos no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2018/01/multiple-version-of-php-and-python-on-macos.html">
+                        <header class="post-card-header"><span class="post-card-tags">Multiple Version</span><h2 class="post-card-title">macOS下PHP与Python的多版本环境共存</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>
+  对于一个开发人员来说，经常要面对不同的开发环境、测试环境、线上环境……很多时候这些环境的配置并不一致，原因太多就不赘述了。要是能在一台机器上配置多个不同的环境，需要的时候可以方便的在这些环境中进行切换，至少不是件坏事，而且这在很多系统上，实现起来并不难。
+
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
+
+            
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://devylee.github.io">
+            
+            <span>elsewhere</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">macOS下51单片机的开发</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=macOS%E4%B8%8B51%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E5%BC%80%E5%8F%91&amp;url=https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html&title=macOS%E4%B8%8B51%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E5%BC%80%E5%8F%91"
+           onclick="window.open('http://service.weibo.com/share/share.php?title=macOS%E4%B8%8B51%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E5%BC%80%E5%8F%91&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
+           <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2018 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script></body>
+</html>
+

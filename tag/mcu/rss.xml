@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title>elsewhere - MCU</title>
+   <link>https://devylee.github.io/tag/mcu/rss.xml</link>
+   <description>一个辅助记忆的树洞</description>
+   <language>zh-CN</language>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   <item>
+    <title>macOS下51单片机的开发</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html</link>
+    <pubDate>2018-09-17T18:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>可能是因为闲大了，也可能是因为以前一直想做却没做，现在终于可以做了！总之最近某宝淘了一块树莓派、一块STM32和一块STC89C52。今天从最低级的51板STC89开始鼓捣一下，这第一步，就是在mac上配置开发环境。</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html</guid>
+    <image>https://devylee.github.io/uploads/2018/09/helloworld.png</image>
+</item>
+</channel>
+</rss>

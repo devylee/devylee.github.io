@@ -17,7 +17,7 @@
 ## Thanks
 
 - [Jekyll](https://jekyllrb.com)
-- [Github Pages](https://pages.githu.com)
+- [Github Pages](https://pages.github.com)
 - [Ghost Casper](https://github.com/tryghost/casper)
 - [Jasper](https://github.com/biomadeira/jasper)
 - [jekyll-travis](https://github.com/mfenner/jekyll-travis)
