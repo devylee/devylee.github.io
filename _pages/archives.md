@@ -5,7 +5,7 @@ current : archives
 class   : post page page-archives
 ---
 
-> The post archives by years, authors and tags.
+> The post archives by years and tags.
 
 <!--more-->
 
@@ -16,16 +16,6 @@ class   : post page page-archives
 {%- capture year_path -%}/year/{{ year.name }}/{%- endcapture -%}
  * [<nobr>{{year.name}}<sub>({{year.size}})</sub></nobr>]({{ year_path | relative_url }})
 {% endfor %}
-
-
-### Authors:
-
-{% for author in site.categories %}
-    {%- assign author_key = author[0] -%}
-    {%- assign author_info = site.data.authors[author_key] -%}
-    {%- capture author_path -%}/author/{{ author_key | downcase | slugify }}/{%- endcapture -%}
- * [<nobr>{% if author_info %}{{ author_info.name }}{% else %}{{ author_key }}{% endif %}<sub>({{ author[1] | size }})</sub></nobr>]({{ author_path | relative_url }})
-{% endfor%}
 
 
 ### Tags:

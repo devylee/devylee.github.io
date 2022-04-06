@@ -16,19 +16,19 @@ comments  : true
 
 <!--more-->
 
-51单片机的大部分开发资源都是针对Windows的，我这块开发板的配套资料也一样，可是我实在是不想为它再另购一台电脑或者用Windows虚拟机。而且我也坚信，这不是我一个人的想法，所以还是求教Google啦。所幸，相关的资料虽然少，但好在还是有的。其实编辑器是不用担心的，主要就是编译器和下载工具。
+51单片机的大部分开发资源都是针对Windows的，我这块开发板的配套资料也一样，可是我实在是不想为它再另购一台电脑或者用Windows虚拟机。而且我也坚信，这不是我一个人的想法，所以还是求教Google啦。所幸，相关的资料虽然少，但好在还是有的。其实编辑器是不用担心的，主要就是编译器和下载工具。
 
 ## 编译器
 
-Windows下有集成的开发环境[Keil µVersion](http://www2.keil.com/mdk5/uvision/)，芯片是[宏晶](http://www.stcmcu.com/)的STC89C51RC，烧录软件和下载软件都可以从他的[官网](http://www.stcmicro.com/)下载到。
+Windows下有集成的开发环境[Keil µVersion](http://www2.keil.com/mdk5/uvision/)，芯片是[宏晶](http://www.stcmcu.com/)的STC89C51RC，烧录软件和下载软件都可以从他的[官网](http://www.stcmicro.com/)下载到。
 
-对于macOS就没那么好运，首先要找到可用的编译器，好在找到了[SDCC - Small Device C Compiler](http://sdcc.sourceforge.net/)，它的安装也很简单，我用的[Homebrew](https://brew.sh/)直接运行`brew`命令安装：
+对于macOS就没那么好运，首先要找到可用的编译器，好在找到了[SDCC - Small Device C Compiler](http://sdcc.sourceforge.net/)，它的安装也很简单，我用的[Homebrew](https://brew.sh/)直接运行`brew`命令安装：
 
 ```
 $ brew install sdcc
 ```
 
-虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：
+虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：
 
 
 | |Mac sdcc|Windows Keil c|
@@ -109,12 +109,12 @@ void main() {
 $ sdcc helloword.c
 ```
 
-成功执行后，生成了一堆文件，.asm、.ihx、.lk、.lst...，这里要下载到单片机ROM的只有.ihx文件。
+成功执行后，生成了一堆文件，.asm、.ihx、.lk、.lst...，这里要下载到单片机ROM的只有.ihx文件。
 
 
 ## 下载工具
 
-接下来是下载工具，我最先找到了[stcflash](https://github.com/laborer/stcflash)，这是一个python脚本工具，首先安装依赖[pySerial](https://github.com/pyserial/pyserial)：
+接下来是下载工具，我最先找到了[stcflash](https://github.com/laborer/stcflash)，这是一个python脚本工具，首先安装依赖[pySerial](https://github.com/pyserial/pyserial)：
 
 ```
 $ pip install pyserial
@@ -126,7 +126,7 @@ $ pip install pyserial
 python stcflash.py
 ```
 
-但是这个工具在我这里怎么都无法成功，而且用pyserial的list_ports()命令页列不出usb设备：
+但是这个工具在我这里怎么都无法成功，而且用pyserial的list_ports()命令页列不出usb设备：
 
 ```
 $python -m serial.tools.list_ports -v 
@@ -136,7 +136,7 @@ $python -m serial.tools.list_ports -v
 1 ports found
 ```
 
-后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，[WCH官方](http://www.wch.cn/)有提供[mac的驱动下载](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)。下载来安装并重启后，再list_ports()：
+后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，[WCH官方](http://www.wch.cn/)有提供[mac的驱动下载](http://www.wch.cn/download/CH341SER_MAC_ZIP.html)。下载来安装并重启后，再list_ports()：
 
 ```
 $ python -m serial.tools.list_ports -v
@@ -168,7 +168,7 @@ OSError
 
 额～ 依然不成功！
 
-换了些参数继续尝试也未成功，于是乎继续Google，找到了[stcgal](https://github.com/grigorig/stcgal)，同样是python写的，安装stcgal以及依赖包tqdm：
+换了些参数继续尝试也未成功，于是乎继续Google，找到了[stcgal](https://github.com/grigorig/stcgal)，同样是python写的，安装stcgal以及依赖包tqdm：
 
 ```
 $ pip install git+https://github.com/grigorig/stcgal.git
@@ -200,7 +200,7 @@ Disconnected!
 
 OK了，**注意**在提示“Waiting for MCU, please cycle power:”的时候关掉电源再打开就可以了。
 
-好啦，下载来试试烧录吧，就用上面生成的`helloworld.ihx`：
+好啦，下载来试试烧录吧，就用上面生成的`helloworld.ihx`：
 
 ```
 $ stcgal -P stc89 -p /dev/cu.wchusbserialfd130 helloworld.ihx

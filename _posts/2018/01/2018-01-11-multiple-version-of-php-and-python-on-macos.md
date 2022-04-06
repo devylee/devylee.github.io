@@ -23,9 +23,9 @@ macOS是自带了php、python和ruby的，升级到High Sierra后，php的版本
 
 ## PHP
 
-“PHP是世界上最好的编程语言！”作为LNMP的忠实粉儿，这句话总是在我提到PHP时余音绕梁般浮现在我脑中！果然是真爱啊！公司的项目后端主要是PHP栈，虽然现在PHP的版本已经7.2了，但是由于历史原因，当前线上环境还是跑的5.6，我们还用的[Phalcon](https://phalconphp.com)框架，它的Release版本已经是3.3，但我们线上还停留在2时代。于是乎，我也会纠结于安装哪个版本？PHP56+Phalcon2吧，无法体验到PHP新版本的特性，技术总要面向未来啊；PHP7+Phalcon3吧，项目代码的执行就会有问题了！所以，对我来说，最理想的还是两个环境都有，只要彼此不冲突，可以随时切换就好。好在，Homebrew是可以实现这个需求的！
+“PHP是世界上最好的编程语言！”作为LNMP的忠实粉儿，这句话总是在我提到PHP时余音绕梁般浮现在我脑中！果然是真爱啊！公司的项目后端主要是PHP栈，虽然现在PHP的版本已经7.2了，但是由于历史原因，当前线上环境还是跑的5.6，我们还用的[Phalcon](https://phalconphp.com)框架，它的Release版本已经是3.3，但我们线上还停留在2时代。于是乎，我也会纠结于安装哪个版本？PHP56+Phalcon2吧，无法体验到PHP新版本的特性，技术总要面向未来啊；PHP7+Phalcon3吧，项目代码的执行就会有问题了！所以，对我来说，最理想的还是两个环境都有，只要彼此不冲突，可以随时切换就好。好在，Homebrew是可以实现这个需求的！
 
-### 先tap：
+### 先tap：
 
 ```
 $ brew tap homebrew/homebrew-php
@@ -37,11 +37,11 @@ $ brew tap homebrew/homebrew-php
 $ brew install php72 php72-phalcon
 ```
 
-\* *当然这里你可以安装其他你需要的PHP扩展。*
+\* *当然这里你可以安装其他你需要的PHP扩展。*
 
 ### 接下来我们安装PHP56
 
-安装之前要unlink php72
+安装之前要unlink php72
 
 ```
 $ brew unlink php72
@@ -53,7 +53,7 @@ $ brew unlink php72
 $ brew install php56
 ```
 
-安装Phalcon2扩展（由于Homebrew自带的php56-phalcon扩展版本是3.3，所以这里我选择从代码编译安装）：
+安装Phalcon2扩展（由于Homebrew自带的php56-phalcon扩展版本是3.3，所以这里我选择从代码编译安装）：
 
 ```
 $ git clone git://github.com/phalcon/cphalcon.git
@@ -65,7 +65,7 @@ $ ./install
 
 \* *这里我用cphalcon/ext替换了官方文档中使用的cphalcon/build进行安装，因为使用build运行时会出现一些难以预料的问题，可能是某些编译参数不同的原因。*
 
-install成功最后会看到这样的信息：
+install成功最后会看到这样的信息：
 
 ```
 Build complete.
@@ -89,13 +89,13 @@ $ vi /usr/local/etc/php/5.6/conf.d/ext-phalcon.ini
 extension="/usr/local/Cellar/php56/5.6.xx_x/lib/php/extensions/no-debug-non-zts-20131226/phalcon.so"
 ```
 
-> 当然其实我们还可以用`brew create`来新建一个phalcon2的Formula，这种方式更方便用homebrew来维护：
+> 当然其实我们还可以用`brew create`来新建一个phalcon2的Formula，这种方式更方便用homebrew来维护：
 
 ```
 $ brew create https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz --tap homebrew/homebrew-php
 ```
 
-上面命令会创建一个`/usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb`文件，我们可以把这个文件重命名：
+上面命令会创建一个`/usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb`文件，我们可以把这个文件重命名：
 
 ```
 $ mv /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/php56-phalcon2.rb 
@@ -193,7 +193,7 @@ Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
 
 ## Python
 
-> Homebrew中的python2和python3并无冲突，也就是可以执行`$ brew install python2 python3`就可以同时安装这两个版本。而且python2有virtualenv；python3有pyvenv，都可以用来维护虚拟运行环境。但是python2如果要使用ipython或者pythonw就会出现错误，会提示找不到Framework。好在我们还有另一个选择，那就是[pyenv](https://github.com/pyenv/pyenv)。
+> Homebrew中的python2和python3并无冲突，也就是可以执行`$ brew install python2 python3`就可以同时安装这两个版本。而且python2有virtualenv；python3有pyvenv，都可以用来维护虚拟运行环境。但是python2如果要使用ipython或者pythonw就会出现错误，会提示找不到Framework。好在我们还有另一个选择，那就是[pyenv](https://github.com/pyenv/pyenv)。
 
 首先我们安装pyenv，用homebrew就可以了：
 
@@ -201,7 +201,7 @@ Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
 $ brew install pyenv
 ```
 
-然后初始化一下pyenv的运行环境参数，其实也就是在你的.bash_profile中做了些配置，执行`$ pyenv init`就可以了。
+然后初始化一下pyenv的运行环境参数，其实也就是在你的.bash_profile中做了些配置，执行`$ pyenv init`就可以了。
 
 查看可用的python版本：
 
@@ -209,7 +209,7 @@ $ brew install pyenv
 $ pyenv install --list
 ```
 
-安装你需要的python版本，比如2.7.14、3.6.3，注意安装之后（或者pip安装了带有可执行命令的包之后）要执行rehash：
+安装你需要的python版本，比如2.7.14、3.6.3，注意安装之后（或者pip安装了带有可执行命令的包之后）要执行rehash：
 
 ```
 $ pyenv install 2.7.14
@@ -217,7 +217,7 @@ $ pyenv install 3.6.3
 $ pyenv rehash
 ```
 
-需要注意的是，如果需要支持Framework，要加上--enable-framework参数：
+需要注意的是，如果需要支持Framework，要加上--enable-framework参数：
 
 ```
 $ env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 2.7.14
@@ -235,8 +235,8 @@ $ pyenv local 2.7.14
 * [Wiki](https://github.com/pyenv/pyenv/wiki)
 * [Command Reference](https://github.com/pyenv/pyenv/blob/master/COMMANDS.md)
 
-还是很简单方便的是吧！
+还是很简单方便的是吧！
 
 ## Ruby
 
-对于这货，其实只要安装了[RVM](https://rvm.io/)就OK了！
+对于这货，其实只要安装了[RVM](https://rvm.io/)就OK了！

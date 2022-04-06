@@ -43,3 +43,9 @@ python:
 webpack:
   name: webpack
   desc: A static module bundler for modern JavaScript applications.
+soft:
+  name: 不争
+  desc: A Taoist philosophy
+bootstrapped:
+  name: 独立开发者
+  desc: Bootstrapped
