@@ -98,7 +98,7 @@
 <p>首先上Dockerfile（SAE上如何部署Dockerfile可以参考我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”）：</p>
 
 <blockquote>
-  <p>我这里监听的端口是5050，这个要看你的SAE应用中环境变量<code class="highlighter-rouge">PORT</code>的具体值。</p>
+  <p>我这里监听的端口是5050，这个要看你的SAE应用中环境变量<code class="language-plaintext highlighter-rouge">PORT</code>的具体值。</p>
 </blockquote>
 
 <div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> nginx:alpine</span>
@@ -125,10 +125,10 @@
 
 <p>如此，push并确认成功后，在浏览器输入devylee.me，哦，没错，这就是我的Github Page！不过，备案号呢？貌似sub_filter并未起作用啊！</p>
 
-<p>经过各种尝试（甚至是更换镜像源，从头编译nginx，然并卵！），最终找到原因原来是因为<code class="highlighter-rouge">Accept-Encoding</code>！</p>
+<p>经过各种尝试（甚至是更换镜像源，从头编译nginx，然并卵！），最终找到原因原来是因为<code class="language-plaintext highlighter-rouge">Accept-Encoding</code>！</p>
 
-<p>怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是<code class="highlighter-rouge">Accept-Encoding: gzip</code>，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
-通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行<code class="highlighter-rouge">proxy_set_header Accept-Encoding ""</code>）就可以了：</p>
+<p>怎么回事？因为现在几乎所有的Web服务器都支持gzip压缩的，也就是<code class="language-plaintext highlighter-rouge">Accept-Encoding: gzip</code>，而且默认情况下就是启用的，当然Github Page也不例外！于是乎，我们的Nginx
+通过proxy_pass得到的响应内容其实是被gzip过的，所以，sub_filter就根本不起作用！找到问题所在，接下来就简单了，我们只要对nginx-default.conf稍加改造（增加一行<code class="language-plaintext highlighter-rouge">proxy_set_header Accept-Encoding ""</code>）就可以了：</p>
 
 <div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span> {
     <span class="n">listen</span> <span class="m">5050</span>;
@@ -153,7 +153,7 @@
 <p><em>参考：</em></p>
 
 <ol>
-  <li><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html">Nginx <code class="highlighter-rouge">ngx_http_sub_module</code> Module</a></li>
+  <li><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html">Nginx <code class="language-plaintext highlighter-rouge">ngx_http_sub_module</code> Module</a></li>
 </ol>
 
                 </section>
@@ -168,7 +168,7 @@
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -323,7 +323,7 @@
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">

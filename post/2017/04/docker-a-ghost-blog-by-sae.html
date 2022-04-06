@@ -129,7 +129,7 @@
   <p>其实<a href="https://hub.docker.com/">Docker Hub</a>中也有Ghost官方提供的镜像的(<a href="https://hub.docker.com/_/ghost/">点这里</a>)，你可以参考他的Dockerfile，我并没有试过这个镜像是否可以直接在SAE上运行</p>
 </blockquote>
 
-<p>我的Dockerfile大概是下面这样的（<em>GHOST_CONTENT参考注<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></em>）：</p>
+<p>我的Dockerfile大概是下面这样的（<em>GHOST_CONTENT参考注<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></em>）：</p>
 
 <div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> node:4-slim</span>
 
@@ -146,9 +146,9 @@
 </span>    <span class="o">&amp;&amp;</span> apt-get update <span class="se">\
 </span>    <span class="o">&amp;&amp;</span> apt-get <span class="nb">install</span> <span class="nt">-y</span> curl unzip rsync ca-certificates <span class="nt">--no-install-recommends</span> <span class="se">\
 </span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> /var/lib/apt/lists/<span class="k">*</span> <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">"</span>  <span class="nt">-o</span> /usr/local/bin/gosu <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="k">$(</span>dpkg <span class="nt">--print-architecture</span><span class="k">)</span><span class="s2">.asc"</span> <span class="nt">-o</span> /usr/local/bin/gosu.asc <span class="se">\
-</span>	<span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="k">)</span><span class="s2">"</span> <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2">"</span>  <span class="nt">-o</span> /usr/local/bin/gosu <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> curl <span class="nt">-L</span> <span class="s2">"https://github.com/tianon/gosu/releases/download/</span><span class="nv">$GOSU_VERSION</span><span class="s2">/gosu-</span><span class="si">$(</span>dpkg <span class="nt">--print-architecture</span><span class="si">)</span><span class="s2">.asc"</span> <span class="nt">-o</span> /usr/local/bin/gosu.asc <span class="se">\
+</span>	<span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">GNUPGHOME</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="si">)</span><span class="s2">"</span> <span class="se">\
 </span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--keyserver</span> ha.pool.sks-keyservers.net <span class="nt">--recv-keys</span> B42F6819007F00F88E364FD4036A9C25BF357DD4 <span class="se">\
 </span>	<span class="o">&amp;&amp;</span> gpg <span class="nt">--batch</span> <span class="nt">--verify</span> /usr/local/bin/gosu.asc /usr/local/bin/gosu <span class="se">\
 </span>	<span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GNUPGHOME</span><span class="s2">"</span> /usr/local/bin/gosu.asc <span class="se">\
@@ -186,7 +186,7 @@
 
 rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOST_SOURCE</span><span class="s2">/content/"</span> <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">/"</span>
 
-<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$*</span><span class="s2">"</span> <span class="o">==</span> npm<span class="k">*</span>start<span class="k">*</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="k">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="k">)</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'0'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$*</span><span class="s2">"</span> <span class="o">==</span> npm<span class="k">*</span>start<span class="k">*</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">=</span> <span class="s1">'0'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
 	</span><span class="nb">chown</span> <span class="nt">-R</span> ghost:ghost <span class="s2">"</span><span class="nv">$GHOST_CONTENT</span><span class="s2">"</span>
     <span class="nb">exec </span>gosu ghost <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 <span class="k">fi
@@ -194,32 +194,32 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
 </span><span class="nb">exec</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </code></pre></div></div>
 
-<p>ghost-config.js大概是这个样子（<em>url配置参考注<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup></em>）：</p>
+<p>ghost-config.js大概是这个样子（<em>url配置参考注<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup></em>）：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">),</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">),</span>
     <span class="nx">config</span><span class="p">;</span>
 
 <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">production</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">url</span><span class="p">:</span> <span class="s1">'http://yourdomain.com/'</span><span class="p">,</span> <span class="c1">// 参考注2</span>
+        <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://yourdomain.com/</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// 参考注2</span>
         <span class="na">mail</span><span class="p">:</span> <span class="p">{},</span>
         <span class="na">logging</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
         <span class="na">database</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">client</span><span class="p">:</span> <span class="s2">"mysql"</span><span class="p">,</span>
+            <span class="na">client</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mysql</span><span class="dl">"</span><span class="p">,</span>
             <span class="na">connection</span><span class="p">:</span> <span class="p">{</span>
                 <span class="na">host</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MYSQL_HOST</span><span class="p">,</span>
                 <span class="na">port</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">MYSQL_PORT</span><span class="p">,</span>
                 <span class="na">user</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ACCESSKEY</span><span class="p">,</span>
                 <span class="na">password</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SECRETKEY</span><span class="p">,</span>
-                <span class="na">database</span><span class="p">:</span> <span class="s1">'app_'</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">APPNAME</span><span class="p">,</span>
-                <span class="na">charset</span><span class="p">:</span> <span class="s2">"utf8"</span>
+                <span class="na">database</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app_</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">APPNAME</span><span class="p">,</span>
+                <span class="na">charset</span><span class="p">:</span> <span class="dl">"</span><span class="s2">utf8</span><span class="dl">"</span>
             <span class="p">}</span>
         <span class="p">},</span>
         <span class="na">paths</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">contentPath</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">GHOST_CONTENT</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">)</span>
+            <span class="na">contentPath</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">GHOST_CONTENT</span><span class="p">,</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">)</span>
         <span class="p">},</span>
         <span class="na">server</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">host</span><span class="p">:</span> <span class="s1">'0.0.0.0'</span><span class="p">,</span>
+            <span class="na">host</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0.0.0.0</span><span class="dl">'</span><span class="p">,</span>
             <span class="na">port</span><span class="p">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -232,7 +232,7 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
 
 <p>其实这一步就是git comit &amp; push你的代码，然后你就静待花开吧，如果一切顺利，在push收到成功的信息后，你的blog就在那里了。</p>
 
-<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中<code class="highlighter-rouge">$GHOST_CONTENT</code>所指定的路径上并重启你的容器。</p>
+<p>哦，别忘了把你的<em>“共享存储”</em>挂载到Dockerfile中<code class="language-plaintext highlighter-rouge">$GHOST_CONTENT</code>所指定的路径上并重启你的容器。</p>
 
 <p>Enjoy!</p>
 
@@ -246,13 +246,13 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
 
 <p><em>注：</em></p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p>GHOST_CONTENT 就是你在第1步中申请的“共享存储”的挂载路径 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2">
-      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="highlighter-rouge">url: 'http://' + process.env.APPNAME + '.applinzi.com/'</code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：<code class="highlighter-rouge">http://yourdomain.com/</code>，然后你的配置就可以这样写： <code class="highlighter-rouge">url: process.env.SITEURL</code> 。 <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:2" role="doc-endnote">
+      <p>这是你博客的网址，你可以用SAE的二级网址，比如这样：<code class="language-plaintext highlighter-rouge">url: 'http://' + process.env.APPNAME + '.applinzi.com/'</code>；或者像我，先在SAE控制台的“应用”&gt;“环境变量”中添加一个环境变量，例如：SITEURL，值为：<code class="language-plaintext highlighter-rouge">http://yourdomain.com/</code>，然后你的配置就可以这样写： <code class="language-plaintext highlighter-rouge">url: process.env.SITEURL</code> 。 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -269,7 +269,7 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -430,7 +430,7 @@ rsync <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$GHOS
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">

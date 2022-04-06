@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://devylee.github.io/about/</loc>
-<lastmod>2018-09-17T20:15:29+08:00</lastmod>
+<lastmod>2022-04-06T14:04:26+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/archives/</loc>
-<lastmod>2018-09-17T20:15:29+08:00</lastmod>
+<lastmod>2022-04-06T14:04:26+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/post/2017/04/welcome-to-my-pages.html</loc>
@@ -47,6 +47,10 @@
 <url>
 <loc>https://devylee.github.io/post/2018/09/mcu-develop-on-macos.html</loc>
 <lastmod>2018-09-17T18:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>https://devylee.github.io/post/2022/04/come-back.html</loc>
+<lastmod>2022-04-05T17:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/</loc>
@@ -106,6 +110,12 @@
 <loc>https://devylee.github.io/tag/sdcc/</loc>
 </url>
 <url>
+<loc>https://devylee.github.io/tag/soft/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/bootstrapped/</loc>
+</url>
+<url>
 <loc>https://devylee.github.io/author/devy/</loc>
 </url>
 <url>
@@ -116,6 +126,9 @@
 </url>
 <url>
 <loc>https://devylee.github.io/year/2018/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/year/2022/</loc>
 </url>
 <url>
 <loc>https://devylee.github.io/page/2/</loc>

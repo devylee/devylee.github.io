@@ -106,17 +106,17 @@
 
 <h2 id="那就开始吧">那就开始吧</h2>
 
-<p><a href="https://nodejs.org/en/download/">Node的安装</a>我不想赘述，很容易就可以寻到针对不同系统的安装Guide，我就当你的系统里已经有Node了，至于webpack的版本，当然是2.x！首先，我们来初始化一个项目，你可以手动或者像我一样使用<code class="highlighter-rouge">npm init</code>创建一个<code class="highlighter-rouge">package.json</code>，内容大概会是这个样子：</p>
+<p><a href="https://nodejs.org/en/download/">Node的安装</a>我不想赘述，很容易就可以寻到针对不同系统的安装Guide，我就当你的系统里已经有Node了，至于webpack的版本，当然是2.x！首先，我们来初始化一个项目，你可以手动或者像我一样使用<code class="language-plaintext highlighter-rouge">npm init</code>创建一个<code class="language-plaintext highlighter-rouge">package.json</code>，内容大概会是这个样子：</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"using-webpack"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a sample about using webpack"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index.js"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo </span><span class="se">\"</span><span class="s2">Error: no test specified</span><span class="se">\"</span><span class="s2"> &amp;&amp; exit 1"</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"using-webpack"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a sample about using webpack"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index.js"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo </span><span class="se">\"</span><span class="s2">Error: no test specified</span><span class="se">\"</span><span class="s2"> &amp;&amp; exit 1"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MIT"</span><span class="w">
+  </span><span class="nl">"license"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MIT"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
@@ -130,41 +130,41 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save</span> lodash jquery
 </code></pre></div></div>
 
-<p>这些依赖默认都会安装到node_modules目录下，我们看下<code class="highlighter-rouge">package.json</code>，多了<code class="highlighter-rouge">devDependencies</code>和<code class="highlighter-rouge">dependencies</code>（当然你也可以手动编写<code class="highlighter-rouge">package.json</code>然后运行<code class="highlighter-rouge">npm install</code>命令来安装这些依赖）：</p>
+<p>这些依赖默认都会安装到node_modules目录下，我们看下<code class="language-plaintext highlighter-rouge">package.json</code>，多了<code class="language-plaintext highlighter-rouge">devDependencies</code>和<code class="language-plaintext highlighter-rouge">dependencies</code>（当然你也可以手动编写<code class="language-plaintext highlighter-rouge">package.json</code>然后运行<code class="language-plaintext highlighter-rouge">npm install</code>命令来安装这些依赖）：</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="err">...</span><span class="w">
-  </span><span class="s2">"devDependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"webpack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.6.1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"webpack-dev-server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.4.5"</span><span class="w">
+  </span><span class="nl">"devDependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"webpack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.6.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"webpack-dev-server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.4.5"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"jquery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^3.2.1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"lodash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^4.17.4"</span><span class="w">
+  </span><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"jquery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^3.2.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lodash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^4.17.4"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre></div></div>
 
-<p>下面，我们来创建一个static文件夹用来存放所有的前端资源文件（JS、CSS、图片、字体等等）和一个webpack配置文件<code class="highlighter-rouge">webpack.config.js</code>：</p>
+<p>下面，我们来创建一个static文件夹用来存放所有的前端资源文件（JS、CSS、图片、字体等等）和一个webpack配置文件<code class="language-plaintext highlighter-rouge">webpack.config.js</code>：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/'</span><span class="p">),</span>
+  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/</span><span class="dl">'</span><span class="p">),</span>
   <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'app'</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/js/main.js'</span><span class="p">)</span>
+    <span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/js/main.js</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">},</span>
   <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span> <span class="s1">'[name].bundle.js'</span><span class="p">),</span>
-    <span class="na">publicPath</span><span class="p">:</span> <span class="s1">'/'</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">js</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">[name].bundle.js</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">publicPath</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>我们需要一个简单的HTML文件<code class="highlighter-rouge">static/sample.html</code>：</p>
+<p>我们需要一个简单的HTML文件<code class="language-plaintext highlighter-rouge">static/sample.html</code>：</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
@@ -190,37 +190,37 @@
 <span class="nt">&lt;/html&gt;</span>
 </code></pre></div></div>
 
-<p>接下来我们要在<code class="highlighter-rouge">static/js/main.js</code>里写点东西（在页面中追加“Hello World”）：</p>
+<p>接下来我们要在<code class="language-plaintext highlighter-rouge">static/js/main.js</code>里写点东西（在页面中追加“Hello World”）：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'p'</span><span class="p">);</span>
-    <span class="nx">hello</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s1">'Hello World'</span><span class="p">;</span>
-    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">'div'</span><span class="p">).</span><span class="nx">item</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">hello</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">hello</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">p</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">hello</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">).</span><span class="nx">item</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">hello</span><span class="p">);</span>
 <span class="p">})();</span>
 </code></pre></div></div>
 
-<p>我们可以用<a href="https://webpack.js.org/configuration/dev-server/">webpack-dev-server</a>来启动一个开发服务，测试我们的代码，不过，在此之前，我们要来完善一下<code class="highlighter-rouge">webpack.config.js</code>，增加<code class="highlighter-rouge">devServer</code>相关的配置：</p>
+<p>我们可以用<a href="https://webpack.js.org/configuration/dev-server/">webpack-dev-server</a>来启动一个开发服务，测试我们的代码，不过，在此之前，我们要来完善一下<code class="language-plaintext highlighter-rouge">webpack.config.js</code>，增加<code class="language-plaintext highlighter-rouge">devServer</code>相关的配置：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
 <span class="p">...</span>
   <span class="na">devServer</span><span class="p">:</span> <span class="p">{</span>
-    <span class="na">contentBase</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/'</span><span class="p">),</span>
-    <span class="na">publicPath</span><span class="p">:</span> <span class="s1">'/'</span>
+    <span class="na">contentBase</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">publicPath</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
   <span class="p">}</span>
 <span class="p">}</span>
 <span class="p">...</span>
 </code></pre></div></div>
 
-<p>然后，我们就可以通过命令行<code class="highlighter-rouge">node_modules/.bin/webpack-dev-server --config ./webpack.config.js</code>来启动DevServer，默认地址是<code class="highlighter-rouge">http://localhost:8080/</code>。浏览<code class="highlighter-rouge">http://localhost:8080/sample.html</code>就可以看到效果了。</p>
+<p>然后，我们就可以通过命令行<code class="language-plaintext highlighter-rouge">node_modules/.bin/webpack-dev-server --config ./webpack.config.js</code>来启动DevServer，默认地址是<code class="language-plaintext highlighter-rouge">http://localhost:8080/</code>。浏览<code class="language-plaintext highlighter-rouge">http://localhost:8080/sample.html</code>就可以看到效果了。</p>
 
 <blockquote>
-  <p>我们可以把上面这个命令配置在<code class="highlighter-rouge">package.json</code>的<code class="highlighter-rouge">scripts</code>中<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>，例如下面的配置，这样启动DevServer，只要执行<code class="highlighter-rouge">npm start</code>就可以了：</p>
+  <p>我们可以把上面这个命令配置在<code class="language-plaintext highlighter-rouge">package.json</code>的<code class="language-plaintext highlighter-rouge">scripts</code>中<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>，例如下面的配置，这样启动DevServer，只要执行<code class="language-plaintext highlighter-rouge">npm start</code>就可以了：</p>
   <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
 </span><span class="err">...</span><span class="w">
-  </span><span class="s2">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node_modules/.bin/webpack-dev-server --config ./webpack.config.js"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo </span><span class="se">\"</span><span class="s2">Error: no test specified</span><span class="se">\"</span><span class="s2"> &amp;&amp; exit 1"</span><span class="w">
+  </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node_modules/.bin/webpack-dev-server --config ./webpack.config.js"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"echo </span><span class="se">\"</span><span class="s2">Error: no test specified</span><span class="se">\"</span><span class="s2"> &amp;&amp; exit 1"</span><span class="w">
   </span><span class="p">},</span><span class="w">
 </span><span class="err">...</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -231,16 +231,16 @@
 
 <h2 id="加载样式">加载样式</h2>
 
-<p>样式表的加载就需要用到webpack的loaders<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>了，对于CSS的加载，我们要用到两个Loader：<a href="https://webpack.js.org/loaders/style-loader/">style-loader</a>和<a href="https://webpack.js.org/loaders/css-loader/">css-loader</a>（<em>如果你的项目用到<a href="http://lesscss.org/">LESS</a>或者<a href="http://sass-lang.com/">SASS</a>，那你还需要用到<a href="https://webpack.js.org/loaders/less-loader/">less-loader</a>或者<a href="https://webpack.js.org/loaders/sass-loader/">sass-loader</a></em>）。</p>
+<p>样式表的加载就需要用到webpack的loaders<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>了，对于CSS的加载，我们要用到两个Loader：<a href="https://webpack.js.org/loaders/style-loader/">style-loader</a>和<a href="https://webpack.js.org/loaders/css-loader/">css-loader</a>（<em>如果你的项目用到<a href="http://lesscss.org/">LESS</a>或者<a href="http://sass-lang.com/">SASS</a>，那你还需要用到<a href="https://webpack.js.org/loaders/less-loader/">less-loader</a>或者<a href="https://webpack.js.org/loaders/sass-loader/">sass-loader</a></em>）。</p>
 
 <p>安装相关依赖</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save-dev</span> style-loader css-loader
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">webpack.config.js</code>增加相关的配置</p>
+<p><code class="language-plaintext highlighter-rouge">webpack.config.js</code>增加相关的配置</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span>
@@ -248,7 +248,7 @@
     <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
       <span class="p">{</span>
         <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">css$/</span><span class="p">,</span>
-        <span class="na">use</span><span class="p">:</span> <span class="p">[</span> <span class="s1">'style-loader'</span><span class="p">,</span> <span class="s1">'css-loader'</span> <span class="p">]</span>
+        <span class="na">use</span><span class="p">:</span> <span class="p">[</span> <span class="dl">'</span><span class="s1">style-loader</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span> <span class="p">]</span>
       <span class="p">}</span>
     <span class="p">]</span>
   <span class="p">}</span>
@@ -257,7 +257,7 @@
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>增加CSS文件<code class="highlighter-rouge">static/css/app.css</code>，定义一些样式，例如：</p>
+<p>增加CSS文件<code class="language-plaintext highlighter-rouge">static/css/app.css</code>，定义一些样式，例如：</p>
 
 <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">body</span> <span class="p">{</span>
     <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
@@ -271,23 +271,23 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>然后在<code class="highlighter-rouge">static/js/main.js</code>中要import这个CSS：</p>
+<p>然后在<code class="language-plaintext highlighter-rouge">static/js/main.js</code>中要import这个CSS：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">import</span> <span class="s1">'../css/app.css'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">../css/app.css</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="p">...</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">npm start</code>并访问<code class="highlighter-rouge">http://localhost:8080/sample.html</code>，是的，我们写的样式生效了，但用浏览器的开发工具看一下你就会发现，这些样式是被webpack打包到<code class="highlighter-rouge">app.bundle.js</code>然后由JS写到页面中。如果我们要把样式输出到相应的css文件，那么我们还需要做一点工作，这个时候就要用到<a href="https://webpack.js.org/plugins/extract-text-webpack-plugin/">ExtractTextWebpackPlugin</a>。首先，我们当然要先安装这个插件：</p>
+<p><code class="language-plaintext highlighter-rouge">npm start</code>并访问<code class="language-plaintext highlighter-rouge">http://localhost:8080/sample.html</code>，是的，我们写的样式生效了，但用浏览器的开发工具看一下你就会发现，这些样式是被webpack打包到<code class="language-plaintext highlighter-rouge">app.bundle.js</code>然后由JS写到页面中。如果我们要把样式输出到相应的css文件，那么我们还需要做一点工作，这个时候就要用到<a href="https://webpack.js.org/plugins/extract-text-webpack-plugin/">ExtractTextWebpackPlugin</a>。首先，我们当然要先安装这个插件：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">--save-dev</span> extract-text-webpack-plugin
 </code></pre></div></div>
 
-<p>然后，配置我们的<code class="highlighter-rouge">webpack.config.js</code>（注意css rule中的<code class="highlighter-rouge">publicPath: '../'</code>，这是根据你的项目来配置的，会影响到css文件中url()函数所引用资源的生成路径）：</p>
+<p>然后，配置我们的<code class="language-plaintext highlighter-rouge">webpack.config.js</code>（注意css rule中的<code class="language-plaintext highlighter-rouge">publicPath: '../'</code>，这是根据你的项目来配置的，会影响到css文件中url()函数所引用资源的生成路径）：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">ExtractTextPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"extract-text-webpack-plugin"</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">ExtractTextPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">extract-text-webpack-plugin</span><span class="dl">"</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span>
@@ -295,16 +295,16 @@
     <span class="na">rules</span><span class="p">:</span> <span class="p">[{</span>
         <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">css$/</span><span class="p">,</span>
         <span class="na">use</span><span class="p">:</span> <span class="nx">ExtractTextPlugin</span><span class="p">.</span><span class="nx">extract</span><span class="p">({</span>
-          <span class="na">fallback</span><span class="p">:</span> <span class="s2">"style-loader"</span><span class="p">,</span>
-          <span class="na">use</span><span class="p">:</span> <span class="s2">"css-loader"</span><span class="p">,</span>
-          <span class="na">publicPath</span><span class="p">:</span> <span class="s1">'../'</span>
+          <span class="na">fallback</span><span class="p">:</span> <span class="dl">"</span><span class="s2">style-loader</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">use</span><span class="p">:</span> <span class="dl">"</span><span class="s2">css-loader</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">publicPath</span><span class="p">:</span> <span class="dl">'</span><span class="s1">../</span><span class="dl">'</span>
         <span class="p">})</span>
       <span class="p">}</span>
     <span class="p">]</span>
   <span class="p">},</span>
   <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
     <span class="k">new</span> <span class="nx">ExtractTextPlugin</span><span class="p">({</span>
-      <span class="na">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">'css'</span><span class="p">,</span> <span class="s1">'[name].bundle.css'</span><span class="p">)</span>
+      <span class="na">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">css</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">[name].bundle.css</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">}),</span>
   <span class="p">],</span>
   <span class="p">...</span>
@@ -327,11 +327,11 @@
 ...
 </code></pre></div></div>
 
-<p>再<code class="highlighter-rouge">npm start</code>并浏览<code class="highlighter-rouge">http://localhost:8080/sample.html</code>，嗯！Nice~</p>
+<p>再<code class="language-plaintext highlighter-rouge">npm start</code>并浏览<code class="language-plaintext highlighter-rouge">http://localhost:8080/sample.html</code>，嗯！Nice~</p>
 
 <h2 id="图片资源">图片资源</h2>
 
-<p>接下来，我们该为页面加上几张图来美化一下了，首先，还是先来安装相应的<a href="https://webpack.js.org/loaders/#files">Loaders</a>，在本例中，我就用<a href="https://webpack.js.org/loaders/file-loader/">file-loader</a>了，因为这个比较简单！执行安装命令：<code class="highlighter-rouge">npm install --save-dev file-loader</code>，然后修改<code class="highlighter-rouge">webpack.config.js</code>：</p>
+<p>接下来，我们该为页面加上几张图来美化一下了，首先，还是先来安装相应的<a href="https://webpack.js.org/loaders/#files">Loaders</a>，在本例中，我就用<a href="https://webpack.js.org/loaders/file-loader/">file-loader</a>了，因为这个比较简单！执行安装命令：<code class="language-plaintext highlighter-rouge">npm install --save-dev file-loader</code>，然后修改<code class="language-plaintext highlighter-rouge">webpack.config.js</code>：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
@@ -341,9 +341,9 @@
       <span class="p">...</span>
       <span class="p">{</span>
         <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.(</span><span class="sr">png|gif|jpe</span><span class="se">?</span><span class="sr">g</span><span class="se">)</span><span class="sr">$/</span><span class="p">,</span>
-        <span class="na">loader</span><span class="p">:</span> <span class="s1">'file-loader'</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">file-loader</span><span class="dl">'</span><span class="p">,</span>
         <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
-          <span class="na">name</span><span class="p">:</span> <span class="s1">'img/[name].[ext]'</span>
+          <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">img/[name].[ext]</span><span class="dl">'</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">]</span>
@@ -354,7 +354,7 @@
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>现在，把要用到的图片放到<code class="highlighter-rouge">static/img</code>目录下，就可以在CSS或者HTML中引用图片了。实际的开发中可能还会遇到字体、视频等静态资源的加载，这些都可以通过配置相应的rules来实现。</p>
+<p>现在，把要用到的图片放到<code class="language-plaintext highlighter-rouge">static/img</code>目录下，就可以在CSS或者HTML中引用图片了。实际的开发中可能还会遇到字体、视频等静态资源的加载，这些都可以通过配置相应的rules来实现。</p>
 
 <p>写到这里，我们已经可以开始基本的Web前端开发工作了。但实际的项目中我们似乎才只是迈出第一步而已！</p>
 
@@ -364,30 +364,30 @@
   <p>通常项目发布的时候，我们要将前端资源打包输出，在这个过程中，通常用到的javascript和样式表会被compile或者minify。如果是用到less、sass，会被编译成css，或者用到<a href="http://coffeescript.org/">CoffeeScript</a>之类，也要被编译成javascript。</p>
 </blockquote>
 
-<p>webpack为我们提供了方便的<code class="highlighter-rouge">webpack -p</code><sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup>命令。还是之前的<code class="highlighter-rouge">webpack.config.js</code>，稍作修改，增加关于输出路径的配置，我们将发布文件输出到<code class="highlighter-rouge">dist/static/</code>：</p>
+<p>webpack为我们提供了方便的<code class="language-plaintext highlighter-rouge">webpack -p</code><sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>命令。还是之前的<code class="language-plaintext highlighter-rouge">webpack.config.js</code>，稍作修改，增加关于输出路径的配置，我们将发布文件输出到<code class="language-plaintext highlighter-rouge">dist/static/</code>：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
 <span class="nx">output</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nl">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">'js'</span><span class="p">,</span> <span class="s1">'[name].bundle.js'</span><span class="p">),</span>
-    <span class="nx">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'dist/static/'</span><span class="p">),</span>
-    <span class="nx">publicPath</span><span class="p">:</span> <span class="s1">'/'</span>
+    <span class="nl">filename</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">posix</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">js</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">[name].bundle.js</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dist/static/</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">publicPath</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
   <span class="p">},</span>
 <span class="p">...</span>
 </code></pre></div></div>
 
-<p>然后执行<code class="highlighter-rouge">node_modules/.bin/webpack -p --config ./webpack.config.js</code>，当然，你也可以把这个命令配置到到<code class="highlighter-rouge">package.json</code>的<code class="highlighter-rouge">scripts</code>中：</p>
+<p>然后执行<code class="language-plaintext highlighter-rouge">node_modules/.bin/webpack -p --config ./webpack.config.js</code>，当然，你也可以把这个命令配置到到<code class="language-plaintext highlighter-rouge">package.json</code>的<code class="language-plaintext highlighter-rouge">scripts</code>中：</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">...</span><span class="w">
-</span><span class="s2">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node_modules/.bin/webpack -p --config ./webpack.config.js"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node_modules/.bin/webpack -p --config ./webpack.config.js"</span><span class="p">,</span><span class="w">
     </span><span class="err">...</span><span class="w">
-  </span><span class="p">},</span><span class="w">
+  </span><span class="p">}</span><span class="err">,</span><span class="w">
 </span><span class="err">...</span><span class="w">
 </span></code></pre></div></div>
 
-<p>这样，我们只需要执行<code class="highlighter-rouge">npm run build</code>就可以了。</p>
+<p>这样，我们只需要执行<code class="language-plaintext highlighter-rouge">npm run build</code>就可以了。</p>
 
-<p>不过你可能会发现一个问题：css中用url()引用的图片可以正常的被输出到dist，但是html中直接引用的图片就不行。解决这个问题的一种办法是在js中声明，比如<code class="highlighter-rouge">import '../img/sample-pic.jpg'</code>或者<code class="highlighter-rouge">require('../img/sample-pic.jpg')</code>；或者使用<a href="https://webpack.js.org/loaders/html-loader/">html-loader</a>来处理引用图片的html文件，即：<code class="highlighter-rouge">npm install --save-dev html-loader</code>然后在js中<code class="highlighter-rouge">require('html-loader!../sample.html')</code>。</p>
+<p>不过你可能会发现一个问题：css中用url()引用的图片可以正常的被输出到dist，但是html中直接引用的图片就不行。解决这个问题的一种办法是在js中声明，比如<code class="language-plaintext highlighter-rouge">import '../img/sample-pic.jpg'</code>或者<code class="language-plaintext highlighter-rouge">require('../img/sample-pic.jpg')</code>；或者使用<a href="https://webpack.js.org/loaders/html-loader/">html-loader</a>来处理引用图片的html文件，即：<code class="language-plaintext highlighter-rouge">npm install --save-dev html-loader</code>然后在js中<code class="language-plaintext highlighter-rouge">require('html-loader!../sample.html')</code>。</p>
 
 <p>不过直接使用html-loader的一个问题是，html文件内容会被一起打包到js中，这并不是我们想要的结果。我们可以利用file-loader和extract-loader将其单独输出：</p>
 
@@ -396,7 +396,7 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">--save-dev</span> extract-loader
 </code></pre></div></div>
 
-<p>配置<code class="highlighter-rouge">webpack.config.js</code>：</p>
+<p>配置<code class="language-plaintext highlighter-rouge">webpack.config.js</code>：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
@@ -407,16 +407,16 @@
       <span class="p">{</span>
         <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">html</span><span class="se">?</span><span class="sr">$/</span><span class="p">,</span>
         <span class="na">use</span><span class="p">:</span> <span class="p">[{</span>
-            <span class="na">loader</span><span class="p">:</span> <span class="s1">'file-loader'</span><span class="p">,</span>
+            <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">file-loader</span><span class="dl">'</span><span class="p">,</span>
             <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
-              <span class="na">name</span><span class="p">:</span> <span class="s1">'[name].[ext]'</span><span class="p">,</span>
+              <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">[name].[ext]</span><span class="dl">'</span><span class="p">,</span>
             <span class="p">},</span>
           <span class="p">},</span>
           <span class="p">{</span>
-            <span class="na">loader</span><span class="p">:</span> <span class="s1">'extract-loader'</span><span class="p">,</span>
+            <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">extract-loader</span><span class="dl">'</span><span class="p">,</span>
           <span class="p">},</span>
           <span class="p">{</span>
-            <span class="na">loader</span><span class="p">:</span> <span class="s1">'html-loader'</span>
+            <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">html-loader</span><span class="dl">'</span>
           <span class="p">}</span>
         <span class="p">]</span>
       <span class="p">}</span>
@@ -428,18 +428,18 @@
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>现在，再次<code class="highlighter-rouge">webpack -p</code>，文件已经可以正确的输出到dist了。不过因为使用了require()，所生成的js中依然会有类似<code class="highlighter-rouge">e.exports='module.exports = __webpack_public_path__ + "sample.html";'</code>这种代码。如果你像我一样对代码有着严重的洁癖，可以把相关的require()移出，比如像我把他放到<code class="highlighter-rouge">webpack.config.js</code>中另外指定了一个叫html的entry：</p>
+<p>现在，再次<code class="language-plaintext highlighter-rouge">webpack -p</code>，文件已经可以正确的输出到dist了。不过因为使用了require()，所生成的js中依然会有类似<code class="language-plaintext highlighter-rouge">e.exports='module.exports = __webpack_public_path__ + "sample.html";'</code>这种代码。如果你像我一样对代码有着严重的洁癖，可以把相关的require()移出，比如像我把他放到<code class="language-plaintext highlighter-rouge">webpack.config.js</code>中另外指定了一个叫html的entry：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
 <span class="p">...</span>
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/'</span><span class="p">),</span>
+  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/</span><span class="dl">'</span><span class="p">),</span>
   <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'app'</span><span class="p">:</span> <span class="p">[</span>
-      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/js/main.js'</span><span class="p">),</span>
-      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/css/app.css'</span><span class="p">)</span>
+    <span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/js/main.js</span><span class="dl">'</span><span class="p">),</span>
+      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/css/app.css</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">],</span>
-    <span class="s1">'html'</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/sample.html'</span><span class="p">)</span>
+    <span class="dl">'</span><span class="s1">html</span><span class="dl">'</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/sample.html</span><span class="dl">'</span><span class="p">)</span>
   <span class="p">},</span>
   <span class="p">...</span>
 <span class="p">}</span>
@@ -447,18 +447,18 @@
 <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>当然这还是会输出一个<code class="highlighter-rouge">html.bundle.js</code>，不过我们完全可以忽略或者删除这个文件！</p>
+<p>当然这还是会输出一个<code class="language-plaintext highlighter-rouge">html.bundle.js</code>，不过我们完全可以忽略或者删除这个文件！</p>
 
 <h2 id="关于加载第三方库">关于加载第三方库</h2>
 
-<p>实际项目中我们通常还会用到一些第三方的库资源，比如<a href="https://lodash.com/">lodash</a>、<a href="http://jquery.com/">jQuery</a>。只要是npm仓库中有的，都可以通过<code class="highlighter-rouge">npm install</code>来安装，并在代码中import或者require()来使用，或者通过<code class="highlighter-rouge">webpack.config.js</code>配置将这些库单独打成vendor包：</p>
+<p>实际项目中我们通常还会用到一些第三方的库资源，比如<a href="https://lodash.com/">lodash</a>、<a href="http://jquery.com/">jQuery</a>。只要是npm仓库中有的，都可以通过<code class="language-plaintext highlighter-rouge">npm install</code>来安装，并在代码中import或者require()来使用，或者通过<code class="language-plaintext highlighter-rouge">webpack.config.js</code>配置将这些库单独打成vendor包：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/'</span><span class="p">),</span>
+  <span class="na">context</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/</span><span class="dl">'</span><span class="p">),</span>
   <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'vendor'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'lodash'</span><span class="p">,</span> <span class="s1">'jquery'</span><span class="p">],</span>
+    <span class="dl">'</span><span class="s1">vendor</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">lodash</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">jquery</span><span class="dl">'</span><span class="p">],</span>
     <span class="p">...</span>
   <span class="p">},</span>
   <span class="p">...</span>
@@ -481,17 +481,17 @@
 ...
 </code></pre></div></div>
 
-<p><strong class="highlight">需要注意</strong>的是有些类库的使用可能会有一些问题（不过这类问题大多通过webpack或者类库官方的文档就可以找到说明和解决的办法），比如jQuery会出现<code class="highlighter-rouge">Uncaught ReferenceError: jQuery is not defined</code>问题，这个问题是由于webpack打包和minify的过程会对js类库中的变量进行混淆，这会导致jQuery库的$和jQuery全局定义丢失，这个问题可以用<a href="https://webpack.js.org/plugins/provide-plugin/">ProvidePlugin</a>来解决，<code class="highlighter-rouge">webpack.config.js</code>配置：</p>
+<p><strong class="highlight">需要注意</strong>的是有些类库的使用可能会有一些问题（不过这类问题大多通过webpack或者类库官方的文档就可以找到说明和解决的办法），比如jQuery会出现<code class="language-plaintext highlighter-rouge">Uncaught ReferenceError: jQuery is not defined</code>问题，这个问题是由于webpack打包和minify的过程会对js类库中的变量进行混淆，这会导致jQuery库的$和jQuery全局定义丢失，这个问题可以用<a href="https://webpack.js.org/plugins/provide-plugin/">ProvidePlugin</a>来解决，<code class="language-plaintext highlighter-rouge">webpack.config.js</code>配置：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"webpack"</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">...</span>
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">...</span>
   <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">...</span>
     <span class="k">new</span> <span class="nx">webpack</span><span class="p">.</span><span class="nx">ProvidePlugin</span><span class="p">({</span>
-      <span class="na">$</span><span class="p">:</span> <span class="s2">"jquery"</span><span class="p">,</span>
-      <span class="na">jQuery</span><span class="p">:</span> <span class="s2">"jquery"</span>
+      <span class="na">$</span><span class="p">:</span> <span class="dl">"</span><span class="s2">jquery</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">jQuery</span><span class="p">:</span> <span class="dl">"</span><span class="s2">jquery</span><span class="dl">"</span>
     <span class="p">})</span>
     <span class="p">...</span>
   <span class="p">],</span>
@@ -504,31 +504,31 @@
 <p>好了，现在你可以放心的在代码中使用$了。我们可以将之前写的那段测试代码改造一下试试效果：</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-    <span class="nx">$</span><span class="p">(</span><span class="s1">'.wrapper'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'&lt;p&gt;Hello World&lt;/p&gt;'</span><span class="p">));</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.wrapper</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;p&gt;Hello World&lt;/p&gt;</span><span class="dl">'</span><span class="p">));</span>
 <span class="p">})();</span>
 </code></pre></div></div>
 
 <p>嗯，看起来，没什么问题了！</p>
 
-<p>当我们项目有多个entry points，而且又有重复引用类库的时候，你会发现类库被重复的打包在各个js中！这一点webpack也为我们想到了，就是<a href="https://webpack.js.org/plugins/commons-chunk-plugin/">CommonsChunkPlugin</a>插件，使用也并不复杂，就是在<code class="highlighter-rouge">webpack.config.js</code>中增加配置，在本例中可以这样：</p>
+<p>当我们项目有多个entry points，而且又有重复引用类库的时候，你会发现类库被重复的打包在各个js中！这一点webpack也为我们想到了，就是<a href="https://webpack.js.org/plugins/commons-chunk-plugin/">CommonsChunkPlugin</a>插件，使用也并不复杂，就是在<code class="language-plaintext highlighter-rouge">webpack.config.js</code>中增加配置，在本例中可以这样：</p>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'path'</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"webpack"</span><span class="p">);</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">webpack</span><span class="dl">"</span><span class="p">);</span>
 <span class="p">...</span>
 
 <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
   <span class="na">entry</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s1">'vendor'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'jquery'</span><span class="p">],</span>
-    <span class="s1">'app'</span><span class="p">:</span> <span class="p">[</span>
-      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/js/main.js'</span><span class="p">),</span>
-      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="s1">'static/css/app.css'</span><span class="p">)</span>
+    <span class="dl">'</span><span class="s1">vendor</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">jquery</span><span class="dl">'</span><span class="p">],</span>
+    <span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/js/main.js</span><span class="dl">'</span><span class="p">),</span>
+      <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">static/css/app.css</span><span class="dl">'</span><span class="p">)</span>
     <span class="p">]</span>
   <span class="p">},</span>
   <span class="p">...</span>
   <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">...</span>
     <span class="k">new</span> <span class="nx">webpack</span><span class="p">.</span><span class="nx">optimize</span><span class="p">.</span><span class="nx">CommonsChunkPlugin</span><span class="p">({</span>
-      <span class="na">name</span><span class="p">:</span> <span class="s2">"vendor"</span><span class="p">,</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">vendor</span><span class="dl">"</span><span class="p">,</span>
       <span class="na">minChunks</span><span class="p">:</span> <span class="kc">Infinity</span><span class="p">,</span>
     <span class="p">})</span>
   <span class="p">],</span>
@@ -546,16 +546,16 @@
 
 <p><em>参考：</em></p>
 
-<div class="footnotes">
+<div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:1">
-      <p><a href="https://docs.npmjs.com/cli/run-script">npm-run-script : Run arbitrary package scripts</a>; <a href="https://docs.npmjs.com/misc/scripts">npm-scripts : How npm handles the "scripts" field</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://docs.npmjs.com/cli/run-script">npm-run-script : Run arbitrary package scripts</a>; <a href="https://docs.npmjs.com/misc/scripts">npm-scripts : How npm handles the "scripts" field</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:2">
-      <p><a href="https://webpack.js.org/concepts/loaders/">Webpack Loaders</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://webpack.js.org/concepts/loaders/">Webpack Loaders</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:3">
-      <p><a href="https://webpack.js.org/guides/production-build/">Building for Production</a> <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:3" role="doc-endnote">
+      <p><a href="https://webpack.js.org/guides/production-build/">Building for Production</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -572,7 +572,7 @@
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -727,7 +727,7 @@
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">

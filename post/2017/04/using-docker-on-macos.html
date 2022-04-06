@@ -86,7 +86,7 @@
 
                 <section class="post-full-content">
                     <blockquote>
-  <p>自从接触了<a href="https://www.docker.com/">Docker</a>，我就深深的觉得：<strong>Docker的使用应该是一个开发人员，尤其是基于Linux的Web服务端开发人员应该具备的基本技能之一！</strong>其实Docker的使用也并不复杂，熟悉两个命令<code class="highlighter-rouge">docker</code>、<code class="highlighter-rouge">docker-machine</code>和一个<code class="highlighter-rouge">Dockerfile</code>就可以在你的本机开发环境中跑起来了。</p>
+  <p>自从接触了<a href="https://www.docker.com/">Docker</a>，我就深深的觉得：<strong>Docker的使用应该是一个开发人员，尤其是基于Linux的Web服务端开发人员应该具备的基本技能之一！</strong>其实Docker的使用也并不复杂，熟悉两个命令<code class="language-plaintext highlighter-rouge">docker</code>、<code class="language-plaintext highlighter-rouge">docker-machine</code>和一个<code class="language-plaintext highlighter-rouge">Dockerfile</code>就可以在你的本机开发环境中跑起来了。</p>
 </blockquote>
 
 <!--more-->
@@ -108,7 +108,7 @@
 <h2 id="docker-machine">docker-machine</h2>
 
 <blockquote>
-  <p>要运行docker，首先得有可用的Docker Machine，本地环境中的Machine可以由<code class="highlighter-rouge">docker-machine</code>命令来维护。</p>
+  <p>要运行docker，首先得有可用的Docker Machine，本地环境中的Machine可以由<code class="language-plaintext highlighter-rouge">docker-machine</code>命令来维护。</p>
 </blockquote>
 
 <p>先来ls一下：</p>
@@ -146,72 +146,72 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
 <span class="c"># Run this command to configure your shell: </span>
 <span class="c"># eval $(docker-machine env)</span>
 
-<span class="nv">$ </span><span class="nb">eval</span> <span class="s2">"</span><span class="k">$(</span>docker-machine <span class="nb">env </span>default<span class="k">)</span><span class="s2">"</span>
+<span class="nv">$ </span><span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>docker-machine <span class="nb">env </span>default<span class="si">)</span><span class="s2">"</span>
 
 </code></pre></div></div>
 
-<p>好了，我们的Docker Machine算是启动了，如果要ssh连接到这个主机，需要用<code class="highlighter-rouge">docker-machine ssh default</code>。</p>
+<p>好了，我们的Docker Machine算是启动了，如果要ssh连接到这个主机，需要用<code class="language-plaintext highlighter-rouge">docker-machine ssh default</code>。</p>
 
 <blockquote>
-  <p>在Docker主机中如果要切换su，执行<code class="highlighter-rouge">sudo -i</code>就可以了。</p>
+  <p>在Docker主机中如果要切换su，执行<code class="language-plaintext highlighter-rouge">sudo -i</code>就可以了。</p>
 </blockquote>
 
 <p><em>常用的docker-machine命令：</em></p>
 
 <ul>
-  <li><code class="highlighter-rouge">docker-machine create</code>  创建</li>
-  <li><code class="highlighter-rouge">docker-machine start</code> 启动</li>
-  <li><code class="highlighter-rouge">docker-machine stop</code> 停止</li>
-  <li><code class="highlighter-rouge">docker-machine env</code> 查看环境参数</li>
-  <li><code class="highlighter-rouge">docker-machine ip</code> 查看IP</li>
-  <li><code class="highlighter-rouge">docker-machine ssh</code> ssh连接</li>
-  <li><code class="highlighter-rouge">docker-machine ls</code> machines 列表</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine create</code>  创建</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine start</code> 启动</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine stop</code> 停止</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine env</code> 查看环境参数</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine ip</code> 查看IP</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine ssh</code> ssh连接</li>
+  <li><code class="language-plaintext highlighter-rouge">docker-machine ls</code> machines 列表</li>
 </ul>
 
 <h2 id="docker">docker</h2>
 
-<p>下面该<code class="highlighter-rouge">docker</code>登场了！<code class="highlighter-rouge">docker info</code>可以查看当前接入的Docker Machine的信息，我们先来run一个mysql试试：</p>
+<p>下面该<code class="language-plaintext highlighter-rouge">docker</code>登场了！<code class="language-plaintext highlighter-rouge">docker info</code>可以查看当前接入的Docker Machine的信息，我们先来run一个mysql试试：</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--name</span> mysql <span class="nt">-p</span> 3306:3306 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>mysqlpwd <span class="nt">-d</span> mysql
 </code></pre></div></div>
 
-<p>这个命令会创建一个运行mysql的容器，容器的3306端口（也就是mysql的服务端口）会被映射到docker主机的3306端口，mysql的root用户密码是<code class="highlighter-rouge">MYSQL_ROOT_PASSWORD</code>指定的<code class="highlighter-rouge">mysqlpwd</code>。我们可以用下面的命令连接这个mysql服务看看：</p>
+<p>这个命令会创建一个运行mysql的容器，容器的3306端口（也就是mysql的服务端口）会被映射到docker主机的3306端口，mysql的root用户密码是<code class="language-plaintext highlighter-rouge">MYSQL_ROOT_PASSWORD</code>指定的<code class="language-plaintext highlighter-rouge">mysqlpwd</code>。我们可以用下面的命令连接这个mysql服务看看：</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mysql 192.168.85.135 <span class="nt">-u</span> root <span class="nt">-p</span>
 </code></pre></div></div>
 
-<p>可以了吧，好了，关于run命令的更多信息可以<code class="highlighter-rouge">docker run --help</code>查阅。如果要停止上面那个容器可以用<code class="highlighter-rouge">docker stop mysql</code>。run过之后，这个容器（Container）和镜像（Image）都已经保存在本地了，下次再运行这个容器可以直接运行<code class="highlighter-rouge">docker start mysql</code>而不需要再<code class="highlighter-rouge">docker run</code>了。</p>
+<p>可以了吧，好了，关于run命令的更多信息可以<code class="language-plaintext highlighter-rouge">docker run --help</code>查阅。如果要停止上面那个容器可以用<code class="language-plaintext highlighter-rouge">docker stop mysql</code>。run过之后，这个容器（Container）和镜像（Image）都已经保存在本地了，下次再运行这个容器可以直接运行<code class="language-plaintext highlighter-rouge">docker start mysql</code>而不需要再<code class="language-plaintext highlighter-rouge">docker run</code>了。</p>
 
 <p><em>常用的docker命令：</em></p>
 
 <ul>
-  <li><code class="highlighter-rouge">docker build</code> 通过Dockerfile构建镜像</li>
-  <li><code class="highlighter-rouge">docker run</code> 运行容器</li>
-  <li><code class="highlighter-rouge">docker ps</code> 显示当前运行的容器（加<code class="highlighter-rouge">-a</code>参数可以列出本地所有容器，包括未运行的容器）</li>
-  <li><code class="highlighter-rouge">docker start</code> 启动容器</li>
-  <li><code class="highlighter-rouge">docker stop</code> 停止容器</li>
-  <li><code class="highlighter-rouge">docker rm</code> 删除容器</li>
-  <li><code class="highlighter-rouge">docker rmi</code> 删除镜像</li>
+  <li><code class="language-plaintext highlighter-rouge">docker build</code> 通过Dockerfile构建镜像</li>
+  <li><code class="language-plaintext highlighter-rouge">docker run</code> 运行容器</li>
+  <li><code class="language-plaintext highlighter-rouge">docker ps</code> 显示当前运行的容器（加<code class="language-plaintext highlighter-rouge">-a</code>参数可以列出本地所有容器，包括未运行的容器）</li>
+  <li><code class="language-plaintext highlighter-rouge">docker start</code> 启动容器</li>
+  <li><code class="language-plaintext highlighter-rouge">docker stop</code> 停止容器</li>
+  <li><code class="language-plaintext highlighter-rouge">docker rm</code> 删除容器</li>
+  <li><code class="language-plaintext highlighter-rouge">docker rmi</code> 删除镜像</li>
 </ul>
 
-<h2 id="dockerfile--docker-build">Dockerfile &amp; <code class="highlighter-rouge">docker build</code></h2>
+<h2 id="dockerfile--docker-build">Dockerfile &amp; <code class="language-plaintext highlighter-rouge">docker build</code></h2>
 
 <blockquote>
-  <p><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>文件用于声明自动构建镜像的一系列命令，<code class="highlighter-rouge">docker build</code>使用这个文件来构建镜像。<em>在我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中，我就是用Dockerfile来构建的<a href="https://ghost.org">Ghost</a>应用。</em></p>
+  <p><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>文件用于声明自动构建镜像的一系列命令，<code class="language-plaintext highlighter-rouge">docker build</code>使用这个文件来构建镜像。<em>在我之前的文章“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中，我就是用Dockerfile来构建的<a href="https://ghost.org">Ghost</a>应用。</em></p>
 </blockquote>
 
-<p>当你编写好了Dockerfile之后，你就可以使用<code class="highlighter-rouge">docker build</code>命令了：</p>
+<p>当你编写好了Dockerfile之后，你就可以使用<code class="language-plaintext highlighter-rouge">docker build</code>命令了：</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /path/to/workdir/
 <span class="nv">$ </span>docker build <span class="nb">.</span>
 </code></pre></div></div>
 
-<p>我们也可以在build的时候为镜像命名，另外，在build的时候，docker还会为每一个步骤（命令）生成缓存，我们可以加<code class="highlighter-rouge">--no-cache</code>参数取消缓存，如下：</p>
+<p>我们也可以在build的时候为镜像命名，另外，在build的时候，docker还会为每一个步骤（命令）生成缓存，我们可以加<code class="language-plaintext highlighter-rouge">--no-cache</code>参数取消缓存，如下：</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker build <span class="nt">-t</span> image_name <span class="nt">--no-cache</span> <span class="nb">.</span>
 </code></pre></div></div>
 
-<p>build成功后，执行<code class="highlighter-rouge">docker images</code>就可以看到本地的镜像列表，如果是第一次执行可以用<code class="highlighter-rouge">docker run</code>，如果已经作为容器运行了（<code class="highlighter-rouge">docker ps -a</code>查看）则可以用<code class="highlighter-rouge">docker start</code>来启动容器。另外<code class="highlighter-rouge">docker run</code>时也可以指定环境变量，例如：我在“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中的Dockerfile，因为用到了SAE的环境变量，所以，在本地测试环境中，我就把本地环境配置放到一个名为env-dev.list的文件中，内容类似这样：</p>
+<p>build成功后，执行<code class="language-plaintext highlighter-rouge">docker images</code>就可以看到本地的镜像列表，如果是第一次执行可以用<code class="language-plaintext highlighter-rouge">docker run</code>，如果已经作为容器运行了（<code class="language-plaintext highlighter-rouge">docker ps -a</code>查看）则可以用<code class="language-plaintext highlighter-rouge">docker start</code>来启动容器。另外<code class="language-plaintext highlighter-rouge">docker run</code>时也可以指定环境变量，例如：我在“<a href="/post/2017/04/docker-a-ghost-blog-by-sae.html">用SAE Docker一个Ghost博客</a>”中的Dockerfile，因为用到了SAE的环境变量，所以，在本地测试环境中，我就把本地环境配置放到一个名为env-dev.list的文件中，内容类似这样：</p>
 
 <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">MYSQL_HOST</span><span class="p">=</span><span class="s">192.168.85.135</span>
 <span class="py">MYSQL_PORT</span><span class="p">=</span><span class="s">3306</span>
@@ -222,14 +222,14 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
 <span class="py">PORT</span><span class="p">=</span><span class="s">2467</span>
 </code></pre></div></div>
 
-<p>然后<code class="highlighter-rouge">docker run</code>：</p>
+<p>然后<code class="language-plaintext highlighter-rouge">docker run</code>：</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--name</span> ghost <span class="nt">-p</span> 7000:2467 <span class="nt">--env-file</span><span class="o">=</span>./env-dev.list <span class="nt">-v</span> /var/storage/ghost:/var/storage/ghost ghost_image
 </code></pre></div></div>
 
-<p>这条命令使用ghost_image镜像启动容器并将容器的2467端口映射到主机的7000端口，同时将主机的<code class="highlighter-rouge">/var/storage/ghost</code>目录挂载到容器的<code class="highlighter-rouge">/var/storage/ghost</code>。</p>
+<p>这条命令使用ghost_image镜像启动容器并将容器的2467端口映射到主机的7000端口，同时将主机的<code class="language-plaintext highlighter-rouge">/var/storage/ghost</code>目录挂载到容器的<code class="language-plaintext highlighter-rouge">/var/storage/ghost</code>。</p>
 
-<p>没什么问题的话，我们就可以通过在浏览器输入<code class="highlighter-rouge">http://192.168.85.135:7000/</code>来访问这个Ghost应用了。</p>
+<p>没什么问题的话，我们就可以通过在浏览器输入<code class="language-plaintext highlighter-rouge">http://192.168.85.135:7000/</code>来访问这个Ghost应用了。</p>
 
 <hr />
 
@@ -255,7 +255,7 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -414,7 +414,7 @@ Started machines may have new IP addresses. You may need to re-run the <span cla
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">

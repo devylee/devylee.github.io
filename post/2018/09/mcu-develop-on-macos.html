@@ -96,18 +96,18 @@
 
 <!--more-->
 
-<p>51单片机的大部分开发资源都是针对Windows的，我这块开发板的配套资料也一样，可是我实在是不想为它再另购一台电脑或者用Windows虚拟机。而且我也坚信，这不是我一个人的想法，所以还是求教Google啦。所幸，相关的资料虽然少，但好在还是有的。其实编辑器是不用担心的，主要就是编译器和下载工具。</p>
+<p>51单片机的大部分开发资源都是针对Windows的，我这块开发板的配套资料也一样，可是我实在是不想为它再另购一台电脑或者用Windows虚拟机。而且我也坚信，这不是我一个人的想法，所以还是求教Google啦。所幸，相关的资料虽然少，但好在还是有的。其实编辑器是不用担心的，主要就是编译器和下载工具。</p>
 
 <h2 id="编译器">编译器</h2>
 
-<p>Windows下有集成的开发环境<a href="http://www2.keil.com/mdk5/uvision/">Keil µVersion</a>，芯片是<a href="http://www.stcmcu.com/">宏晶</a>的STC89C51RC，烧录软件和下载软件都可以从他的<a href="http://www.stcmicro.com/">官网</a>下载到。</p>
+<p>Windows下有集成的开发环境<a href="http://www2.keil.com/mdk5/uvision/">Keil µVersion</a>，芯片是<a href="http://www.stcmcu.com/">宏晶</a>的STC89C51RC，烧录软件和下载软件都可以从他的<a href="http://www.stcmicro.com/">官网</a>下载到。</p>
 
-<p>对于macOS就没那么好运，首先要找到可用的编译器，好在找到了<a href="http://sdcc.sourceforge.net/">SDCC - Small Device C Compiler</a>，它的安装也很简单，我用的<a href="https://brew.sh/">Homebrew</a>直接运行<code class="highlighter-rouge">brew</code>命令安装：</p>
+<p>对于macOS就没那么好运，首先要找到可用的编译器，好在找到了<a href="http://sdcc.sourceforge.net/">SDCC - Small Device C Compiler</a>，它的安装也很简单，我用的<a href="https://brew.sh/">Homebrew</a>直接运行<code class="language-plaintext highlighter-rouge">brew</code>命令安装：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install sdcc
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install sdcc
 </code></pre></div></div>
 
-<p>虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：</p>
+<p>虽然有编译器，也都是c代码，但是语法上还是有那么一点点不同，根据文档以及网上的说法：</p>
 
 <table>
   <thead>
@@ -141,10 +141,10 @@
   </tbody>
 </table>
 
-<p>因为有配套设备中有个1602液晶屏，所以先来一个<code class="highlighter-rouge">Hello World!</code>吧，新建文件<code class="highlighter-rouge">helloworld.c</code>，代码如下：</p>
+<p>因为有配套设备中有个1602液晶屏，所以先来一个<code class="language-plaintext highlighter-rouge">Hello World!</code>吧，新建文件<code class="language-plaintext highlighter-rouge">helloworld.c</code>，代码如下：</p>
 
 <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="cp">#include&lt;8052.h&gt;
+<span class="cp">#include</span><span class="cpf">&lt;8052.h&gt;</span><span class="cp">
 </span>
 <span class="cp">#define uchar unsigned char
 #define uint unsigned int
@@ -207,35 +207,35 @@
 
 <p>然后编译：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sdcc helloword.c
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sdcc helloword.c
 </code></pre></div></div>
 
-<p>成功执行后，生成了一堆文件，.asm、.ihx、.lk、.lst…，这里要下载到单片机ROM的只有.ihx文件。</p>
+<p>成功执行后，生成了一堆文件，.asm、.ihx、.lk、.lst…，这里要下载到单片机ROM的只有.ihx文件。</p>
 
 <h2 id="下载工具">下载工具</h2>
 
-<p>接下来是下载工具，我最先找到了<a href="https://github.com/laborer/stcflash">stcflash</a>，这是一个python脚本工具，首先安装依赖<a href="https://github.com/pyserial/pyserial">pySerial</a>：</p>
+<p>接下来是下载工具，我最先找到了<a href="https://github.com/laborer/stcflash">stcflash</a>，这是一个python脚本工具，首先安装依赖<a href="https://github.com/pyserial/pyserial">pySerial</a>：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install pyserial
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install pyserial
 </code></pre></div></div>
 
 <p>然后下载stcflash到本地，执行：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python stcflash.py
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python stcflash.py
 </code></pre></div></div>
 
-<p>但是这个工具在我这里怎么都无法成功，而且用pyserial的list_ports()命令页列不出usb设备：</p>
+<p>但是这个工具在我这里怎么都无法成功，而且用pyserial的list_ports()命令页列不出usb设备：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$python -m serial.tools.list_ports -v 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$python -m serial.tools.list_ports -v 
 /dev/cu.Bluetooth-Incoming-Port
     desc: n/a
     hwid: n/a
 1 ports found
 </code></pre></div></div>
 
-<p>后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，<a href="http://www.wch.cn/">WCH官方</a>有提供<a href="http://www.wch.cn/download/CH341SER_MAC_ZIP.html">mac的驱动下载</a>。下载来安装并重启后，再list_ports()：</p>
+<p>后来，考虑是不是USB驱动的问题？好在板上的CH340G芯片，<a href="http://www.wch.cn/">WCH官方</a>有提供<a href="http://www.wch.cn/download/CH341SER_MAC_ZIP.html">mac的驱动下载</a>。下载来安装并重启后，再list_ports()：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python -m serial.tools.list_ports -v
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python -m serial.tools.list_ports -v
 /dev/cu.Bluetooth-Incoming-Port
     desc: n/a
     hwid: n/a
@@ -247,7 +247,7 @@
 
 <p>好了，终于出来了，在用stcflash看一下设备信息：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python stcflash.py --protocol 89 --port /dev/cu.wchusbserialfd130
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python stcflash.py --protocol 89 --port /dev/cu.wchusbserialfd130
 Connect to /dev/cu.wchusbserialfd130 at baudrate 2400
 Detecting target...Traceback (most recent call last):
   File "stcflash.py", line 701, in &lt;module&gt;
@@ -263,15 +263,15 @@ OSError
 
 <p>额～ 依然不成功！</p>
 
-<p>换了些参数继续尝试也未成功，于是乎继续Google，找到了<a href="https://github.com/grigorig/stcgal">stcgal</a>，同样是python写的，安装stcgal以及依赖包tqdm：</p>
+<p>换了些参数继续尝试也未成功，于是乎继续Google，找到了<a href="https://github.com/grigorig/stcgal">stcgal</a>，同样是python写的，安装stcgal以及依赖包tqdm：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install git+https://github.com/grigorig/stcgal.git
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install git+https://github.com/grigorig/stcgal.git
 $ pip install tqdm
 </code></pre></div></div>
 
 <p>先来看下设备信息：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130
 Waiting for MCU, please cycle power: done
 Target model:
   Name: STC89C52RC/LE52R
@@ -293,9 +293,9 @@ Disconnected!
 
 <p>OK了，<strong>注意</strong>在提示“Waiting for MCU, please cycle power:”的时候关掉电源再打开就可以了。</p>
 
-<p>好啦，下载来试试烧录吧，就用上面生成的<code class="highlighter-rouge">helloworld.ihx</code>：</p>
+<p>好啦，下载来试试烧录吧，就用上面生成的<code class="language-plaintext highlighter-rouge">helloworld.ihx</code>：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130 helloworld.ihx
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ stcgal -P stc89 -p /dev/cu.wchusbserialfd130 helloworld.ihx
 Waiting for MCU, please cycle power: done
 Target model:
   Name: STC89C52RC/LE52R
@@ -336,7 +336,7 @@ Disconnected!
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -401,6 +401,25 @@ Disconnected!
                 
             
 
+
+            
+                
+            <article class="post-card post tag-soft tag-bootstrapped no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2022/04/come-back.html">
+                        <header class="post-card-header"><span class="post-card-tags">不争</span><h2 class="post-card-title">回归</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>
+  一别近四载，再回来已是年过四十的中年大叔！按人类的平均寿命来看，我的人生已是过半。回看过往总是无限感慨，无奈过去已回不去！都说四十不惑，而其实自己一直疲于解惑之中，只是与年少时相比，早已隐去锋芒变得不争。
+
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
 
             
 
@@ -472,7 +491,7 @@ Disconnected!
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">

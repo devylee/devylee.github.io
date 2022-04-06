@@ -101,35 +101,35 @@
 
 <h2 id="php">PHP</h2>
 
-<p>“PHP是世界上最好的编程语言！”作为LNMP的忠实粉儿，这句话总是在我提到PHP时余音绕梁般浮现在我脑中！果然是真爱啊！公司的项目后端主要是PHP栈，虽然现在PHP的版本已经7.2了，但是由于历史原因，当前线上环境还是跑的5.6，我们还用的<a href="https://phalconphp.com">Phalcon</a>框架，它的Release版本已经是3.3，但我们线上还停留在2时代。于是乎，我也会纠结于安装哪个版本？PHP56+Phalcon2吧，无法体验到PHP新版本的特性，技术总要面向未来啊；PHP7+Phalcon3吧，项目代码的执行就会有问题了！所以，对我来说，最理想的还是两个环境都有，只要彼此不冲突，可以随时切换就好。好在，Homebrew是可以实现这个需求的！</p>
+<p>“PHP是世界上最好的编程语言！”作为LNMP的忠实粉儿，这句话总是在我提到PHP时余音绕梁般浮现在我脑中！果然是真爱啊！公司的项目后端主要是PHP栈，虽然现在PHP的版本已经7.2了，但是由于历史原因，当前线上环境还是跑的5.6，我们还用的<a href="https://phalconphp.com">Phalcon</a>框架，它的Release版本已经是3.3，但我们线上还停留在2时代。于是乎，我也会纠结于安装哪个版本？PHP56+Phalcon2吧，无法体验到PHP新版本的特性，技术总要面向未来啊；PHP7+Phalcon3吧，项目代码的执行就会有问题了！所以，对我来说，最理想的还是两个环境都有，只要彼此不冲突，可以随时切换就好。好在，Homebrew是可以实现这个需求的！</p>
 
-<h3 id="先tap">先tap：</h3>
+<h3 id="先tap">先tap：</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew tap homebrew/homebrew-php
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew tap homebrew/homebrew-php
 </code></pre></div></div>
 
 <h3 id="然后我们先来安装php72">然后我们先来安装PHP72：</h3>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php72 php72-phalcon
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php72 php72-phalcon
 </code></pre></div></div>
 
-<p>* <em>当然这里你可以安装其他你需要的PHP扩展。</em></p>
+<p>* <em>当然这里你可以安装其他你需要的PHP扩展。</em></p>
 
 <h3 id="接下来我们安装php56">接下来我们安装PHP56</h3>
 
-<p>安装之前要unlink php72</p>
+<p>安装之前要unlink php72</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php72
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php72
 </code></pre></div></div>
 
 <p>安装php56</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php56
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install php56
 </code></pre></div></div>
 
-<p>安装Phalcon2扩展（由于Homebrew自带的php56-phalcon扩展版本是3.3，所以这里我选择从代码编译安装）：</p>
+<p>安装Phalcon2扩展（由于Homebrew自带的php56-phalcon扩展版本是3.3，所以这里我选择从代码编译安装）：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone git://github.com/phalcon/cphalcon.git
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone git://github.com/phalcon/cphalcon.git
 $ cd cphalcon
 $ git checkout 2.0.x
 $ cd ext
@@ -138,9 +138,9 @@ $ ./install
 
 <p>* <em>这里我用cphalcon/ext替换了官方文档中使用的cphalcon/build进行安装，因为使用build运行时会出现一些难以预料的问题，可能是某些编译参数不同的原因。</em></p>
 
-<p>install成功最后会看到这样的信息：</p>
+<p>install成功最后会看到这样的信息：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Build complete.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Build complete.
 Don't forget to run 'make test'.
 
 Password:
@@ -150,7 +150,7 @@ Installing header files:           /usr/local/Cellar/php56/5.6.xx_x/include/php/
 
 <p>添加php扩展：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /usr/local/etc/php/5.6/conf.d/ext-phalcon.ini
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /usr/local/etc/php/5.6/conf.d/ext-phalcon.ini
 </code></pre></div></div>
 <p>内容如下：</p>
 
@@ -159,20 +159,20 @@ Installing header files:           /usr/local/Cellar/php56/5.6.xx_x/include/php/
 </code></pre></div></div>
 
 <blockquote>
-  <p>当然其实我们还可以用<code class="highlighter-rouge">brew create</code>来新建一个phalcon2的Formula，这种方式更方便用homebrew来维护：</p>
+  <p>当然其实我们还可以用<code class="language-plaintext highlighter-rouge">brew create</code>来新建一个phalcon2的Formula，这种方式更方便用homebrew来维护：</p>
 </blockquote>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew create https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz --tap homebrew/homebrew-php
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew create https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz --tap homebrew/homebrew-php
 </code></pre></div></div>
 
-<p>上面命令会创建一个<code class="highlighter-rouge">/usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb</code>文件，我们可以把这个文件重命名：</p>
+<p>上面命令会创建一个<code class="language-plaintext highlighter-rouge">/usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb</code>文件，我们可以把这个文件重命名：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/php56-phalcon2.rb 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/cphalcon.rb /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/php56-phalcon2.rb 
 </code></pre></div></div>
 
 <p>然后修改这个文件：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/php56-phalcon2.rb
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /usr/local/Homebrew/Library/Taps/homebrew/homebrew-php/Formula/php56-phalcon2.rb
 </code></pre></div></div>
 
 <p>内容如下：</p>
@@ -203,9 +203,9 @@ Installing header files:           /usr/local/Cellar/php56/5.6.xx_x/include/php/
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>然后执行<code class="highlighter-rouge">brew install php56-phalcon2</code>，大概会看到类似如下的输出：</p>
+<p>然后执行<code class="language-plaintext highlighter-rouge">brew install php56-phalcon2</code>，大概会看到类似如下的输出：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>==&gt; Installing php56-phalcon2 from homebrew/php
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>==&gt; Installing php56-phalcon2 from homebrew/php
 ==&gt; Downloading https://github.com/phalcon/cphalcon/archive/phalcon-v2.0.13.tar.gz
 Already downloaded: /Users/devylee/Library/Caches/Homebrew/php56-phalcon2-2.0.13.tar.gz
 ==&gt; /usr/local/opt/php56/bin/phpize
@@ -234,9 +234,9 @@ To finish installing phalcon2 for PHP 5.6:
 
 <p>phalcon2已经成功安装了。</p>
 
-<p>好了，执行<code class="highlighter-rouge">php -v</code>:</p>
+<p>好了，执行<code class="language-plaintext highlighter-rouge">php -v</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ php -v
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ php -v
 PHP 5.6.33 (cli) (built: Jan  7 2018 11:14:18) 
 Copyright (c) 1997-2016 The PHP Group
 Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
@@ -244,7 +244,7 @@ Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 
 <p>切到PHP7：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php56
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew unlink php56
 $ brew link php72
 $ php -v
 PHP 7.2.0 (cli) (built: Dec  3 2017 21:46:44) ( NTS )
@@ -257,51 +257,51 @@ Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
 <h2 id="python">Python</h2>
 
 <blockquote>
-  <p>Homebrew中的python2和python3并无冲突，也就是可以执行<code class="highlighter-rouge">$ brew install python2 python3</code>就可以同时安装这两个版本。而且python2有virtualenv；python3有pyvenv，都可以用来维护虚拟运行环境。但是python2如果要使用ipython或者pythonw就会出现错误，会提示找不到Framework。好在我们还有另一个选择，那就是<a href="https://github.com/pyenv/pyenv">pyenv</a>。</p>
+  <p>Homebrew中的python2和python3并无冲突，也就是可以执行<code class="language-plaintext highlighter-rouge">$ brew install python2 python3</code>就可以同时安装这两个版本。而且python2有virtualenv；python3有pyvenv，都可以用来维护虚拟运行环境。但是python2如果要使用ipython或者pythonw就会出现错误，会提示找不到Framework。好在我们还有另一个选择，那就是<a href="https://github.com/pyenv/pyenv">pyenv</a>。</p>
 </blockquote>
 
 <p>首先我们安装pyenv，用homebrew就可以了：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install pyenv
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ brew install pyenv
 </code></pre></div></div>
 
-<p>然后初始化一下pyenv的运行环境参数，其实也就是在你的.bash_profile中做了些配置，执行<code class="highlighter-rouge">$ pyenv init</code>就可以了。</p>
+<p>然后初始化一下pyenv的运行环境参数，其实也就是在你的.bash_profile中做了些配置，执行<code class="language-plaintext highlighter-rouge">$ pyenv init</code>就可以了。</p>
 
 <p>查看可用的python版本：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install --list
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install --list
 </code></pre></div></div>
 
-<p>安装你需要的python版本，比如2.7.14、3.6.3，注意安装之后（或者pip安装了带有可执行命令的包之后）要执行rehash：</p>
+<p>安装你需要的python版本，比如2.7.14、3.6.3，注意安装之后（或者pip安装了带有可执行命令的包之后）要执行rehash：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install 2.7.14
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv install 2.7.14
 $ pyenv install 3.6.3
 $ pyenv rehash
 </code></pre></div></div>
 
-<p>需要注意的是，如果需要支持Framework，要加上–enable-framework参数：</p>
+<p>需要注意的是，如果需要支持Framework，要加上–enable-framework参数：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 2.7.14
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ env PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 2.7.14
 </code></pre></div></div>
 
 <p>设置python的版本，可以设置全局global，也可以使用local设置当前目录的：</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv global 3.6.3
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pyenv global 3.6.3
 $ pyenv local 2.7.14
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">pyenv version</code> 查看当前的python版本，<code class="highlighter-rouge">pyenv versions</code>列出系统已安装的的python版本。更多的pyenv命令和配置可以参考：</p>
+<p><code class="language-plaintext highlighter-rouge">pyenv version</code> 查看当前的python版本，<code class="language-plaintext highlighter-rouge">pyenv versions</code>列出系统已安装的的python版本。更多的pyenv命令和配置可以参考：</p>
 
 <ul>
   <li><a href="https://github.com/pyenv/pyenv/wiki">Wiki</a></li>
   <li><a href="https://github.com/pyenv/pyenv/blob/master/COMMANDS.md">Command Reference</a></li>
 </ul>
 
-<p>还是很简单方便的是吧！</p>
+<p>还是很简单方便的是吧！</p>
 
 <h2 id="ruby">Ruby</h2>
 
-<p>对于这货，其实只要安装了<a href="https://rvm.io/">RVM</a>就OK了！</p>
+<p>对于这货，其实只要安装了<a href="https://rvm.io/">RVM</a>就OK了！</p>
 
                 </section>
 
@@ -315,7 +315,7 @@ $ pyenv local 2.7.14
                             <section class="author-card-content">
                                 <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
                                 
-                                    <p> 代码猴' 全栈' 真爱LNMP' 勾搭着一众开发技术' 拖延症患者' 已婚俩孩儿带只狗'</p>
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
                                 
                             </section>
                         </section>
@@ -470,7 +470,7 @@ $ pyenv local 2.7.14
             <div class="site-footer-content inner">
                 <section class="copyright">
                     <a href="/">elsewhere</a> 
-                    &copy; 2018 
+                    &copy; 2022 
                     <nobr>All Rights Reserved.</nobr>
                 </section>
                 <nav class="site-footer-nav">
