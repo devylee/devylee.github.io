@@ -46,6 +46,6 @@ webpack:
 soft:
   name: 不争
   desc: A Taoist philosophy
-bootstrapped:
+bootstrapping:
   name: 独立开发者
-  desc: Bootstrapped
+  desc: Bootstrapping as an independent developer
