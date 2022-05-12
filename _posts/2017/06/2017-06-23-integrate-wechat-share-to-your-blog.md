@@ -4,9 +4,9 @@ date      : 2017-06-23 17:00:00
 category  : devy
 tags      : 
   - javascript
-  - weixin
+  - wechat
 layout    : post
-class     : post tag-javascript tag-weixin
+class     : post tag-javascript tag-wechat
 comments  : true
 ---
 

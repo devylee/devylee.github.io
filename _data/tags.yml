@@ -28,7 +28,7 @@ nginx:
 nodejs:
   name: NodeJS
   desc: A JavaScript runtime built on Chrome's V8 JavaScript engine.
-weixin:
+wechat:
   name: 微信
   desc: A social App
 homebrew:
@@ -49,3 +49,6 @@ soft:
 bootstrapping:
   name: 独立开发者
   desc: Bootstrapping as an independent developer
+miniprogram:
+  name: 小程序
+  desc: A mini program is an app within an app. 
