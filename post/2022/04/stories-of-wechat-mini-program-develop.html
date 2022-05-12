@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <title>elsewhere | 微信小程序开发二三事</title>
+    <link rel="canonical" href="https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html" />
+    <meta name="referrer" content="origin" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@idevylee" />
+    <meta name="twitter:creator" content="@idevylee" />
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html" />
+    <meta property="og:title" content="elsewhere | 微信小程序开发二三事" />
+    <meta property="og:description" name="description" content="最近江湖救急，帮朋友做了个微信小程序。之前也有做过几个小程序项目，不过基本上都是内容展示类的，顶多再就是有点表单交互。这次这个不太一样，除了常规的内容展示、还要通过小程序实现扫码、人脸识别、拍照和视频录制功能，这让我对微信小程序的摄像头相关API有了更深入的了解和使用感受。" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "author": "Devy",
+        "publisher": "elsewhere",
+        "url": "https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html",
+        "description": "最近江湖救急，帮朋友做了个微信小程序。之前也有做过几个小程序项目，不过基本上都是内容展示类的，顶多再就是有点表单交互。这次这个不太一样，除了常规的内容展示、还要通过小程序实现扫码、人脸识别、拍照和视频录制功能，这让我对微信小程序的摄像头相关API有了更深入的了解和使用感受。"
+    }
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="https://devylee.github.io/feed.xml" />
+
+
+</head>
+<body class="post-template tag-miniprogram tag-wechat">
+
+    <div class="site-wrapper">
+
+
+        
+    
+    <header class="site-header outer">
+        <div class="inner">
+                <nav class="site-nav">
+        <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
+                <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
+                <li class="nav-about " role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-archives " role="menuitem"><a href="/archives/">Archives</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="https://devylee.github.io/feed.xml" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+        </div>
+    </nav>
+    
+        </div>
+    </header>
+    
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+
+            <article class="post-full post tag-miniprogram tag-wechat no-image">
+
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="">22 Apr 2022</time>
+                            <span class="date-divider">/</span> <a href="/tag/miniprogram/">小程序</a>
+                            <span class="date-divider">/</span> <a href="/tag/wechat/">微信</a>
+                            
+                        </section>
+                        <h1 class="post-full-title">微信小程序开发二三事</h1>
+                </header>
+
+                
+
+                <section class="post-full-content">
+                    <blockquote>
+  <p>最近江湖救急，帮朋友做了个微信小程序。之前也有做过几个小程序项目，不过基本上都是内容展示类的，顶多再就是有点表单交互。这次这个不太一样，除了常规的内容展示、还要通过小程序实现扫码、人脸识别、拍照和视频录制功能，这让我对微信小程序的摄像头相关API有了更深入的了解和使用感受。</p>
+</blockquote>
+
+<!--more-->
+
+<p>坦白说，对于微信小程序，我想吐槽的东西还是挺多的，但是呢，我们也要认识到，任何事物都不可能对所有人做到完美，所以我们应该接受它的不足（虽然本人也是极不情愿），拥抱它优秀的一面，如果你足够强大，那就去推动完善它。本文，我只说camera组件使用过程中遇到的几个问题以及如何解决。包括：</p>
+
+<ul>
+  <li>Camera实时帧数据的base64编码转换问题；</li>
+  <li>视频录制的30秒限制问题；</li>
+</ul>
+
+<p>这里我们会用到小程序的<a href="https://developers.weixin.qq.com/miniprogram/dev/component/camera.html">camera组件</a>、<a href="https://developers.weixin.qq.com/miniprogram/dev/component/canvas.html">canvas组件</a>和下面相关的API：</p>
+<ul>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/device/screen/wx.setKeepScreenOn.html">wx.setKeepScreenOn</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/camera/wx.createCameraContext.html">wx.createCameraContext</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/ai/face/wx.initFaceDetect.html">wx.initFaceDetect</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/ai/face/wx.faceDetect.html">wx.faceDetect</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/camera/CameraContext.onCameraFrame.html">CameraContext.onCameraFrame</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/camera/CameraContext.startRecord.html">CameraContext.startRecord</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/camera/CameraContext.stopRecord.html">CameraContext.stopRecord</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasPutImageData.html">wx.canvasPutImageData</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasToTempFilePath.html">wx.canvasToTempFilePath</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/file/FileSystemManager.readFile.html">FileSystemManager.readFile</a></li>
+  <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/file/FileSystemManager.saveFile.html">FileSystemManager.saveFile</a></li>
+</ul>
+
+<p>因为这个小程序进入后首先有个刷脸验证的环节，我们就先来说说小程序的人脸识别吧。本来的想法还是比较简单的，用户进入刷脸环节，调起手机前置摄像头（UI通过camera组件显示实时画面并指导用户调整距离、角度和姿态等等），通过监听<code class="language-plaintext highlighter-rouge">CameraContext.onCameraFrame</code>将图像数据传递给<code class="language-plaintext highlighter-rouge">wx.faceDetect</code>接口进行检测，如果成功检测到有效的人脸信息就将该帧的图像做base64转码并通过业务接口提交到服务器做人脸比对。所以最初的实现差不多是类似这样的：</p>
+
+<p>首先wxml要声明camera组件：<code class="language-plaintext highlighter-rouge">&lt;camera device-position="front" /&gt;</code>，（可以通过样式表或者行内样式定义高度/宽度等），然后js大概就是这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">encode</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">upng-js</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">Base64</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">js-base64</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">Page</span><span class="p">({</span>
+    <span class="nx">onLoad</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">wx</span><span class="p">.</span><span class="nx">initFaceDetect</span><span class="p">({</span>
+            <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="kd">const</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">wx</span><span class="p">.</span><span class="nx">createCameraContext</span><span class="p">()</span>
+                <span class="kd">const</span> <span class="nx">listener</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">onCameraFrame</span><span class="p">((</span><span class="nx">frame</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">faceDetect</span><span class="p">({</span>
+                        <span class="na">frameBuffer</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span>
+                        <span class="na">width</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+                        <span class="na">height</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                            <span class="c1">// const pngBase64 = wx.arrayBufferToBase64(frame.data) </span>
+                            <span class="kd">const</span> <span class="nx">pngBuffer</span> <span class="o">=</span> <span class="nx">encode</span><span class="p">([</span><span class="nx">frame</span><span class="p">.</span><span class="nx">data</span><span class="p">],</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">height</span><span class="p">)</span>
+                            <span class="kd">const</span> <span class="nx">strBuffer</span> <span class="o">=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span><span class="p">(...</span><span class="k">new</span> <span class="nb">Uint8Array</span><span class="p">(</span><span class="nx">pngBuffer</span><span class="p">))</span>
+                            <span class="kd">const</span> <span class="nx">pngBase64</span> <span class="o">=</span> <span class="nx">Base64</span><span class="p">.</span><span class="nx">btoa</span><span class="p">(</span><span class="nx">strBuffer</span><span class="p">)</span>
+                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pngBase64</span><span class="p">)</span>
+                        <span class="p">}</span>
+                    <span class="p">})</span>
+                <span class="p">})</span>
+                <span class="nx">listener</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>因为<a href="https://developers.weixin.qq.com/miniprogram/dev/api/base/wx.arrayBufferToBase64.html">wx.arrayBufferToBase64</a>接口从基础库2.4.0开始停止维护，所以使用了两个第三方库<a href="https://github.com/photopea/UPNG.js">UPNG</a>和<a href="https://github.com/dankogai/js-base64">js-base64</a>，用于将CameraContext.onCameraFrame帧数据(ArrayBuffer)转成base64编码。但这个方法在iOS下实测速度很慢（甚至卡死<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>）！于是乎就有了下面这个使用canvas画布来获取base64的方案：</p>
+
+<p>首先在wxml中要声明canvas画布<code class="language-plaintext highlighter-rouge">&lt;canvas canvas-id="faceCapture"&gt;&lt;/canvas&gt;</code>，（当然你可能要想办法把这个画布“藏起来”，比如用绝对定位把它放到屏幕之外看不到的地方或者用其他组件遮盖，直接隐藏是不行的），然后js这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nx">Page</span><span class="p">({</span>
+
+    <span class="na">camera</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">context</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="na">listener</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="na">free</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+
+    <span class="nx">onLoad</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">wx</span><span class="p">.</span><span class="nx">initFaceDetect</span><span class="p">({</span>
+            <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="kd">const</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">wx</span><span class="p">.</span><span class="nx">createCameraContext</span><span class="p">()</span>
+                <span class="kd">const</span> <span class="nx">listener</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">onCameraFrame</span><span class="p">((</span><span class="nx">frame</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">wx</span><span class="p">.</span><span class="nx">faceDetect</span><span class="p">({</span>
+                        <span class="na">frameBuffer</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span>
+                        <span class="na">width</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+                        <span class="na">height</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+                        <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">free</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 加个状态开关，避免产生大量的处理任务</span>
+                                <span class="k">this</span><span class="p">.</span><span class="nx">handleFrame</span><span class="p">(</span><span class="nx">frame</span><span class="p">)</span>
+                            <span class="p">}</span>
+                        <span class="p">}</span>
+                    <span class="p">})</span>
+                <span class="p">})</span>
+                <span class="nx">listener</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">listener</span> <span class="o">=</span> <span class="nx">listener</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">},</span>
+
+    <span class="nx">handleFrame</span><span class="p">(</span><span class="nx">frame</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">free</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Uint8Array</span><span class="p">(</span><span class="nx">frame</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+        <span class="kd">const</span> <span class="nx">clamped</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Uint8ClampedArray</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+        <span class="nx">wx</span><span class="p">.</span><span class="nx">canvasPutImageData</span><span class="p">({</span>
+            <span class="na">canvasId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">faceCapture</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">data</span><span class="p">:</span> <span class="nx">clamped</span><span class="p">,</span>
+            <span class="na">height</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+            <span class="na">width</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+            <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="na">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">wx</span><span class="p">.</span><span class="nx">canvasToTempFilePath</span><span class="p">({</span>
+                    <span class="na">canvasId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">faceCapture</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">fileType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">png</span><span class="dl">'</span><span class="p">,</span>
+                    <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="nx">wx</span><span class="p">.</span><span class="nx">getFileSystemManager</span><span class="p">().</span><span class="nx">readFile</span><span class="p">({</span>
+                            <span class="na">filePath</span><span class="p">:</span> <span class="nx">result</span><span class="p">.</span><span class="nx">tempFilePath</span><span class="p">,</span>
+                            <span class="na">encoding</span><span class="p">:</span> <span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">,</span>
+                            <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">file</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="c1">// base64 string</span>
+                            <span class="p">}</span>
+                        <span class="p">})</span>
+                    <span class="p">},</span>
+                    <span class="na">completed</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">free</span> <span class="o">=</span> <span class="kc">true</span>
+                    <span class="p">}</span>
+                <span class="p">},</span> <span class="k">this</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">},</span> <span class="k">this</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+</code></pre></div></div>
+
+<p>OK, 刷脸照片转base64的问题算是解决了！接下来我们来看看视频录制，我们的需求是，用户点击录制按钮就开始持续录制视频并上传的服务器，直到用户点击停止录制。这个过程，我们首先要解决几个问题：1、保持手机不能熄屏，避免应用被杀死；2、长时间录制时不能把手机存储空间占满。</p>
+
+<p>对于第1个问题，微信小程序可以通过<code class="language-plaintext highlighter-rouge">wx.setKeepScreenOn</code>API来实现：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">wx</span><span class="p">.</span><span class="nx">setKeepScreenOn</span><span class="p">({</span>
+  <span class="na">keepScreenOn</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>对于第2个问题，首先我们要知道微信小程序的两个限制：一个是单次录制视频时间不能超过30秒，否则就会触发<code class="language-plaintext highlighter-rouge">timeoutCallback</code>；另一个是小程序有10m的本地存储空间限制<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>。所以，如果不是采用实时推流（小程序是可以用<a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/live/LivePusherContext.html">LivePusherContext</a>做推流的，这也是比较理想的方式，但是需要先通过类目审核，再在小程序管理后台，「开发」-「接口设置」中自助申请开通相关权限）的话，那只能是采用一段一段录制、一个一个的上传，并且及时清理已经完成上传的视频文件。当然这样做，两段视频之间会断录百十来毫秒，如果业务场景对视频连续性要求并不是很高的话，应该也是可以接受的（或者说也只能如此了）。</p>
+
+<p>另外，要特别注意<code class="language-plaintext highlighter-rouge">CameraContext.stopRecord</code>方法的<code class="language-plaintext highlighter-rouge">compressed</code>参数，在Android设备中当<code class="language-plaintext highlighter-rouge">compressed=true</code>时会很慢（就是要很久才能收到<code class="language-plaintext highlighter-rouge">complete</code>回调，当然这也有可能是我的Android测试设备配置不高吧？），不过iOS也没有好到哪里去，因为<a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.compressVideo.html">wx.compressVideo</a>接口在iOS下不起作用<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>！所以，如果你的视频需要压缩的话，是需要做程序兼容处理的。</p>
+
+<p>好了，该放码了～</p>
+
+<p><code class="language-plaintext highlighter-rouge">CameraRecorder.js</code>（这里我把录制操作做了简单的封装）</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cm">/**
+ * CameraRecorder
+ * @param {*} options 
+ */</span>
+<span class="kd">function</span> <span class="nx">CameraRecorder</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({</span>
+    <span class="na">onError</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// 出错时的回调函数</span>
+    <span class="na">onRecorded</span><span class="p">:</span> <span class="kc">null</span> <span class="c1">// 有录制文件产生时的回调函数</span>
+  <span class="p">},</span> <span class="nx">options</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">wx</span><span class="p">.</span><span class="nx">createCameraContext</span><span class="p">()</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">isRecording</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * 开始录制
+ */</span>
+<span class="nx">CameraRecorder</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">startRecord</span><span class="p">({</span>
+      <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isRecording</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">fail</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isRecording</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_handleError</span><span class="p">(</span><span class="dl">'</span><span class="s1">startRecord fail</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">timeoutCallback</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">startRecord timeout</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isRecording</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_handleFile</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span> <span class="c1">// 循环录制</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * 停止录制
+ */</span>
+<span class="nx">CameraRecorder</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">stop</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">stopRecord</span><span class="p">({</span>
+      <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">stopRecord success</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">isRecording</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_handleFile</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">fail</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_handleError</span><span class="p">(</span><span class="dl">'</span><span class="s1">stopRecord fail</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">complete</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * 文件处理
+ * @param {*} res 
+ */</span>
+<span class="nx">CameraRecorder</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_handleFile</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onRecorded</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onRecorded</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * 错误处理
+ * @param {String} msg 
+ * @param {*} err 
+ */</span>
+<span class="nx">CameraRecorder</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_handleError</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onError</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">CameraRecorder</span>
+
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">wxml</code>（这里只做个简单的view，至于样式大家可以自己发挥一下）</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nt">&lt;view&gt;</span>
+  <span class="nt">&lt;camera</span> <span class="na">device-position=</span><span class="s">"back"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;view&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"primary"</span> <span class="na">bindtap=</span><span class="s">"onRecordTap"</span> <span class="na">wx:if=</span><span class="s">"{{ !recording }}"</span><span class="nt">&gt;</span>
+      开始录制
+    <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"primary"</span> <span class="na">bindtap=</span><span class="s">"onStopTap"</span> <span class="na">wx:if=</span><span class="s">"{{ recording }}"</span><span class="nt">&gt;</span>
+      停止录制
+    <span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;/view&gt;</span>
+<span class="nt">&lt;/view&gt;</span>
+
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">js</code></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">CameraRecorder</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path/to/CameraRecorder</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">Page</span><span class="p">({</span>
+
+  <span class="cm">/**
+   * 页面的初始数据
+   */</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">recording</span><span class="p">:</span> <span class="kc">false</span>
+  <span class="p">},</span>
+
+  <span class="na">cameraRecorder</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// 录制器</span>
+
+  <span class="cm">/**
+   * 生命周期函数--监听页面加载
+   */</span>
+  <span class="nx">onLoad</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">wx</span><span class="p">.</span><span class="nx">setKeepScreenOn</span><span class="p">({</span>
+        <span class="na">keepScreenOn</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="p">})</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">wx.setKeepScreenOn error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// Recorder</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">cameraRecorder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CameraRecorder</span><span class="p">({</span>
+      <span class="na">onError</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">onRecorded</span><span class="p">:</span> <span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="nx">recorder</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">video</span><span class="p">)</span>
+        <span class="c1">// 视频文件处理</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">},</span>
+
+
+  <span class="cm">/**
+   * 点击录制
+   * @param {*}} e 
+   */</span>
+  <span class="nx">onRecordTap</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">cameraRecorder</span><span class="p">.</span><span class="nx">start</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setData</span><span class="p">({</span>
+        <span class="na">recording</span><span class="p">:</span> <span class="kc">true</span>
+      <span class="p">})</span>
+    <span class="p">})</span>
+  <span class="p">},</span>
+
+  <span class="cm">/**
+   * 点击停止
+   * @param {*}} e 
+   */</span>
+  <span class="nx">onStopTap</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">cameraRecorder</span><span class="p">.</span><span class="nx">stop</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">setData</span><span class="p">({</span>
+        <span class="na">recording</span><span class="p">:</span> <span class="kc">false</span>
+      <span class="p">})</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>抛砖引玉，本文就先写这么多吧。</p>
+
+<hr />
+
+<p>参考：</p>
+
+<ol>
+  <li><a href="https://developers.weixin.qq.com/community/develop/article/doc/0002082db805b04e7d4af1f6a56013">小程序AR识别，三行代码实现Camera数据毫秒级转base64图片</a></li>
+</ol>
+
+<hr />
+
+<p><em>注：</em></p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://developers.weixin.qq.com/community/develop/doc/0000eaf449cde0eeff9ae0f8852000">https://developers.weixin.qq.com/community/develop/doc/0000eaf449cde0eeff9ae0f8852000</a>; <a href="https://developers.weixin.qq.com/community/develop/doc/0006822c32056849489a3489654400">https://developers.weixin.qq.com/community/develop/doc/0006822c32056849489a3489654400</a>; <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://developers.weixin.qq.com/community/develop/doc/000e8458a986b85a5148667035b400">https://developers.weixin.qq.com/community/develop/doc/000e8458a986b85a5148667035b400</a>；<a href="https://developers.weixin.qq.com/community/develop/doc/000448c5ea074042e3f8d326056800">https://developers.weixin.qq.com/community/develop/doc/000448c5ea074042e3f8d326056800</a>; <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p><a href="https://developers.weixin.qq.com/community/develop/issue/346">https://developers.weixin.qq.com/community/develop/issue/346</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+                </section>
+
+                <footer class="post-full-footer">
+
+    
+                    <section class="author-card">
+                        
+                            <img class="author-profile-image" src="https://github.com/devylee.png?size=120" alt="Devy" />
+                        
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
+                                
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/devy/">Read More</a>
+                        </div>
+        
+                </footer>
+
+            
+                
+
+<section class="post-full-comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = 'https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html';
+            this.page.identifier = '/post/2022/04/stories-of-wechat-mini-program-develop.html';
+        };
+        (function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//devylee.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                });
+            });
+        })();
+    </script>
+</section>
+            
+
+            </article>
+
+        </div>
+    </main>
+
+
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; elsewhere &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="/tag/miniprogram/">小程序</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            
+                            <li><a href="/post/2022/04/stories-of-wechat-mini-program-develop.html">微信小程序开发二三事</a></li>
+                            
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/miniprogram/">1 post →</a>
+                    </footer>
+                </article>
+                
+            
+
+
+            
+
+            
+                
+            <article class="post-card post tag-soft tag-bootstrapping no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2022/04/come-back.html">
+                        <header class="post-card-header"><span class="post-card-tags">不争</span><h2 class="post-card-title">回归</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>
+  一别近四载，再回来已是年过四十的中年大叔！按人类的平均寿命来看，我的人生已是过半。回看过往总是无限感慨，无奈过去已回不去！都说四十不惑，而其实自己一直疲于解惑之中，只是与年少时相比，早已隐去锋芒变得不争。
+
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
+
+            
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://devylee.github.io">
+            
+            <span>elsewhere</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">微信小程序开发二三事</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E4%BA%8C%E4%B8%89%E4%BA%8B&amp;url=https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html&title=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E4%BA%8C%E4%B8%89%E4%BA%8B"
+           onclick="window.open('http://service.weibo.com/share/share.php?title=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E4%BA%8C%E4%B8%89%E4%BA%8B&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
+           <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2022 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script></body>
+</html>
+

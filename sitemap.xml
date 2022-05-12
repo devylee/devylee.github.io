@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://devylee.github.io/about/</loc>
-<lastmod>2022-04-06T20:27:57+08:00</lastmod>
+<lastmod>2022-05-12T23:03:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/archives/</loc>
-<lastmod>2022-04-06T20:27:57+08:00</lastmod>
+<lastmod>2022-05-12T23:03:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/post/2017/04/welcome-to-my-pages.html</loc>
@@ -33,7 +33,7 @@
 <lastmod>2017-06-09T17:30:00+08:00</lastmod>
 </url>
 <url>
-<loc>https://devylee.github.io/post/2017/06/integrate-weixin-share-to-your-blog.html</loc>
+<loc>https://devylee.github.io/post/2017/06/integrate-wechat-share-to-your-blog.html</loc>
 <lastmod>2017-06-24T01:00:00+08:00</lastmod>
 </url>
 <url>
@@ -51,6 +51,10 @@
 <url>
 <loc>https://devylee.github.io/post/2022/04/come-back.html</loc>
 <lastmod>2022-04-05T17:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html</loc>
+<lastmod>2022-04-22T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/</loc>
@@ -89,7 +93,7 @@
 <loc>https://devylee.github.io/tag/nodejs/</loc>
 </url>
 <url>
-<loc>https://devylee.github.io/tag/weixin/</loc>
+<loc>https://devylee.github.io/tag/wechat/</loc>
 </url>
 <url>
 <loc>https://devylee.github.io/tag/multiple-version/</loc>
@@ -114,6 +118,9 @@
 </url>
 <url>
 <loc>https://devylee.github.io/tag/bootstrapping/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/miniprogram/</loc>
 </url>
 <url>
 <loc>https://devylee.github.io/author/devy/</loc>

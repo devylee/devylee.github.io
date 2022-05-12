@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title>elsewhere - 小程序</title>
+   <link>https://devylee.github.io/tag/miniprogram/rss.xml</link>
+   <description>A mini program is an app within an app.</description>
+   <language>zh-CN</language>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   <item>
+    <title>微信小程序开发二三事</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html</link>
+    <pubDate>2022-04-22T00:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>最近江湖救急，帮朋友做了个微信小程序。之前也有做过几个小程序项目，不过基本上都是内容展示类的，顶多再就是有点表单交互。这次这个不太一样，除了常规的内容展示、还要通过小程序实现扫码、人脸识别、拍照和视频录制功能，这让我对微信小程序的摄像头相关API有了更深入的了解和使用感受。</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html</guid>
+    
+</item>
+</channel>
+</rss>
