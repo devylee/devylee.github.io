@@ -18,21 +18,21 @@ comments  : true
 
 Node火了，似乎你不用Node都不好意思说自己是个全栈！但你确定要在你的项目中使用一个前后端都是JS的全栈？任何一种技术都有它值得推崇的地方，但同样也有它适合和不适的领域，所以我个人在项目的技术体系和方案选择上会综合很多因素来选择**相对适合**{:.highlight}的，从不会撕逼于各种技术社区和流派！
 
-Well，你可能要问，我**选择Node+webpack做前端的理由是什么**{:.highlight}呢？好吧，我承认这是个问题，但其实，我也只是在尝试组合了几种方案之后觉得这个还蛮简单的！因为我的需求本就不复杂：
+Well，你可能要问，我**选择Node+webpack做前端的理由是什么**{:.highlight}呢？好吧，我承认这是个问题，但其实，我也只是在尝试组合了几种方案之后觉得这个还蛮简单的！因为我的需求本就不复杂：
 
 - 首先，我需要一个前端资源的bundler；
-- 其次，要兼容当下主流的JS模块化规范（[CommonJS](http://www.commonjs.org/)、[AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)之类）；
-- 最后，就是要有一个方便本地开发调试的服务。
+- 其次，要兼容当下主流的JS模块化规范（[CommonJS](http://www.commonjs.org/)、[AMD](https://github.com/amdjs/amdjs-api/wiki/AMD)之类）；
+- 最后，就是要有一个方便本地开发调试的服务。
 
 好啦，废话说的有点多，该放码了！
 
 ## 那就开始吧
 
-[Node的安装](https://nodejs.org/en/download/)我不想赘述，很容易就可以寻到针对不同系统的安装Guide，我就当你的系统里已经有Node了，至于webpack的版本，当然是2.x！首先，我们来初始化一个项目，你可以手动或者像我一样使用`npm init`创建一个`package.json`，内容大概会是这个样子：
+[Node的安装](https://nodejs.org/en/download/)我不想赘述，很容易就可以寻到针对不同系统的安装Guide，我就当你的系统里已经有Node了，至于webpack的版本，当然是2.x！首先，我们来初始化一个项目，你可以手动或者像我一样使用`npm init`创建一个`package.json`，内容大概会是这个样子：
 
 ```json
 {
-  "name": "using-webpack",
+  "name": "using-webpack",
   "version": "1.0.0",
   "description": "a sample about using webpack",
   "main": "index.js",
@@ -43,7 +43,7 @@ Well，你可能要问，我**选择Node+webpack做前端的理由是什么**{:.
 }
 ```
 
-接下来，我们要安装几个依赖：
+接下来，我们要安装几个依赖：
 
 ```bash
 $ npm install --save-dev webpack webpack-dev-server
@@ -156,13 +156,13 @@ var config = {
 }
 ```
 
-JS可以加载并工作了，但对于Web前端而言还远远不够，至少我们还需要个样式表！
+JS可以加载并工作了，但对于Web前端而言还远远不够，至少我们还需要个样式表！
 
 ## 加载样式
 
-样式表的加载就需要用到webpack的loaders[^2]了，对于CSS的加载，我们要用到两个Loader：[style-loader](https://webpack.js.org/loaders/style-loader/)和[css-loader](https://webpack.js.org/loaders/css-loader/)（*如果你的项目用到[LESS](http://lesscss.org/)或者[SASS](http://sass-lang.com/)，那你还需要用到[less-loader](https://webpack.js.org/loaders/less-loader/)或者[sass-loader](https://webpack.js.org/loaders/sass-loader/)*）。
+样式表的加载就需要用到webpack的loaders[^2]了，对于CSS的加载，我们要用到两个Loader：[style-loader](https://webpack.js.org/loaders/style-loader/)和[css-loader](https://webpack.js.org/loaders/css-loader/)（*如果你的项目用到[LESS](http://lesscss.org/)或者[SASS](http://sass-lang.com/)，那你还需要用到[less-loader](https://webpack.js.org/loaders/less-loader/)或者[sass-loader](https://webpack.js.org/loaders/sass-loader/)*）。
 
-安装相关依赖
+安装相关依赖
 
 ```bash
 $ npm install --save-dev style-loader css-loader
@@ -203,7 +203,7 @@ body {
 }
 ```
 
-然后在`static/js/main.js`中要import这个CSS：
+然后在`static/js/main.js`中要import这个CSS：
 
 ```javascript
 
@@ -212,7 +212,7 @@ import '../css/app.css';
 ...
 ```
 
-`npm start`并访问`http://localhost:8080/sample.html`，是的，我们写的样式生效了，但用浏览器的开发工具看一下你就会发现，这些样式是被webpack打包到`app.bundle.js`然后由JS写到页面中。如果我们要把样式输出到相应的css文件，那么我们还需要做一点工作，这个时候就要用到[ExtractTextWebpackPlugin](https://webpack.js.org/plugins/extract-text-webpack-plugin/)。首先，我们当然要先安装这个插件：
+`npm start`并访问`http://localhost:8080/sample.html`，是的，我们写的样式生效了，但用浏览器的开发工具看一下你就会发现，这些样式是被webpack打包到`app.bundle.js`然后由JS写到页面中。如果我们要把样式输出到相应的css文件，那么我们还需要做一点工作，这个时候就要用到[ExtractTextWebpackPlugin](https://webpack.js.org/plugins/extract-text-webpack-plugin/)。首先，我们当然要先安装这个插件：
 
 ```bash
 $ npm install --save-dev extract-text-webpack-plugin
@@ -248,7 +248,7 @@ var config = {
 module.exports = config;
 ```
 
-最后我们要在HTML中引入CSS：
+最后我们要在HTML中引入CSS：
 
 ```html
 <!DOCTYPE html>
@@ -267,7 +267,7 @@ module.exports = config;
 
 ## 图片资源
 
-接下来，我们该为页面加上几张图来美化一下了，首先，还是先来安装相应的[Loaders](https://webpack.js.org/loaders/#files)，在本例中，我就用[file-loader](https://webpack.js.org/loaders/file-loader/)了，因为这个比较简单！执行安装命令：`npm install --save-dev file-loader`，然后修改`webpack.config.js`：
+接下来，我们该为页面加上几张图来美化一下了，首先，还是先来安装相应的[Loaders](https://webpack.js.org/loaders/#files)，在本例中，我就用[file-loader](https://webpack.js.org/loaders/file-loader/)了，因为这个比较简单！执行安装命令：`npm install --save-dev file-loader`，然后修改`webpack.config.js`：
 
 ```javascript
 ...
@@ -291,13 +291,13 @@ var config = {
 module.exports = config;
 ```
 
-现在，把要用到的图片放到`static/img`目录下，就可以在CSS或者HTML中引用图片了。实际的开发中可能还会遇到字体、视频等静态资源的加载，这些都可以通过配置相应的rules来实现。
+现在，把要用到的图片放到`static/img`目录下，就可以在CSS或者HTML中引用图片了。实际的开发中可能还会遇到字体、视频等静态资源的加载，这些都可以通过配置相应的rules来实现。
 
-写到这里，我们已经可以开始基本的Web前端开发工作了。但实际的项目中我们似乎才只是迈出第一步而已！
+写到这里，我们已经可以开始基本的Web前端开发工作了。但实际的项目中我们似乎才只是迈出第一步而已！
 
 ## Build
 
-> 通常项目发布的时候，我们要将前端资源打包输出，在这个过程中，通常用到的javascript和样式表会被compile或者minify。如果是用到less、sass，会被编译成css，或者用到[CoffeeScript](http://coffeescript.org/)之类，也要被编译成javascript。
+> 通常项目发布的时候，我们要将前端资源打包输出，在这个过程中，通常用到的javascript和样式表会被compile或者minify。如果是用到less、sass，会被编译成css，或者用到[CoffeeScript](http://coffeescript.org/)之类，也要被编译成javascript。
 
 webpack为我们提供了方便的`webpack -p`[^3]命令。还是之前的`webpack.config.js`，稍作修改，增加关于输出路径的配置，我们将发布文件输出到`dist/static/`：
 
@@ -324,7 +324,7 @@ output: {
 
 这样，我们只需要执行`npm run build`就可以了。
 
-不过你可能会发现一个问题：css中用url()引用的图片可以正常的被输出到dist，但是html中直接引用的图片就不行。解决这个问题的一种办法是在js中声明，比如`import '../img/sample-pic.jpg'`或者`require('../img/sample-pic.jpg')`；或者使用[html-loader](https://webpack.js.org/loaders/html-loader/)来处理引用图片的html文件，即：`npm install --save-dev html-loader`然后在js中`require('html-loader!../sample.html')`。
+不过你可能会发现一个问题：css中用url()引用的图片可以正常的被输出到dist，但是html中直接引用的图片就不行。解决这个问题的一种办法是在js中声明，比如`import '../img/sample-pic.jpg'`或者`require('../img/sample-pic.jpg')`；或者使用[html-loader](https://webpack.js.org/loaders/html-loader/)来处理引用图片的html文件，即：`npm install --save-dev html-loader`然后在js中`require('html-loader!../sample.html')`。
 
 不过直接使用html-loader的一个问题是，html文件内容会被一起打包到js中，这并不是我们想要的结果。我们可以利用file-loader和extract-loader将其单独输出：
 
@@ -389,9 +389,9 @@ module.exports = config;
 
 当然这还是会输出一个`html.bundle.js`，不过我们完全可以忽略或者删除这个文件！
 
-## 关于加载第三方库
+## 关于加载第三方库
 
-实际项目中我们通常还会用到一些第三方的库资源，比如[lodash](https://lodash.com/)、[jQuery](http://jquery.com/)。只要是npm仓库中有的，都可以通过`npm install`来安装，并在代码中import或者require()来使用，或者通过`webpack.config.js`配置将这些库单独打成vendor包：
+实际项目中我们通常还会用到一些第三方的库资源，比如[lodash](https://lodash.com/)、[jQuery](http://jquery.com/)。只要是npm仓库中有的，都可以通过`npm install`来安装，并在代码中import或者require()来使用，或者通过`webpack.config.js`配置将这些库单独打成vendor包：
 
 ```javascript
 var path = require('path');
@@ -423,7 +423,7 @@ module.exports = config;
 ...
 ```
 
-**需要注意**{:.highlight}的是有些类库的使用可能会有一些问题（不过这类问题大多通过webpack或者类库官方的文档就可以找到说明和解决的办法），比如jQuery会出现`Uncaught ReferenceError: jQuery is not defined`问题，这个问题是由于webpack打包和minify的过程会对js类库中的变量进行混淆，这会导致jQuery库的$和jQuery全局定义丢失，这个问题可以用[ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/)来解决，`webpack.config.js`配置：
+**需要注意**{:.highlight}的是有些类库的使用可能会有一些问题（不过这类问题大多通过webpack或者类库官方的文档就可以找到说明和解决的办法），比如jQuery会出现`Uncaught ReferenceError: jQuery is not defined`问题，这个问题是由于webpack打包和minify的过程会对js类库中的变量进行混淆，这会导致jQuery库的$和jQuery全局定义丢失，这个问题可以用[ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/)来解决，`webpack.config.js`配置：
 
 ```javascript
 var webpack = require("webpack");
@@ -444,7 +444,7 @@ var config = {
 module.exports = config;
 ```
 
-好了，现在你可以放心的在代码中使用$了。我们可以将之前写的那段测试代码改造一下试试效果：
+好了，现在你可以放心的在代码中使用$了。我们可以将之前写的那段测试代码改造一下试试效果：
 
 ```javascript
 (function(){
@@ -454,7 +454,7 @@ module.exports = config;
 
 嗯，看起来，没什么问题了！
 
-当我们项目有多个entry points，而且又有重复引用类库的时候，你会发现类库被重复的打包在各个js中！这一点webpack也为我们想到了，就是[CommonsChunkPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/)插件，使用也并不复杂，就是在`webpack.config.js`中增加配置，在本例中可以这样：
+当我们项目有多个entry points，而且又有重复引用类库的时候，你会发现类库被重复的打包在各个js中！这一点webpack也为我们想到了，就是[CommonsChunkPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/)插件，使用也并不复杂，就是在`webpack.config.js`中增加配置，在本例中可以这样：
 
 ```javascript
 var path = require('path');
