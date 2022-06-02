@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title>elsewhere - Android</title>
+   <link>https://devylee.github.io/tag/android/rss.xml</link>
+   <description>一个辅助记忆的树洞</description>
+   <language>zh-CN</language>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   <item>
+    <title>一个基于Android TV的多媒体播放器</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html</link>
+    <pubDate>2022-06-02T00:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html</guid>
+    
+</item>
+</channel>
+</rss>

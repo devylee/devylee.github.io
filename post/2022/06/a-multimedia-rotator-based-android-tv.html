@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <title>elsewhere | 一个基于Android TV的多媒体播放器</title>
+    <link rel="canonical" href="https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html" />
+    <meta name="referrer" content="origin" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@idevylee" />
+    <meta name="twitter:creator" content="@idevylee" />
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html" />
+    <meta property="og:title" content="elsewhere | 一个基于Android TV的多媒体播放器" />
+    <meta property="og:description" name="description" content="前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "author": "Devy",
+        "publisher": "elsewhere",
+        "url": "https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html",
+        "description": "前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。"
+    }
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="https://devylee.github.io/feed.xml" />
+
+
+</head>
+<body class="post-template tag-android">
+
+    <div class="site-wrapper">
+
+
+        
+    
+    <header class="site-header outer">
+        <div class="inner">
+                <nav class="site-nav">
+        <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
+                <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
+                <li class="nav-about " role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-archives " role="menuitem"><a href="/archives/">Archives</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="https://devylee.github.io/feed.xml" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+        </div>
+    </nav>
+    
+        </div>
+    </header>
+    
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+
+            <article class="post-full post tag-android no-image">
+
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="">02 Jun 2022</time>
+                            <span class="date-divider">/</span> <a href="/tag/android/">Android</a>
+                            
+                        </section>
+                        <h1 class="post-full-title">一个基于Android TV的多媒体播放器</h1>
+                </header>
+
+                
+
+                <section class="post-full-content">
+                    <blockquote>
+  <p>前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。</p>
+</blockquote>
+
+<!--more-->
+
+<p>说到电视盒子，我相信大部分人应该也不陌生，市面上这种产品也挺多的，消费级产品多是用来接电视，代替有线电视联网看视频和网络电视，也有应用商店，应用也还蛮多的，应该说生态比较成熟。我拿到的这个盒子，看起来像是个外贸产品，或者也许是厂家并没有做太多的定制开发，基本上就是个接近原生的Android TV环境，1G内存，8G内置存储……，太适合做开发测试用了。</p>
+
+<p>拿到这个盒子我也在想能做点什么？也巧，朋友处有一个展厅项目有几块拼接大屏，想要做一些多媒体内容的联动播放展示，问我有没有解决方案，我突然就想到这个Box应该是可以作为屏幕的播放终端，通过联网接入一个中控系统来进行集中播放控制的。只可惜客户的需求也一直在变，最终这个方案被简化成每块大屏只要能有设备插个U盘单机播放就可以了！好吧，我也是无话可说，谁让人家是甲方爸爸！</p>
+
+<p>这样一来似乎也就不需要我做什么了，因为这种单机播放软件挺多的，他随便弄个闲置的PC机装个播放软件就可以了，这种软件设备供应商也有提供，而且免费！呵呵～</p>
+
+<p>不过既然是有了这个方案的想法，就不要让这个盒子闲着了，先写个单机的多媒体播放试试吧！</p>
+
+<p>功能需求很简单：</p>
+
+<ol>
+  <li>循环播放图片（包括GIF动图）和视频；</li>
+  <li>插入U盘，自动读取U盘内容，从指定的目录中获取文件列表并自动开始播放；</li>
+  <li>拔出U盘，播放自动停止。</li>
+</ol>
+
+<p>所以其实这个应用，关键解决两个问题就可以了：</p>
+
+<ol>
+  <li>图片和视频播放；</li>
+  <li>USB设备事件监听处理。</li>
+</ol>
+
+<p>先来说说第一个，图片和视频播放的问题。其实也蛮简单的，思路就是用ViewPager，如果是静态图片，则停留3秒，如果是动图或视频就停留到播放完毕，然后自动跳到下一个文件播放。</p>
+
+<p>首先我们定义一个Media类，来处理多媒体文件（这里图片的加载用到了<a href="">Glide 4</a>）：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.graphics.Color</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.graphics.drawable.Drawable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.net.Uri</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Handler</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Looper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.os.Message</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.AttributeSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.ImageView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.RelativeLayout</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.VideoView</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">androidx.annotation.NonNull</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">androidx.annotation.Nullable</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.Glide</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.gifdecoder.GifDecoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.gifdecoder.GifHeaderParser</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.gifdecoder.StandardGifDecoder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.load.DataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.load.engine.DiskCacheStrategy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.load.engine.GlideException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.load.resource.gif.GifBitmapProvider</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.load.resource.gif.GifDrawable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.request.RequestListener</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.bumptech.glide.request.target.Target</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.ByteBuffer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 多媒体文件
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Media</span> <span class="kd">extends</span> <span class="nc">RelativeLayout</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isImage</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isGif</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">GifDrawable</span> <span class="n">gif</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isVideo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isPlaying</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">ImageView</span> <span class="n">image</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">VideoView</span> <span class="n">video</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MediaPlayListener</span> <span class="n">listener</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">MESSAGE_PLAY_DONE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">duration</span> <span class="o">=</span> <span class="mi">3000</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Handler</span> <span class="n">handler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Handler</span><span class="o">(</span><span class="nc">Looper</span><span class="o">.</span><span class="na">myLooper</span><span class="o">())</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="nc">Message</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">handleMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+            <span class="n">handler</span><span class="o">.</span><span class="na">removeMessages</span><span class="o">(</span><span class="no">MESSAGE_PLAY_DONE</span><span class="o">);</span>
+            <span class="n">onPlayDone</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+
+    <span class="kd">public</span> <span class="nf">Media</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Media</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">AttributeSet</span> <span class="n">attrs</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Media</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">AttributeSet</span> <span class="n">attrs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">defStyleAttr</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">,</span> <span class="n">defStyleAttr</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMedia</span><span class="o">(</span><span class="nc">File</span> <span class="n">file</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">file</span> <span class="o">=</span> <span class="n">file</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">fileType</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">fileType</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">probeContentType</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">toPath</span><span class="o">());</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="nc">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="no">TAG</span><span class="o">,</span> <span class="n">fileType</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">fileType</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">"image/"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">isImage</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">fileType</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"image/gif"</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">isGif</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ImageView</span><span class="o">(</span><span class="n">getContext</span><span class="o">());</span>
+            <span class="n">image</span><span class="o">.</span><span class="na">setScaleType</span><span class="o">(</span><span class="nc">ImageView</span><span class="o">.</span><span class="na">ScaleType</span><span class="o">.</span><span class="na">CENTER_INSIDE</span><span class="o">);</span>
+            <span class="n">image</span><span class="o">.</span><span class="na">setBackgroundColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">WHITE</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">isGif</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">Glide</span><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">load</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">())</span>
+                        <span class="o">.</span><span class="na">diskCacheStrategy</span><span class="o">(</span><span class="nc">DiskCacheStrategy</span><span class="o">.</span><span class="na">RESOURCE</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">listener</span><span class="o">(</span><span class="k">new</span> <span class="nc">RequestListener</span><span class="o">&lt;</span><span class="nc">Drawable</span><span class="o">&gt;()</span> <span class="o">{</span>
+                            <span class="nd">@Override</span>
+                            <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onLoadFailed</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="nc">GlideException</span> <span class="n">e</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">model</span><span class="o">,</span> <span class="nc">Target</span><span class="o">&lt;</span><span class="nc">Drawable</span><span class="o">&gt;</span> <span class="n">target</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isFirstResource</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+                            <span class="o">}</span>
+
+                            <span class="nd">@Override</span>
+                            <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onResourceReady</span><span class="o">(</span><span class="nc">Drawable</span> <span class="n">resource</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">model</span><span class="o">,</span> <span class="nc">Target</span><span class="o">&lt;</span><span class="nc">Drawable</span><span class="o">&gt;</span> <span class="n">target</span><span class="o">,</span> <span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">isFirstResource</span><span class="o">)</span> <span class="o">{</span>
+                                <span class="n">gif</span> <span class="o">=</span> <span class="o">(</span><span class="nc">GifDrawable</span><span class="o">)</span> <span class="n">resource</span><span class="o">;</span>
+                                <span class="n">gif</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+                                <span class="n">gif</span><span class="o">.</span><span class="na">setLoopCount</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+                                <span class="nc">ByteBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">gif</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+                                <span class="nc">GifBitmapProvider</span> <span class="n">provider</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GifBitmapProvider</span><span class="o">(</span><span class="nc">Glide</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">getBitmapPool</span><span class="o">());</span>
+                                <span class="nc">GifDecoder</span> <span class="n">decoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StandardGifDecoder</span><span class="o">(</span><span class="n">provider</span><span class="o">);</span>
+                                <span class="n">decoder</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="k">new</span> <span class="nc">GifHeaderParser</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">buffer</span><span class="o">).</span><span class="na">parseHeader</span><span class="o">(),</span> <span class="n">buffer</span><span class="o">);</span>
+                                <span class="kt">int</span> <span class="n">_duration</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">gif</span><span class="o">.</span><span class="na">getFrameCount</span><span class="o">();</span> <span class="n">i</span> <span class="o">++)</span> <span class="o">{</span>
+                                    <span class="n">_duration</span> <span class="o">+=</span> <span class="n">decoder</span><span class="o">.</span><span class="na">getDelay</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                                <span class="o">}</span>
+                                <span class="k">if</span> <span class="o">(</span><span class="n">duration</span> <span class="o">&lt;</span> <span class="n">_duration</span><span class="o">)</span> <span class="o">{</span>
+                                    <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">;</span>
+                                <span class="o">}</span>
+                                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+                            <span class="o">}</span>
+                        <span class="o">}).</span><span class="na">into</span><span class="o">(</span><span class="n">image</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="nc">Glide</span><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">load</span><span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">())</span>
+                        <span class="o">.</span><span class="na">diskCacheStrategy</span><span class="o">(</span><span class="nc">DiskCacheStrategy</span><span class="o">.</span><span class="na">RESOURCE</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">into</span><span class="o">(</span><span class="n">image</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">addView</span><span class="o">(</span><span class="n">image</span><span class="o">,</span> <span class="k">new</span> <span class="nc">RelativeLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">fileType</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">"video/"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">isVideo</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 播放
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">play</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">isPlaying</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">isVideo</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">video</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VideoView</span><span class="o">(</span><span class="n">getContext</span><span class="o">());</span>
+                <span class="c1">//video.setVideoPath(file.getAbsolutePath()); // MediaPlayer java.io.FileNotFoundException: No content provider</span>
+                <span class="n">video</span><span class="o">.</span><span class="na">setVideoURI</span><span class="o">(</span><span class="nc">Uri</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">file</span><span class="o">));</span>
+                <span class="n">video</span><span class="o">.</span><span class="na">setOnCompletionListener</span><span class="o">(</span><span class="n">mp</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">onPlayDone</span><span class="o">();</span>
+                <span class="o">});</span>
+                <span class="n">video</span><span class="o">.</span><span class="na">setOnErrorListener</span><span class="o">((</span><span class="n">mp</span><span class="o">,</span> <span class="n">what</span><span class="o">,</span> <span class="n">extra</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">mp</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+                    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="o">});</span>
+                <span class="n">video</span><span class="o">.</span><span class="na">setOnPreparedListener</span><span class="o">(</span><span class="n">mp</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">mp</span><span class="o">.</span><span class="na">setLooping</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                    <span class="n">mp</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+                <span class="o">});</span>
+                <span class="n">addView</span><span class="o">(</span><span class="n">video</span><span class="o">,</span> <span class="k">new</span> <span class="nc">RelativeLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">));</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">isImage</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">isGif</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">gif</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="n">gif</span><span class="o">.</span><span class="na">startFromFirstFrame</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">gif</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+                    <span class="o">}</span>
+
+                <span class="o">}</span>
+                <span class="n">waiting</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 停止
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stop</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">isPlaying</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="n">handler</span><span class="o">.</span><span class="na">removeMessages</span><span class="o">(</span><span class="no">MESSAGE_PLAY_DONE</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isVideo</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">video</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">video</span><span class="o">.</span><span class="na">stopPlayback</span><span class="o">();</span>
+            <span class="n">video</span><span class="o">.</span><span class="na">setOnCompletionListener</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+            <span class="n">video</span><span class="o">.</span><span class="na">setOnPreparedListener</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+            <span class="n">video</span><span class="o">.</span><span class="na">setOnErrorListener</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+            <span class="n">video</span><span class="o">.</span><span class="na">suspend</span><span class="o">();</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">isGif</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">gif</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">gif</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 播放状态
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isPlaying</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">isVideo</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">video</span><span class="o">))</span> <span class="o">?</span> <span class="n">video</span><span class="o">.</span><span class="na">isPlaying</span><span class="o">()</span> <span class="o">:</span> <span class="n">isPlaying</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">waiting</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">handler</span><span class="o">.</span><span class="na">hasMessages</span><span class="o">(</span><span class="no">MESSAGE_PLAY_DONE</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">isPlaying</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="n">handler</span><span class="o">.</span><span class="na">sendEmptyMessageDelayed</span><span class="o">(</span><span class="no">MESSAGE_PLAY_DONE</span><span class="o">,</span> <span class="n">duration</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">onPlayDone</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">isPlaying</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">listener</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">listener</span><span class="o">.</span><span class="na">onPlayDone</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 媒体类型
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="nc">Type</span> <span class="nf">getType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">isVideo</span> <span class="o">?</span> <span class="nc">Type</span><span class="o">.</span><span class="na">Video</span> <span class="o">:</span> <span class="n">isImage</span> <span class="o">?</span> <span class="nc">Type</span><span class="o">.</span><span class="na">Image</span> <span class="o">:</span> <span class="nc">Type</span><span class="o">.</span><span class="na">Unknown</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 注册事件监听器
+     * @param listener
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addMediaPlayListener</span><span class="o">(</span><span class="nc">MediaPlayListener</span> <span class="n">listener</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 多媒体文件类型
+     */</span>
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Type</span> <span class="o">{</span>
+        <span class="nc">Image</span><span class="o">,</span>
+        <span class="nc">Video</span><span class="o">,</span>
+        <span class="nc">Unknown</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 媒体播放监听器
+     */</span>
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MediaPlayListener</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">onPlayDone</span><span class="o">(</span><span class="nc">Media</span> <span class="n">media</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>然后MediaAdapter（PagerAdapter）是这样：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">android.annotation.SuppressLint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.MotionEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.View</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.view.ViewGroup</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">androidx.annotation.NonNull</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">androidx.viewpager.widget.PagerAdapter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">androidx.viewpager.widget.ViewPager</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MediaAdapter</span> <span class="kd">extends</span> <span class="nc">PagerAdapter</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Media</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ViewPager</span> <span class="n">pager</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getPosition</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">position</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setPosition</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">MediaAdapter</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">ViewPager</span> <span class="n">pager</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">context</span> <span class="o">=</span> <span class="n">context</span><span class="o">;</span>
+        <span class="n">pager</span><span class="o">.</span><span class="na">addOnPageChangeListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ViewPager</span><span class="o">.</span><span class="na">OnPageChangeListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPageScrolled</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">float</span> <span class="n">positionOffset</span><span class="o">,</span> <span class="kt">int</span> <span class="n">positionOffsetPixels</span><span class="o">)</span> <span class="o">{</span>
+              
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPageSelected</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">Media</span> <span class="n">previous</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">getPosition</span><span class="o">()</span> <span class="o">%</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+                <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">previous</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">previous</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+                <span class="o">}</span>
+                <span class="n">setPosition</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+                <span class="nc">Media</span> <span class="n">media</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span> <span class="o">%</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+                <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">media</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">media</span><span class="o">.</span><span class="na">play</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPageScrollStateChanged</span><span class="o">(</span><span class="kt">int</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+              
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pager</span> <span class="o">=</span> <span class="n">pager</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 设置播放文件列表
+     * @param files
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMedias</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">File</span><span class="o">&gt;</span> <span class="n">files</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">items</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">File</span> <span class="n">file</span> <span class="o">:</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">files</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">Media</span> <span class="n">media</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Media</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+            <span class="n">media</span><span class="o">.</span><span class="na">setMedia</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">media</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Media</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">Image</span><span class="o">)</span>
+                    <span class="o">||</span> <span class="n">media</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Media</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">Video</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">media</span><span class="o">.</span><span class="na">addMediaPlayListener</span><span class="o">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="o">());</span>
+                <span class="n">items</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">media</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 播放
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">play</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Media</span> <span class="n">media</span> <span class="o">=</span> <span class="n">getCurrentMedia</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">media</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">media</span><span class="o">.</span><span class="na">play</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 当前播放的文件
+     * @return
+     */</span>
+    <span class="kd">private</span> <span class="nc">Media</span> <span class="nf">getCurrentMedia</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">pager</span><span class="o">.</span><span class="na">getCurrentItem</span><span class="o">()</span> <span class="o">%</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 下一个
+     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">pager</span><span class="o">.</span><span class="na">setCurrentItem</span><span class="o">((</span><span class="n">pager</span><span class="o">.</span><span class="na">getCurrentItem</span><span class="o">()</span> <span class="o">&lt;</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">)</span> <span class="o">?</span> <span class="o">(</span><span class="n">pager</span><span class="o">.</span><span class="na">getCurrentItem</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getItemPosition</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="nc">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">POSITION_NONE</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isViewFromObject</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="nc">View</span> <span class="n">view</span><span class="o">,</span> <span class="nd">@NonNull</span> <span class="nc">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">view</span> <span class="o">==</span> <span class="n">object</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroyItem</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="nc">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="nd">@NonNull</span> <span class="nc">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">container</span><span class="o">.</span><span class="na">removeView</span><span class="o">(</span><span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span> <span class="o">%</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">()));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">instantiateItem</span><span class="o">(</span><span class="nd">@NonNull</span> <span class="nc">ViewGroup</span> <span class="n">container</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span> <span class="o">%</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">())</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">container</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">view</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">view</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>MediaView也很简单：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.util.AttributeSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.RelativeLayout</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">androidx.viewpager.widget.ViewPager</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="cm">/**
+ * MediaView
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MediaView</span> <span class="kd">extends</span> <span class="nc">RelativeLayout</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ViewPager</span> <span class="n">pager</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MediaAdapter</span> <span class="n">adapter</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MediaView</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+        <span class="n">initView</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">MediaView</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">AttributeSet</span> <span class="n">attrs</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">);</span>
+        <span class="n">initView</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">MediaView</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">AttributeSet</span> <span class="n">attrs</span><span class="o">,</span> <span class="kt">int</span> <span class="n">defStyleAttr</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">attrs</span><span class="o">,</span> <span class="n">defStyleAttr</span><span class="o">);</span>
+        <span class="n">initView</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initView</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">pager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ViewPager</span><span class="o">(</span><span class="n">getContext</span><span class="o">());</span>
+        <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MediaAdapter</span><span class="o">(</span><span class="n">getContext</span><span class="o">(),</span> <span class="n">pager</span><span class="o">);</span>
+        <span class="n">pager</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">adapter</span><span class="o">);</span>
+        <span class="n">pager</span><span class="o">.</span><span class="na">setOffscreenPageLimit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">addView</span><span class="o">(</span><span class="n">pager</span><span class="o">,</span> <span class="k">new</span> <span class="nc">LayoutParams</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 文件列表
+     * @param files
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMedias</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">File</span><span class="o">&gt;</span> <span class="n">files</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">adapter</span><span class="o">.</span><span class="na">setMedias</span><span class="o">(</span><span class="n">files</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onAttachedToWindow</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onAttachedToWindow</span><span class="o">();</span>
+        <span class="n">adapter</span><span class="o">.</span><span class="na">play</span><span class="o">();</span> <span class="c1">// 自动开始播放</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>第二个问题，USB事件的处理，首先我们定义一个UsbBroadcastReceiver类，继承BroadcastReceiver并重写onReceive方法：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">android.content.BroadcastReceiver</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Intent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.widget.Toast</span><span class="o">;</span>
+
+<span class="cm">/**
+ * USB事件监听
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsbBroadcastReceiver</span> <span class="kd">extends</span> <span class="nc">BroadcastReceiver</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onReceive</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">path</span><span class="o">;</span>
+        <span class="k">switch</span> <span class="o">(</span><span class="n">intent</span><span class="o">.</span><span class="na">getAction</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="nc">Intent</span><span class="o">.</span><span class="na">ACTION_MEDIA_MOUNTED</span><span class="o">:</span> <span class="c1">// 插入U盘</span>
+                <span class="nc">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">intent</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">()</span> <span class="o">+</span> <span class="s">" mounted"</span><span class="o">,</span> <span class="nc">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                <span class="c1">// 播放处理</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="nc">Intent</span><span class="o">.</span><span class="na">ACTION_MEDIA_UNMOUNTED</span><span class="o">:</span> <span class="c1">// 拔出U盘</span>
+                <span class="nc">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">intent</span><span class="o">.</span><span class="na">getData</span><span class="o">().</span><span class="na">getPath</span><span class="o">()</span> <span class="o">+</span> <span class="s">" unmounted"</span><span class="o">,</span> <span class="nc">Toast</span><span class="o">.</span><span class="na">LENGTH_LONG</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                <span class="c1">// 停止播放</span>
+                <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>然后我们要在AndroidManifest.xml中声明权限并注册监听器：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.READ_MEDIA_STORAGE"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.READ_EXTERNAL_STORAGE"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.WRITE_EXTERNAL_STORAGE"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.MANAGE_EXTERNAL_STORAGE"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">"android.permission.USB_PERMISSION"</span> <span class="nt">/&gt;</span>
+
+    ...
+
+    <span class="nt">&lt;application&gt;</span>
+
+        ...
+
+        <span class="nt">&lt;receiver</span>
+            <span class="na">android:name=</span><span class="s">".UsbBroadcastReceiver"</span>
+            <span class="na">android:enabled=</span><span class="s">"true"</span>
+            <span class="na">android:exported=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;intent-filter&gt;</span>
+                <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">"android.intent.action.MEDIA_MOUNTED"</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">"android.intent.action.MEDIA_UNMOUNTED"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/intent-filter&gt;</span>
+        <span class="nt">&lt;/receiver&gt;</span>
+
+        ...
+
+    <span class="nt">&lt;/application&gt;</span>
+
+<span class="nt">&lt;/manifest&gt;</span>
+</code></pre></div></div>
+
+<p>完整的项目代码已经推到Github，感兴趣的朋友可以到仓库拉取代码：<a href="https://github.com/devylee/mas-client">mas-client</a></p>
+
+                </section>
+
+                <footer class="post-full-footer">
+
+    
+                    <section class="author-card">
+                        
+                            <img class="author-profile-image" src="https://github.com/devylee.png?size=120" alt="Devy" />
+                        
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
+                                
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/devy/">Read More</a>
+                        </div>
+        
+                </footer>
+
+            
+                
+
+<section class="post-full-comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = 'https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html';
+            this.page.identifier = '/post/2022/06/a-multimedia-rotator-based-android-tv.html';
+        };
+        (function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//devylee.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                });
+            });
+        })();
+    </script>
+</section>
+            
+
+            </article>
+
+        </div>
+    </main>
+
+
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; elsewhere &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="/tag/android/">Android</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            
+                            <li><a href="/post/2022/06/a-multimedia-rotator-based-android-tv.html">一个基于Android TV的多媒体播放器</a></li>
+                            
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/android/">1 post →</a>
+                    </footer>
+                </article>
+                
+            
+
+
+            
+
+            
+                
+            <article class="post-card post tag-miniprogram tag-wechat no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2022/04/stories-of-wechat-mini-program-develop.html">
+                        <header class="post-card-header"><span class="post-card-tags">小程序</span><h2 class="post-card-title">微信小程序开发二三事</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>
+  最近江湖救急，帮朋友做了个微信小程序。之前也有做过几个小程序项目，不过基本上都是内容展示类的，顶多再就是有点表单交互。这次这个不太一样，除了常规的内容展示、还要通过小程序实现扫码、人脸识别、拍照和视频录制功能，这让我对微信小程序的摄像头相关API有了更深入的了解和使用感受。
+
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
+
+            
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://devylee.github.io">
+            
+            <span>elsewhere</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">一个基于Android TV的多媒体播放器</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8EAndroid%20TV%E7%9A%84%E5%A4%9A%E5%AA%92%E4%BD%93%E6%92%AD%E6%94%BE%E5%99%A8&amp;url=https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html&title=%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8EAndroid%20TV%E7%9A%84%E5%A4%9A%E5%AA%92%E4%BD%93%E6%92%AD%E6%94%BE%E5%99%A8"
+           onclick="window.open('http://service.weibo.com/share/share.php?title=%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8EAndroid%20TV%E7%9A%84%E5%A4%9A%E5%AA%92%E4%BD%93%E6%92%AD%E6%94%BE%E5%99%A8&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
+           <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2022 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script></body>
+</html>
+

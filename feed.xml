@@ -7,6 +7,18 @@
    <language>zh-CN</language>
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    <item>
+    <title>一个基于Android TV的多媒体播放器</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html</link>
+    <pubDate>2022-06-02T00:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html</guid>
+    
+</item><item>
     <title>微信小程序开发二三事</title>
     <author>Devy</author>
     <link>https://devylee.github.io/post/2022/04/stories-of-wechat-mini-program-develop.html</link>
