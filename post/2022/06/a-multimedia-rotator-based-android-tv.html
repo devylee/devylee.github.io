@@ -114,7 +114,7 @@
 
 <p>先来说说第一个，图片和视频播放的问题。其实也蛮简单的，思路就是用ViewPager，如果是静态图片，则停留3秒，如果是动图或视频就停留到播放完毕，然后自动跳到下一个文件播放。</p>
 
-<p>首先我们定义一个Media类，来处理多媒体文件（这里图片的加载用到了<a href="">Glide 4</a>）：</p>
+<p>首先我们定义一个Media类，来处理多媒体文件（这里图片的加载用到了<a href="http://bumptech.github.io/glide/">Glide 4</a>）：</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
