@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://devylee.github.io/about/</loc>
-<lastmod>2022-06-09T10:58:43+08:00</lastmod>
+<lastmod>2022-08-10T14:18:18+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/archives/</loc>
-<lastmod>2022-06-09T10:58:43+08:00</lastmod>
+<lastmod>2022-08-10T14:18:18+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/post/2017/04/welcome-to-my-pages.html</loc>
@@ -59,6 +59,10 @@
 <url>
 <loc>https://devylee.github.io/post/2022/06/a-multimedia-rotator-based-android-tv.html</loc>
 <lastmod>2022-06-02T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html</loc>
+<lastmod>2022-08-09T00:00:00+08:00</lastmod>
 </url>
 <url>
 <loc>https://devylee.github.io/</loc>
@@ -128,6 +132,18 @@
 </url>
 <url>
 <loc>https://devylee.github.io/tag/android/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/flash/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/animate/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/html5/</loc>
+</url>
+<url>
+<loc>https://devylee.github.io/tag/createjs/</loc>
 </url>
 <url>
 <loc>https://devylee.github.io/author/devy/</loc>

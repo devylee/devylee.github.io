@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   <title>elsewhere - HTML5</title>
+   <link>https://devylee.github.io/tag/html5/rss.xml</link>
+   <description>一个辅助记忆的树洞</description>
+   <language>zh-CN</language>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   <item>
+    <title>将Flash转换成HTML5 Canvas</title>
+    <author>Devy</author>
+    <link>https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html</link>
+    <pubDate>2022-08-09T00:00:00+08:00</pubDate>
+    <description><![CDATA[<blockquote>
+  <p>又是救急，一位多年没什么联系的旧同事突然联系到我，他的客户有一批Flash动画要转成HTML5，因为知道我曾经在Flash/Flex技术领域有着丰富的经验和造诣，希望我可以帮他们完成这批动画的转换。也恰好最近手里项目空档期，也就应许下来，不成想，原本以为三五天就可以搞定的事，竟成了我两周来的噩梦！今天就来说说我在Flash转HTML5时遇到的几处坑吧……</p>
+</blockquote>
+
+]]></description>
+    <guid isPermaLink="true">https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html</guid>
+    
+</item>
+</channel>
+</rss>

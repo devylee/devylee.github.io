@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/customize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <title>elsewhere | 将Flash转换成HTML5 Canvas</title>
+    <link rel="canonical" href="https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html" />
+    <meta name="referrer" content="origin" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@idevylee" />
+    <meta name="twitter:creator" content="@idevylee" />
+
+    <meta property="og:site_name" content="elsewhere" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html" />
+    <meta property="og:title" content="elsewhere | 将Flash转换成HTML5 Canvas" />
+    <meta property="og:description" name="description" content="又是救急，一位多年没什么联系的旧同事突然联系到我，他的客户有一批Flash动画要转成HTML5，因为知道我曾经在Flash/Flex技术领域有着丰富的经验和造诣，希望我可以帮他们完成这批动画的转换。也恰好最近手里项目空档期，也就应许下来，不成想，原本以为三五天就可以搞定的事，竟成了我两周来的噩梦！今天就来说说我在Flash转HTML5时遇到的几处坑吧……" />
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "author": "Devy",
+        "publisher": "elsewhere",
+        "url": "https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html",
+        "description": "又是救急，一位多年没什么联系的旧同事突然联系到我，他的客户有一批Flash动画要转成HTML5，因为知道我曾经在Flash/Flex技术领域有着丰富的经验和造诣，希望我可以帮他们完成这批动画的转换。也恰好最近手里项目空档期，也就应许下来，不成想，原本以为三五天就可以搞定的事，竟成了我两周来的噩梦！今天就来说说我在Flash转HTML5时遇到的几处坑吧……"
+    }
+    </script>
+
+    <meta name="generator" content="Jekyll" />
+    <link rel="alternate" type="application/rss+xml" title="elsewhere" href="https://devylee.github.io/feed.xml" />
+
+
+</head>
+<body class="post-template tag-flash tag-animate tag-html5 tag-createjs">
+
+    <div class="site-wrapper">
+
+
+        
+    
+    <header class="site-header outer">
+        <div class="inner">
+                <nav class="site-nav">
+        <div class="site-nav-left"><a class="site-nav-logo" href="/">elsewhere</a><ul class="nav" role="menu">
+                <li class="nav-home " role="menuitem"><a href="/">Home</a></li>
+                <li class="nav-about " role="menuitem"><a href="/about/">About</a></li>
+                <li class="nav-archives " role="menuitem"><a href="/archives/">Archives</a></li>
+                <li class="nav-github-repos"><a href="https://github.com/devylee/" role="menuitem">Github repos</a></li>
+            </ul>
+        </div>
+        <div class="site-nav-right">
+            <a class="rss-button" href="https://devylee.github.io/feed.xml" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+        </div>
+    </nav>
+    
+        </div>
+    </header>
+    
+
+
+    <main id="site-main" class="site-main outer" role="main">
+        <div class="inner">
+
+            <article class="post-full post tag-flash tag-html5 tag-animate tag-createjs no-image">
+
+                <header class="post-full-header">
+                        <section class="post-full-meta">
+                            <time class="post-full-meta-date" datetime="">09 Aug 2022</time>
+                            <span class="date-divider">/</span> <a href="/tag/flash/">Flash</a>
+                            <span class="date-divider">/</span> <a href="/tag/animate/">Animate</a>
+                            <span class="date-divider">/</span> <a href="/tag/html5/">HTML5</a>
+                            <span class="date-divider">/</span> <a href="/tag/createjs/">CreateJS</a>
+                            
+                        </section>
+                        <h1 class="post-full-title">将Flash转换成HTML5 Canvas</h1>
+                </header>
+
+                
+
+                <section class="post-full-content">
+                    <blockquote>
+  <p>又是救急，一位多年没什么联系的旧同事突然联系到我，他的客户有一批Flash动画要转成HTML5，因为知道我曾经在Flash/Flex技术领域有着丰富的经验和造诣，希望我可以帮他们完成这批动画的转换。也恰好最近手里项目空档期，也就应许下来，不成想，原本以为三五天就可以搞定的事，竟成了我两周来的噩梦！今天就来说说我在Flash转HTML5时遇到的几处坑吧……</p>
+</blockquote>
+
+<!--more-->
+
+<p>想想我上一次用Flash/Flex大概是2010年的事了，当时是主导一个前端基于Flash/Flex技术的棋牌游戏平台项目开发。想当年的Flash/Flex技术还是相当成熟的，即便是在浏览器必须安装Flash控件的情况下，依然不影响这项技术的大量应用。但是当HTML5标准出来之后，Adobe并没有第一时间拥抱它，加之日益普及的智能手机也无法支持Flash，当时我就预感到这项技术势必走向没落。所以，从那时至今的10多年时间，我没有再关注这项技术的发展。然而在2020年底Adobe停止更新之后，令我没想到的是，Flash竟然换了一个身份，变成了现在的<a href="https://www.adobe.com/products/animate.html">Animate</a>还继续存活着！但如果说是时代成就了Flash，那不得不说Animate在这个时代也略显尴尬了！</p>
+
+<p>项目的整个过程中，从Animate 2017到2022，除了2020，其他版本我都用了，每个版本都有它的问题，比如：有的版本调整画布大小，个别剪辑发布后会变形窜位，有的版本在缺少字体的时候，文字显示不全，有的版本则深陷于发布时的“JavaScript Error”……好在最终2018、2019两个版本还算令我满意，也不是说这两个版本不存在上述问题，只是至少这两个版本也算能稳定的支撑我把项目做下来（这也足见Adobe在Animate上的用心程度了！）。</p>
+
+<p>不同版本的Animate在界面布局、菜单和格式转换支持上有些许差异，但就我的需求（将Flash转换成HTML5 Canvas）而言，并没有对版本的特别依赖。总体上，Animate也延续了Flash的功能和能力，对于一个熟悉Flash的人来说，非常容易上手（我相信对于一个新手来说，也依然很容易上手）。Animate可以直接打开编辑Flash源文件（.fla文件，事实上，这也是Animate的源文件扩展名，可见它与Flash一衣带水的联系）。</p>
+
+<p>我们言归正传吧！</p>
+
+<p>首先，将Flash转换成HTML5，要转换一下文档格式，这在Animate中有两种方式：</p>
+<ol>
+  <li>通过菜单：File &gt; Convert To &gt; HTML5 Canvas（2017版本这个功能在Commands菜单下）；</li>
+  <li>新建一个HTML5 Canvas文档，然后将Flash中所需的图层和剪辑复制到新建的文档中。</li>
+</ol>
+
+<p>这两种方法我都在用，这个步骤通常也不会有什么问题，但这个步骤选择哪种方式，确实会对后续操作产生一些影响。第一种方式很简单，但输出的HTML5 Canvas动画更容易出现问题，比如：剪辑窜位变形（在Animate的编辑模式下，是看不到这个问题的，但是发布的动画会有问题），或者发布时遇到“JavaScript Error”。相比下来，第二种方式操作上会比较繁琐一些，但是后续出现的问题则要少得多。</p>
+
+<p>第二步，就是调整动画尺寸，因为源动画尺寸是1024 * 576，按客户的要求，需要调整为1920 * 1080，这一步绝大部分情况下，直接在文档属性面板中修改画布尺寸，并勾选“Scale Content”选项即可，但这种方式并不总是奏效，因为毫无规律的在某些情况下，动画发布后会出现个别剪辑元件还是保持着原来的尺寸，或者有窜位的情况发生，所以，当这种情况发生时，我就要回到上述第一个步骤，换一种方式来尝试，还不行的话，就换一个Animate版本（比如从2019换成2018），问题通常就会得到解决。</p>
+
+<p>第三步，要将剪辑库中的资源导出为文件，这一步比较简单，直接发布（或：Command/Ctrl + Enter），Animate会将引用的图片、音视频等资源以文件形式导出到images、sounds等文件夹中，第一次导出成功后，就可以将剪辑库中的所有音频元件删除了，这些音频元件有时也是导致发布时出现“JavaScript Error”的原因之一。</p>
+
+<p>接下来要检查时间轴中的命名元件的命名是否有冲突，Flash中，时间轴的不同的原件在不同的关键帧中可以使用同一个命名，比如：两个Button，在第一个关键帧中用了Button A，命名为“btn”，第二个关键帧中，用了Button B，同样命名为“btn”，这在Flash时代，在各自的关键帧中通过ActionScript进行对象引用，并不会出现问题。但在HTML5 Canvas中，这会导致引用异常（当然有时候它也会如你期望的那样正常工作），所以，严谨的方式是，我们把第一个“btn”改为“btnA”，第二个“btn”改为“btnB”，这样可以避免引用的混乱。</p>
+
+<p>再接下来就是Animate文档中的ActionScript了，Flash转成HTML5 Canvas后，其中所有的ActionScript代码都被注释掉了，因为实际上在HTML5 Canvas中，你不能再使用ActionScript，而是基于<a href="https://createjs.com/">CreateJS</a>库的JavaScript。如果你的动画足够简单，比如只有用到诸如：stop、gotoAndStop、gotoAndPlay这类控制动画流程的脚本，那处理起来就简单很多，这些方法在CreateJS中依然存在，只不过，Flash中的帧是从1开始的，而CreateJS中是从0开始。比如：原来<code class="language-plaintext highlighter-rouge">gotoAndStop(1)</code>表示停止在第一帧，现在你要换成<code class="language-plaintext highlighter-rouge">this.gotoAndStop(0)</code>，这里要特别注意<code class="language-plaintext highlighter-rouge">this</code>，如果你有自定义的函数，比如下面这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">replay</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">gotoAndPlay</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>上述代码中，<code class="language-plaintext highlighter-rouge">this</code>并不是对时间轴对象的引用，所以我们必须对变量进行声明，像下面这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">_this</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">replay</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">_this</span><span class="p">.</span><span class="nx">gotoAndPlay</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>如果你的ActionScript足够复杂，那我建议，就不要在Animate文档中重新编写脚本了，因为Animate实在不是一个方便的“代码编辑器”，尤其对我们这些码农而言！我们可以在关键帧中定义一些事件（Event），然后通过在javascript中监听Canvas事件来进行交互处理。举个例子，在时间轴的最后一帧加一个<code class="language-plaintext highlighter-rouge">complete</code>事件，当捕获到这个事件，动画就跳到第1帧重新播放，我们可以这样做：</p>
+
+<p>首先我们在时间轴的最后一帧加上脚本：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">dispatchEvent</span><span class="p">(</span><span class="k">new</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">Event</span><span class="p">(</span><span class="dl">'</span><span class="s1">complete</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// 触发事件</span>
+</code></pre></div></div>
+
+<p>然后我们在发布后的html文件中的适当位置修改相应的javascript：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="c1">// 监听事件</span>
+<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">complete</span><span class="dl">'</span><span class="p">,</span> <span class="nx">onMovieComplete</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="c1">// 事件回调</span>
+<span class="kd">function</span> <span class="nx">onMovieComplete</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">exportRoot</span><span class="p">.</span><span class="nx">gotoAndPlay</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+</code></pre></div></div>
+
+<p>好啦，进行到这里，我们基本上可以离开Animate（除非你还需要对动画里的内容进行调整），剩下的就是基于CreateJS的javascript编程了。animate发布的HTML5文件包括一个HTML文件和一个js文件，js文件你就不要动了，它是对Animate时间轴动画和元件的描述，我们主要还是来看html文件，通常发布出来，它是下面这个样子的：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="c">&lt;!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+--&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"authoring-tool"</span> <span class="na">content=</span><span class="s">"Adobe_Animate_CC"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>indexgame<span class="nt">&lt;/title&gt;</span>
+<span class="c">&lt;!-- write your code here --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://code.createjs.com/createjs-2015.11.26.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"indexgame.js?1660103482948"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">canvas</span><span class="p">,</span> <span class="nx">stage</span><span class="p">,</span> <span class="nx">exportRoot</span><span class="p">,</span> <span class="nx">anim_container</span><span class="p">,</span> <span class="nx">dom_overlay_container</span><span class="p">,</span> <span class="nx">fnStartAnimation</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">canvas</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">anim_container</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">animation_container</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">dom_overlay_container</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">dom_overlay_container</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">comp</span><span class="o">=</span><span class="nx">AdobeAn</span><span class="p">.</span><span class="nx">getComposition</span><span class="p">(</span><span class="dl">"</span><span class="s2">97D94CEC1018413B9C73A09A74E98D32</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">lib</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getLibrary</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">LoadQueue</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+	<span class="nx">loader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">fileload</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">){</span><span class="nx">handleFileLoad</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">comp</span><span class="p">)});</span>
+	<span class="nx">loader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">complete</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">){</span><span class="nx">handleComplete</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">comp</span><span class="p">)});</span>
+	<span class="kd">var</span> <span class="nx">lib</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getLibrary</span><span class="p">();</span>
+	<span class="nx">loader</span><span class="p">.</span><span class="nx">loadManifest</span><span class="p">(</span><span class="nx">lib</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">manifest</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">handleFileLoad</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span> <span class="nx">comp</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">images</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getImages</span><span class="p">();</span>	
+	<span class="k">if</span> <span class="p">(</span><span class="nx">evt</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">item</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">image</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span> <span class="nx">images</span><span class="p">[</span><span class="nx">evt</span><span class="p">.</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span> <span class="p">}</span>	
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">handleComplete</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">comp</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.</span>
+	<span class="kd">var</span> <span class="nx">lib</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getLibrary</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">ss</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getSpriteSheet</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">queue</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">ssMetadata</span> <span class="o">=</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">ssMetadata</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">ssMetadata</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">ss</span><span class="p">[</span><span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">SpriteSheet</span><span class="p">(</span> <span class="p">{</span><span class="dl">"</span><span class="s2">images</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="nx">queue</span><span class="p">.</span><span class="nx">getResult</span><span class="p">(</span><span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">)],</span> <span class="dl">"</span><span class="s2">frames</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">frames</span><span class="p">}</span> <span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">exportRoot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">indexgame</span><span class="p">();</span>
+	<span class="nx">stage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">Stage</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
+	<span class="nx">stage</span><span class="p">.</span><span class="nx">enableMouseOver</span><span class="p">();</span>	
+	<span class="c1">//Registers the "tick" event listener.</span>
+	<span class="nx">fnStartAnimation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">stage</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">exportRoot</span><span class="p">);</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Ticker</span><span class="p">.</span><span class="nx">setFPS</span><span class="p">(</span><span class="nx">lib</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">fps</span><span class="p">);</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Ticker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">tick</span><span class="dl">"</span><span class="p">,</span> <span class="nx">stage</span><span class="p">);</span>
+	<span class="p">}</span>	    
+	<span class="c1">//Code to support hidpi screens and responsive scaling.</span>
+	<span class="nx">AdobeAn</span><span class="p">.</span><span class="nx">makeResponsive</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span><span class="dl">'</span><span class="s1">both</span><span class="dl">'</span><span class="p">,</span><span class="kc">false</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="nx">canvas</span><span class="p">,</span><span class="nx">anim_container</span><span class="p">,</span><span class="nx">dom_overlay_container</span><span class="p">]);</span>	
+	<span class="nx">AdobeAn</span><span class="p">.</span><span class="nx">compositionLoaded</span><span class="p">(</span><span class="nx">lib</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+	<span class="nx">fnStartAnimation</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="c">&lt;!-- write your code here --&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"init();"</span> <span class="na">style=</span><span class="s">"margin:0px;"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"animation_container"</span> <span class="na">style=</span><span class="s">"background-color:rgba(255, 255, 255, 1.00); width:1920px; height:1080px"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">"canvas"</span> <span class="na">width=</span><span class="s">"1920"</span> <span class="na">height=</span><span class="s">"1080"</span> <span class="na">style=</span><span class="s">"position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"dom_overlay_container"</span> <span class="na">style=</span><span class="s">"pointer-events:none; overflow:hidden; width:1920px; height:1080px; position: absolute; left: 0px; top: 0px; display: block;"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>我就不对上述代码进行翻译了，我就说说，这里可能出现的问题以及如何解决吧。</p>
+
+<p>首先，我遇到的第一个问题，因为原始的flash文件是1024 * 576，现在放大成了1920 * 1080，部分动画在浏览器中的播放速度明显变慢（也可能是因为动画元件过于复杂导致的？因为动画播放的过程中，浏览器的cpu和内存的资源占用明显升高，甚至风扇都开启了“狂躁”模式）！这个问题纠结了我两天，改变Animate文档的帧率（FPS）也不见任何效果！后来，尝试在代码中指定<code class="language-plaintext highlighter-rouge">exportRoot</code>的帧率，就是下面这样的：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="kd">function</span> <span class="nx">handleComplete</span><span class="p">(</span><span class="nx">evt</span><span class="p">,</span><span class="nx">comp</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.</span>
+	<span class="kd">var</span> <span class="nx">lib</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getLibrary</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">ss</span><span class="o">=</span><span class="nx">comp</span><span class="p">.</span><span class="nx">getSpriteSheet</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">queue</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">target</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">ssMetadata</span> <span class="o">=</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">ssMetadata</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">ssMetadata</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">ss</span><span class="p">[</span><span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">SpriteSheet</span><span class="p">(</span> <span class="p">{</span><span class="dl">"</span><span class="s2">images</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="nx">queue</span><span class="p">.</span><span class="nx">getResult</span><span class="p">(</span><span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">name</span><span class="p">)],</span> <span class="dl">"</span><span class="s2">frames</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ssMetadata</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">frames</span><span class="p">}</span> <span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">exportRoot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">indexgame</span><span class="p">();</span>
+	<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">framerate</span> <span class="o">=</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">fps</span><span class="p">;</span> <span class="c1">// 指定exportRoot的帧率为Animate文档中设定的FPS帧率</span>
+	<span class="nx">stage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">Stage</span><span class="p">(</span><span class="nx">canvas</span><span class="p">);</span>
+	<span class="nx">stage</span><span class="p">.</span><span class="nx">enableMouseOver</span><span class="p">();</span>	
+    <span class="p">...</span>
+<span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>动画播放的速度可以了（不过似乎动画的丝滑程度似乎是有所下降），我也怀疑<code class="language-plaintext highlighter-rouge">createjs.Ticker.setFPS(lib.properties.fps)</code>这行代码的作用是什么？不过眼下我并不想在这个问题上再继续耗费时间了！</p>
+
+<p>因为每套动画包含一部主动画和若干部子动画或视频，原来的Flash是通过<code class="language-plaintext highlighter-rouge">loadSWF</code>来实现的，现在需要调整一下，倒也不难，可以通过监听动画中的按钮点击事件，然后向<code class="language-plaintext highlighter-rouge">animation_container</code>注入iframe或者VideoPlayer来实现。这里我就不多说了，我想说说这里我遇到的一个坑，就是音频的自动播放问题（基于CreateJS的SoundJS实现）。</p>
+
+<p>我的Mac一直以来默认的浏览器都是Safari，有一些子动画是带有音频的，动画播放的时候需要自动播放音频，但是我发现怎么都没办法让这些音频自动播放，而且Safari也没有任何提示，直到我用Chrome尝试，并发现了一条警告：<code class="language-plaintext highlighter-rouge">The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu</code>。好吧，音频的播放需要有一个有效的用户行为来触发！这个问题其实在Chrome和Firefox中还好说，因为这是个子动画，用户是需要点击主动画中的按钮才会进入子动画，而点击动作就是一个有效的用户行为，所以，当子动画被打开，其中的音频是可以自动播放，子动画中类似下面的代码是有效的：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">initSounds</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">alternateExtensions</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">mp3</span><span class="dl">"</span><span class="p">];</span>
+ 	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">fileload</span><span class="dl">"</span><span class="p">,</span> <span class="nx">onSoundLoaded</span><span class="p">);</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">sounds/1.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s1</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">sounds/2.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s2</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">sounds/3.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span><span class="p">);</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">sounds/4.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s4</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">onSoundLoaded</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">id</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">s1</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">playSound</span><span class="p">();</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">playSound</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">flag</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">flag</span><span class="o">++</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">play</span><span class="p">(</span><span class="dl">'</span><span class="s1">s</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">);</span>
+		<span class="nx">instance</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">complete</span><span class="dl">"</span><span class="p">,</span> <span class="nx">playSound</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>但是对于Safari而言，这一切就不那么幸运了，所以，我需要对它做一些兼容处理，也就是要将音频的播放放在主动画中，就类似下面这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">isMacSafari</span> <span class="o">=</span> <span class="sr">/Mac.*Safari/i</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nb">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">);</span> <span class="c1">// Safari浏览器检测</span>
+<span class="kd">var</span> <span class="nx">flag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">...</span>
+
+<span class="kd">function</span> <span class="nx">initMovie</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+	<span class="kd">var</span> <span class="nx">btn</span> <span class="o">=</span> <span class="nx">exportRoot</span><span class="p">.</span><span class="nx">btn1</span><span class="p">;</span>
+	<span class="nx">btn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="nx">onBtn1Click</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onBtn1Click</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">showSubMovie</span><span class="p">(</span><span class="dl">'</span><span class="s1">part1/index.html</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 显示子动画</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">isMacSafari</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Safari浏览器Autoplay Policy问题fix</span>
+		<span class="nx">playSound</span><span class="p">();</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">initSounds</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">alternateExtensions</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">mp3</span><span class="dl">"</span><span class="p">];</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">isMacSafari</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Safari浏览器Autoplay Policy问题fix</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">part1/sounds/1.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s1</span><span class="dl">"</span><span class="p">);</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">part1/sounds/2.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s2</span><span class="dl">"</span><span class="p">);</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">part1/sounds/3.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s3</span><span class="dl">"</span><span class="p">);</span>
+		<span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">registerSound</span><span class="p">(</span><span class="dl">"</span><span class="s2">part1/sounds/4.mp3</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">s4</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">playSound</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">flag</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">flag</span><span class="o">++</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">createjs</span><span class="p">.</span><span class="nx">Sound</span><span class="p">.</span><span class="nx">play</span><span class="p">(</span><span class="dl">'</span><span class="s1">s</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">flag</span><span class="p">);</span>
+		<span class="nx">instance</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">complete</span><span class="dl">"</span><span class="p">,</span> <span class="nx">playSound</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>OK，音频播放问题算是解决了。但其实，如果动画中没有互动，我倒是更倾向直接把这些动画转成视频，但是我不清楚为什么这些Flash动画当初的设计者不是将动画放到主场景（Scene）的时间轴，而是将动画做成了剪辑元件（MovieClip），然后再将元件放到主场景（第一帧），这样的做法，结果就是使用Animate直接导出的视频只有一帧！除非我将元件中的所有图层拷贝到主场景，但是因为元件中的动画坐标原点与主场景的坐标原点不同，这导致复制出来的图层在主场景中，元件都是错位的！额～看着还有几十部动画要转换，我已经没有耐心挨个关键帧去调整了！所以动画的设计制作遵循一定的规范，也是有必要的。</p>
+
+<p>再接下来就是动画中的交互了，包括拖拽、Tween动画、遮罩（Mask）以及滤镜，其中Tween动画可以用CreateJSs的TweenJS来实现；关于遮罩，则需要注意一点，就是作为遮罩的元件不要<code class="language-plaintext highlighter-rouge">addChild</code>到场景中，否则遮罩无效！至于拖拽，Flash中可以很方便的用<code class="language-plaintext highlighter-rouge">startDrag()</code>和<code class="language-plaintext highlighter-rouge">stopDrag()</code>实现，但现在，我们需要用到几个事件，分别是<code class="language-plaintext highlighter-rouge">mousedown</code>、<code class="language-plaintext highlighter-rouge">pressmove</code>和<code class="language-plaintext highlighter-rouge">pressup</code>，大概像下面这样：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="kd">function</span> <span class="nx">initMovie</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+	<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">pressmove</span><span class="dl">'</span><span class="p">,</span> <span class="nx">onPressMove</span><span class="p">);</span>
+	<span class="nx">exportRoot</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">pressup</span><span class="dl">'</span><span class="p">,</span> <span class="nx">onPressUp</span><span class="p">);</span>
+	<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+		<span class="kd">var</span> <span class="nx">mc</span> <span class="o">=</span> <span class="nx">exportRoot</span><span class="p">[</span><span class="dl">'</span><span class="s1">mc</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">];</span>
+		<span class="nx">mc</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">pointer</span><span class="dl">'</span><span class="p">;</span>
+		<span class="nx">mc</span><span class="p">.</span><span class="nx">pos</span> <span class="o">=</span> <span class="p">{</span> <span class="na">x</span> <span class="p">:</span> <span class="nx">mc</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="na">y</span> <span class="p">:</span> <span class="nx">mc</span><span class="p">.</span><span class="nx">y</span><span class="p">};</span> <span class="c1">// 保存剪辑元件的初始位置</span>
+		<span class="nx">mc</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">mousedown</span><span class="dl">'</span><span class="p">,</span> <span class="nx">onMcMouseDown</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">dragging</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="cm">/**
+ * 鼠标按下
+ */</span>
+<span class="kd">function</span> <span class="nx">onMcMouseDown</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">dragging</span> <span class="o">=</span> <span class="p">{</span> <span class="na">mc</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">,</span> <span class="na">x</span> <span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageX</span><span class="p">,</span> <span class="na">y</span> <span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageY</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * 拖动
+ */</span>
+<span class="kd">function</span> <span class="nx">onPressMove</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageX</span> <span class="o">-</span> <span class="nx">dragging</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageY</span> <span class="o">-</span> <span class="nx">dragging</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">x</span> <span class="o">+=</span> <span class="nx">x</span><span class="p">;</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">y</span> <span class="o">+=</span> <span class="nx">y</span><span class="p">;</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageX</span><span class="p">;</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageY</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">flag</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="cm">/**
+ * 放下
+ */</span>
+<span class="kd">function</span> <span class="nx">onPressUp</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageX</span><span class="p">;</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">stageY</span><span class="p">;</span>
+
+		<span class="c1">// TODO 根据当前推拽位置进行相应处理</span>
+
+		<span class="p">...</span>
+
+		<span class="c1">// 对象位置还原</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+		<span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">dragging</span><span class="p">.</span><span class="nx">mc</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+		<span class="nx">dragging</span> <span class="o">=</span> <span class="p">{};</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>这里需要注意一点，就是如果动画是被拉伸的（放大或者缩小），在<code class="language-plaintext highlighter-rouge">onPressMove</code>的时候，<code class="language-plaintext highlighter-rouge">x</code>和<code class="language-plaintext highlighter-rouge">y</code>的偏移量要进行拉伸比例换算，否则，它的移动速度和鼠标的移动速度会不匹配。</p>
+
+<p>哦，对了，对于那些<code class="language-plaintext highlighter-rouge">alpha=0</code>的元件，在createjs中是响应不到任何用户事件（比如<code class="language-plaintext highlighter-rouge">click</code>）的，一个简单的办法是，让alpha大于0，比如：<code class="language-plaintext highlighter-rouge">alpha=0.01</code>。</p>
+
+<p>这几天紫外线过敏，我的胳膊和腿暴露在阳光下的的部分都起了疹子，此刻愈发的痒，上了年纪，免疫力几乎是以肉眼可见的速度在下降！就先整理这么多吧。</p>
+
+<p>参考：</p>
+
+<ol>
+  <li><a href="https://createjs.com/docs">CreateJS Docs</a></li>
+</ol>
+
+                </section>
+
+                <footer class="post-full-footer">
+
+    
+                    <section class="author-card">
+                        
+                            <img class="author-profile-image" src="https://github.com/devylee.png?size=120" alt="Devy" />
+                        
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/devy/"></a></h4>
+                                
+                                    <p> 独立开发者' 全栈' 80前' 在理想与现实之间寻找平衡'</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/devy/">Read More</a>
+                        </div>
+        
+                </footer>
+
+            
+                
+
+<section class="post-full-comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = 'https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html';
+            this.page.identifier = '/post/2022/08/flash-to-html5-canvas.html';
+        };
+        (function(){
+            document.addEventListener('DOMContentLoaded', function() {
+                ping('https://devylee.disqus.com/count.js').then(function(delta) {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//devylee.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                });
+            });
+        })();
+    </script>
+</section>
+            
+
+            </article>
+
+        </div>
+    </main>
+
+
+    <aside class="read-next outer">
+        <div class="inner">
+            <div class="read-next-feed">
+            
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">&mdash; elsewhere &mdash;</small>
+                        <h3 class="read-next-card-header-title"><a href="/tag/flash/">Flash</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            
+                            <li><a href="/post/2022/08/flash-to-html5-canvas.html">将Flash转换成HTML5 Canvas</a></li>
+                            
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="/tag/flash/">1 post →</a>
+                    </footer>
+                </article>
+                
+            
+
+
+            
+
+            
+                
+            <article class="post-card post tag-android no-image"><div class="post-card-content">
+                    <a class="post-card-content-link" href="/post/2022/06/a-multimedia-rotator-based-android-tv.html">
+                        <header class="post-card-header"><span class="post-card-tags">Android</span><h2 class="post-card-title">一个基于Android TV的多媒体播放器</h2>
+                        </header>
+                        <section class="post-card-excerpt">
+                            <p>
+  前些日子去朋友那里拜访，聊了很多关于他所做项目和一些技术的应用，席间提到了Android TV Box，朋友还送了我一个。于是乎闲来无事我就花了点时间做了些开发尝试。
+
+
+</p>
+                        </section>
+                    </a>
+                    <footer class="post-card-meta"><img class="author-profile-image" src="https://github.com/devylee.png?size=50" alt="Devy" /><span class="post-card-author"><a href="/author/devy/">Devy</a></span>
+                    </footer>
+                </div>
+            </article>
+
+            
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://devylee.github.io">
+            
+            <span>elsewhere</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">将Flash转换成HTML5 Canvas</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%E5%B0%86Flash%E8%BD%AC%E6%8D%A2%E6%88%90HTML5%20Canvas&amp;url=https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+        <a class="floating-header-share-swb" href="http://service.weibo.com/share/share.php?url=https://devylee.github.io/post/2022/08/flash-to-html5-canvas.html&title=%E5%B0%86Flash%E8%BD%AC%E6%8D%A2%E6%88%90HTML5%20Canvas"
+           onclick="window.open('http://service.weibo.com/share/share.php?title=%E5%B0%86Flash%E8%BD%AC%E6%8D%A2%E6%88%90HTML5%20Canvas&url=' + encodeURIComponent(window.location.href), 'weibo-share', 'width=560,height=530');return false;">
+           <svg aria-labelledby="simpleicons-sinaweibo-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title id="simpleicons-sinaweibo-icon">Sina Weibo icon</title><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z"/></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright">
+                    <a href="/">elsewhere</a> 
+                    &copy; 2022 
+                    <nobr>All Rights Reserved.</nobr>
+                </section>
+                <nav class="site-footer-nav">
+                    <a href="https://jekyllrb.com/">Proudly published with Jekyll</a>
+                    <a href="https://pages.github.com/">Hosted by Github Pages</a>
+                    <a href="https://github.com/tryghost/casper">Theme by Casper</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript" src="/assets/js/ping.js"></script>
+    <script>
+
+    // NOTE: Scroll performance is poor in Safari
+    // - this appears to be due to the events firing much more slowly in Safari.
+    //   Dropping the scroll event and using only a raf loop results in smoother
+    //   scrolling but continuous processing even when not scrolling
+    $(document).ready(function () {
+        // Start fitVids
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // End fitVids
+
+        var progressBar = document.querySelector('progress');
+        var header = document.querySelector('.floating-header');
+        var title = document.querySelector('.post-full-title');
+
+        var lastScrollY = window.scrollY;
+        var lastWindowHeight = window.innerHeight;
+        var lastDocumentHeight = $(document).height();
+        var ticking = false;
+
+        function onScroll() {
+            lastScrollY = window.scrollY;
+            requestTick();
+        }
+
+        function onResize() {
+            lastWindowHeight = window.innerHeight;
+            lastDocumentHeight = $(document).height();
+            requestTick();
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(update);
+            }
+            ticking = true;
+        }
+
+        function update() {
+            var trigger = title.getBoundingClientRect().top + window.scrollY;
+            var triggerOffset = title.offsetHeight + 35;
+            var progressMax = lastDocumentHeight - lastWindowHeight;
+
+            // show/hide floating header
+            if (lastScrollY >= trigger + triggerOffset) {
+                header.classList.add('floating-active');
+            } else {
+                header.classList.remove('floating-active');
+            }
+
+            progressBar.setAttribute('max', progressMax);
+            progressBar.setAttribute('value', lastScrollY);
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onResize, false);
+
+        update();
+    });
+    </script>
+    <!-- Google Analytics Tracking code -->
+    <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-92777218-1', 'auto');
+	    ga('send', 'pageview');
+
+    </script></body>
+</html>
+
